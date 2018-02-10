@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <style>
+        @keyframes jump {
+            0%{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(2);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+
+        .jump{
+            animation: infinite ease-out 1s;
+        }
+    </style>
+</head>
+<body>
+<div id="a" style="position: absolute;  margin: auto;  top: 0;  right: 0;  bottom: 0;  left: 0;   height: 450px;"></div>
+</body>
+<script>
+    text("Hello World");
+    function text(a) {
+        let b = a.split("");
+        let res = "";
+        console.log(b)
+        b.forEach(function (item) {
+            res+="<span class='jump'>"+item+"</span>";
+        });
+        $("#a").html(res);
+    }
+
+</script>
+</html>

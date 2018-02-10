@@ -1,0 +1,92 @@
+    body{
+		//background-image: url("./Resources/bg1.jpg");
+		background-color: ghostwhite;
+	}
+	
+	#logo {
+		margin-bottom: 20px;
+	}
+	
+	header {
+		//background-color: #e8e8e8;
+		margin-bottom: 30px;
+		//box-shadow: 10px 10px 5px #888888;
+	}
+		
+	.container {
+		width:960px;
+		margin: 0 auto;
+		background-color: ghostwhite;
+		//box-shadow: 10px 10px 5px #888888;
+	}
+	
+	.nav_menu{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.nav_menu li{
+		min-width: 8em;
+		float: left;
+		margin-right: 0.5em;
+		text-align: center;
+	}
+	
+	.clear{
+		clear: both;
+	}
+	
+	.nav_menu li a:link,
+	.nav_menu li a:visited {
+		background-color: lightgray;
+		display: block;
+		padding: 0.2em;
+		text-decoration: none;
+		color:black;
+		font-weight: bold;
+		margin: 0 0 0.2em 0;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		boarder-radius: 3px;
+		box-shadow: 3px 3px 3px 3px rgba(43, 43, 77, 0.5);
+	}
+	
+	.nav_menu a {
+	display: block;
+	box-shadow: 10px 10px 5px #888888;
+	}
+	
+	mainbody {
+	
+	}
+	
+	#welcomeDiv {
+		background-color: lightgray;
+		float: left;
+		width: 70%;
+		margin-right: 20px;
+		padding: 15px;
+		margin-left: 10px;
+		box-shadow: 10px 10px 5px #888888;
+	}
+	
+	#Login {
+		display:block;
+		background-color: lightgray;
+		float:left;
+		padding: 15px;
+		width: 20%;
+		margin-bottom: 50px;
+		box-shadow: 10px 10px 5px #888888;
+	}
+	
+	
+	footer {
+		height: 50px;
+		background-color: silver;
+		color: white;
+		text-align: right;
+		padding-right: 20px;
+		padding-top: 5px;
+	}

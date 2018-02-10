@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./p5/p5.min.js"></script>
+    <script src="./p5/addons/p5.dom.min.js"></script>
+    <script src="./p5/addons/p5.sound.min.js"></script>
+    <script src="./sketch.js"></script>
+    <style> body {padding: 0; margin: 0;} </style>
+  </head>
+  <body>
+  	<script>
+  		let balloons = []
+		let screen = 0
+		let score = 0
+		let bombRate = 5 //%
+		let RedScr = 255 //to use: set to 255
+		let hitBombStopAni = false
+		//score vars//
+		let prevDis = " "
+		let dis = "0"
+		let pivot = 0
+		let pivotSpd = 0.05
+		let XspaceInBetween = 33
+		let YspaceInBetween = 70
+		let sx = 30
+		let sy = 70
+		let prevScore = 100
+		//////////////
+		let totalLives = 3
+		let lives = 3
+		let history = []
+		let tailC = [0,0,0]
+		let addBalloonTimer
+		let mouseDragTimer
+		// let checkCount = 0
+
+		function setup(){
+		    bombRate /= 100
+		    createCanvas(window.innerWidth-20,window.innerHeight-20)//(windowWidth-20,windowHeight-20)
+		    noStroke()
+		    background(255)
+		    //fill(255)
+		    // setInterval(function(){alert(checkCount)},20000)
+		}
+
+		function draw(){
+		    if (screen == 1){
+		        drawGameScr()
+		    }else if(screen == 2){
+		        drawGameOverScr()
+		    }else if(screen == 0){
+		        drawWelcomeScr()
+		    }
+		}
+
+		function drawWelcomeScr(){
+		    fill(255,100,100)
+		    textFont("Calibri",100)
+		    text("Balloon Slash",width/4,height/4)
+		    fill(100,100,255)
+		    textFont("Calibri",50)
+		    text("Click Anywhere To Start",width/4+20,height/4+300)
+		}
+
+		function drawGameScr(){
+		    //tint whole screen//
+		    if (RedScr <255){
+		        RedScr += 10
+		        if (RedScr>255){RedScr=255}
+		    }
+		    background(255,RedScr,RedScr)
+		    /////////////////////
+		    //draw score & lives//
+		    drawScore()
+		    drawLives()
+		    //////////////
+
+		    //draw all the balloons//
+		    balloons.forEach(
+		        function myFunction(item, index, arr) {
+		            item.draw()
+		        }
+		    )
+		    /////////////////////////
+		    //draw tail//
+		    drawTail()
+		    /////////////
+		}
+
+		function drawGameOverScr(){
+		    if (RedScr <255){
+		        RedScr += 10
+		        if (RedScr>255){RedScr=255}
+		    }else if (RedScr = 255){
+		        screen = 3
+		    }
+		    background(255,RedScr,RedScr)
+		    textFont("Calibri",100)
+		    fill(0)
+		    let w = width/2-200
+		    if (w<0){w=0}
+		    text("Game Over\n  Score: "+score.toString(),w,height/2)
+		}
+
+		function drawTail(){
+		    history.forEach(function(item,index){
+		        fill(tailC[0], tailC[1], tailC[2],FitIntoScale(index,0,50,100,255))
+		        ellipse(item[0],item[1],40)
+		    })
+		}
+
+		function FitIntoScale(num,Befmin,Befmax,Aftmin,Aftmax){
+		    return (num-Befmin) *(Aftmax-Aftmin) /(Befmax-Befmin) +Aftmin
+		}
+
+		// function mouseDragged(){
+		//     checkAtBalloon()
+		// }
+
+		function mousePressed() {
+		    if (screen == 1){
+		        checkAtBalloon()
+		        mouseDragTimer = setInterval(checkAtBalloon,25)
+		    }else if(screen == 0){
+		        //start game
+		        addBalloonTimer = setInterval(addBalloon, 500)
+		        screen = 1
+		    }
+		}
+
+		function mouseReleased(){
+		    if (screen == 1){
+		        history = []
+		        clearInterval(mouseDragTimer)
+		    }
+		}
+
+		function checkAtBalloon(){
+		    for (i=0; i<balloons.length; i++){
+		        if (balloons[i].inRange(mouseX,mouseY)){
+		            balloons[i].Hit()
+		        }
+		    }
+		    history.push([mouseX,mouseY])
+		    if (history.length>10){
+		        history.shift()
+		    }
+		    // checkCount +=1
+		    // print("check")
+		}
+
+
+		function addBalloon(){
+		    let a = random(1)
+		    //print(a+" "+bombRate)
+		    if (a<=bombRate){
+		        balloons.push(new Bomb(balloons.length))
+		        // print(balloons.length)
+		        //print(balloons[balloons.length-1])
+		        //alert()
+		    }else{
+		        balloons.push(new Balloon(balloons.length))
+		    }
+		    
+
+		    //it also needs to check if anyone wants me to dispose them or not
+		    DeleteBalloons()
+		}
+
+
+		function DeleteBalloons(){
+		    balloons.forEach(function(item,index,arr){
+		        if (item.DeposeMe()){
+		            //print(item)
+		            balloons.splice(index, 1)
+		        }
+		    })
+		}
+
+		function UpdateScore(){
+		    prevDis = dis
+		    pivot = 0
+		    dis = score.toString()
+		    if (!(Math.floor(score/2000) == Math.floor(prevScore/2000))){
+		        for (i=0;i<=5;i++){
+		            addBalloon()
+		        }
+		    }
+		    prevScore = score
+		}
+
+		function drawScore(){
+		    //let w = dis.length*XspaceInBetween //request width
+		    for (i=0; i<dis.length; i++){
+		            //item exists
+		            var d = dis.charAt(i)
+		            var p = prevDis.charAt(i)
+		            //print("processing d= "+d)
+
+		            if (d == p){
+		                //item the same, no animation
+		                printNum(d, i, 0)
+		            }else{
+		                //changed, ANIMATION!!! go according to pivot
+		                printNum(d, Math.abs(0-i), pivot - 1)
+		                printNum(p, Math.abs(0-i), pivot)
+		            }
+		    }
+		    if (pivot < 1){
+		        pivot += pivotSpd
+		    }else{
+		        pivot = 1
+		    }
+		    //put this last: draw the boundaries:
+		    noStroke()
+		    fill(255,RedScr,RedScr)
+		    rect(sx,sy+YspaceInBetween/4,dis.length*XspaceInBetween,YspaceInBetween+1)
+		}
+
+		function printNum(num,xPos,yPos){//the number to //print, xPos compared to default(x), 1=XspaceInBetween, yPos compared to default(y), 1 = YspaceInBetween
+		    fill(0)
+		    textFont("Calibri",60)
+		    text(num.toString(),sx+xPos*XspaceInBetween,sy+yPos*YspaceInBetween)
+		    //pos[0]+xPos*XspaceInBetween, pos[1]+yPos*YspaceInBetween
+		}
+
+		function UpdateLives(){
+		    if (lives<=0){
+		        screen=2
+		        clearInterval(addBalloonTimer)
+		    }
+		}
+
+		function drawLives(){
+		    fill(0,149,221)
+		    for (i=1; i<=totalLives; i++){
+		        if (i>lives){
+		            fill(255,0,0)
+		        }
+		        ellipse(width-i*70,70,50)
+		    }
+		}
+
+
+
+		class Balloon{
+
+		    constructor(index){
+		        this.h = 100 + Math.floor(random(-50,50))
+		        this.w = 100 + Math.floor(random(-50,50))
+		        this.r = this.ReturnBigger(this.h,this.w)/2 //the longer radius
+		        this.x = Math.floor(random(width))
+		        this.y = height + this.r
+		        this.t = [this.x-1, this.y+this.h/2-1, 2, (this.h+this.w)/2,0]
+		        // console.log(this.t)
+		        this.c = [this.RndRGB(), this.RndRGB(), this.RndRGB()]
+
+		        this.spdX = (width/2-this.x)/400 //+ Math.floor(random(-1,1))
+		        this.spdY = -8 //+ Math.floor(random(-1,1))
+		        this.spdC = 0.05 //+ random(-1,1)
+
+		        this.index = index
+
+		        this.score = Math.floor(1/(this.w *this.h)*100000) + 90
+		        //        ________
+		        //_______/die vars\____________
+		        this.died = false
+		        this.dieTextSpd = 13
+		        this.dieCInc = [(255-this.c[0])/30, (255-this.c[1])/30, (255-this.c[2])/30]
+		        this.dieTextC = 0
+		        this.dieTextY = 0
+		        this.SizeAmp = 1
+		        this.pleaseDisposeMe = false
+		    }
+		}
+
+
+		Balloon.prototype.draw = function(){
+		    if (this.c[0]<255){
+		        this.CreateBuf()
+		        this.PrintBalloon()
+		    }
+		    this.dieAni()
+		}
+
+		Balloon.prototype.CreateBuf = function(){
+		    if ((!this.died) && (!this.pleaseDisposeMe)){
+		        this.x += this.spdX
+		        this.y += -Math.abs(this.spdY)
+		        this.spdY += this.spdC
+
+		        this.t[0]=this.x-1
+		        this.t[1]=this.y+this.h/2-1
+
+		        if (this.y+this.h<0 || this.x+this.w<0 || this.x-this.w>width){
+		            RedScr = 0
+		            lives -= 1
+		            UpdateLives()
+		            this.pleaseDisposeMe = true
+		        }
+		    }
+		}
+
+		Balloon.prototype.PrintBalloon = function(){
+		    fill(this.c[0], this.c[1], this.c[2])
+		    ellipse(this.x,this.y,this.w*this.SizeAmp,this.h*this.SizeAmp)
+		    fill(this.t[4])
+		    rect(this.t[0], this.t[1], this.t[2], this.t[3])
+		    // console.log(this.t[0])
+		}
+
+		Balloon.prototype.inRange = function(x, y){
+		    // this only works for a boxreturn ((x>=this.x) && (y>=this.y) && (x<=this.x+this.w) && (y<=this.y+this.h))
+		    return ((x>=this.x-this.r) && (y>=this.y-this.r) && (x<=this.x+this.r) && (y<=this.y+this.r))
+		}
+
+		Balloon.prototype.RndRGB = function(){
+		    return Math.floor(random(200))
+		}
+
+		Balloon.prototype.ReturnBigger = function(a,b){
+		    if (a>b){
+		        return a
+		    }
+		    return b
+		}
+
+		Balloon.prototype.Hit = function(){
+		    if (!this.died){
+		        this.dieTextY = this.y + this.h/2
+		        tailC = this.c.slice(0)
+		        score += this.score
+		        UpdateScore()
+		        this.died = true //trigger animation
+		    }
+		}
+
+		Balloon.prototype.dieAni = function(){ //death animation
+		    if (!this.died){
+		        return
+		    }
+		    if (this.dieTextC<255){
+		        this.SizeAmp += 0.05
+		        this.c = [this.c[0]+this.dieCInc[0], this.c[1]+this.dieCInc[1], this.c[2]+this.dieCInc[2]]
+		        this.t[4] += 8.5
+		        fill(this.dieTextC)
+		        this.dieTextC += 3
+		        textFont("Calibri",30)
+		        text("+"+this.score.toString(),this.x-this.w/4,this.dieTextY)
+		        //text(this.dieTextC.toString(),this.x-this.w/4,this.dieTextY)
+		        if (this.dieTextSpd>=0){
+		            this.dieTextY -= this.dieTextSpd
+		            this.dieTextSpd -= 0.5
+		        }
+		    }else{
+		        this.pleaseDisposeMe = true
+		    }
+		}
+
+		Balloon.prototype.DeposeMe = function(){
+		    return this.pleaseDisposeMe
+		}
+
+
+		class Bomb extends Balloon{
+
+		    constructor(index){
+		        super(index)
+		    }
+		}
+
+		Bomb.prototype.draw = function(){
+		    if (!this.pleaseDisposeMe){
+		        this.CreateBuf()
+		        this.PrintBalloon()
+		    }
+		}
+
+		Bomb.prototype.PrintBalloon = function(){
+		    fill(this.c[0], this.c[1], this.c[2])
+		    rect(this.x,this.y,this.w,this.h)
+		    //print("print bomb"+" "+this.x+" "+this.y+" "+this.w+" "+this.h)
+		}
+
+		Bomb.prototype.CreateBuf = function(){
+		        this.x += this.spdX
+		        this.y += this.spdY
+		        this.spdY += this.spdC
+		        if (this.y+this.h<0 || this.x+this.w<0 || this.x-this.w>width){
+		            this.pleaseDisposeMe = true
+		        }
+		    //print("bomb createbuf"+this.x+" "+this.y)
+		}
+
+		Bomb.prototype.Hit = function(){
+		    if (!this.pleaseDisposeMe){
+		        tailC = [255,255,255]
+		        RedScr = 0
+		        lives -= 1
+		        UpdateLives()
+		        this.pleaseDisposeMe = true
+		        //print("cut bomb!!! live-=1")
+		    }
+		}
+  	</script>
+  </body>
+</html>

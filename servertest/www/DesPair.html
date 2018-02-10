@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!--
+    <script src="./p5/p5.min.js"></script>
+    <script src="./p5/addons/p5.dom.min.js"></script>
+    <script src="./p5/addons/p5.sound.min.js"></script>
+    <script src="./sketch.js"></script>-->
+    <style>
+        * {
+            font-family: sans-serif;
+
+        }
+
+        #content {
+            max-width: 5000px;
+            margin: auto;
+            align-items: center;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        .btn{
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position:relative;
+            width:150px;
+            height:75px;
+            background-color: white;
+            border: 5px solid #ff8000;
+            color: #3366ff;
+            border-style: solid;
+            text-decoration:none;
+            text-align:center;
+            vertical-align:middle;
+            display:table-cell;
+            transition-duration: 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #ff8000;
+            color: white;
+        }
+
+        .btn:active {
+            background-color: #cc6600;
+            border: 5px solid #cc6600;
+        }
+
+        .H {
+            display: block;
+            font-size: 50px;
+            letter-spacing: 0px;
+            font-weight: 400;    
+        }
+
+        .bounce0 {
+        /*    visibility: hidden;*/
+            animation: b .5s ease-out;
+        }
+        .bounce1 {
+        /*    visibility: hidden;*/
+            animation: b .75s ease-out;
+        }
+        .bounce2 {
+        /*    visibility: hidden;*/
+            animation: b 1s ease-out;
+        }
+        .bounce3 {
+        /*    visibility: hidden;*/
+            animation: b 1.25s ease-out;
+        }
+        .bounce4 {
+        /*    visibility: hidden;*/
+            animation: b 1.5s ease-out;
+        }
+        .bounce5 {
+        /*    visibility: hidden;*/
+            animation: b 1.75s ease-out;
+        /*    visibility: visible;*/
+        }
+
+        @keyframes b {
+            0% {
+        /*        visibility: visible;*/
+                opacity: 0;
+                transform: translateY(-700px);
+            }
+
+            100% {
+        /*        visibility: visible;*/
+                opacity: 1;
+                transform: translate(0);
+            }
+        }
+
+        p{
+            font-size: 20px;
+            color: #3366ff;
+            font-weight: bold;
+        }
+
+        input {
+            font-size: 20px;
+            color: #ff8000;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table {
+            margin: 10px auto;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #eee;
+            padding: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+        table tr:nth-child(odd) {
+            background-color: white;
+            padding: 20px;
+            padding: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+        table th {
+            padding: 20px;
+            color: #3366ff;
+            background-color: #ffd9b3;
+        }
+    </style>
+    <script>
+    
+        Array.prototype.group = function(n){
+            var groups = []
+            var clone = this.slice(0)
+
+            while (clone.length > 0){
+                groups.push(clone.splice(0,n))
+            }
+            return groups
+        }
+        //////////////
+        Array.prototype.Pair = function(n){
+            if (typeof n == "null"){n=2}
+            return this.shuffle().group(n)
+        }
+        //////////////
+
+        Array.prototype.shuffle = function (){
+           var clone = this.slice(0);
+           var shuffledArr = [];
+
+            while(clone.length > 0){
+                var elementIndex = randomIndex(clone.length);
+                var deletedElement = clone.splice(elementIndex,1)
+                shuffledArr.push(deletedElement[0]);
+          }
+          return shuffledArr;
+        }
+
+        Array.prototype.Print = function(){
+            let ans = "<table><tr><th></th>"
+            for (i=1; i<=this[0].length; i++){
+                ans += "<th>Person "+i+"</th>"
+            }
+            ans += "</tr>"
+            for (i=0; i<this.length; i++){
+                ans += "<tr><th>Group "+(i+1).toString()+"</th>"
+                for (j=0; j< this[i].length; j++){
+                    ans += "<td>"+this[i][j]+"</td>"
+                }
+                ans += "</tr>"
+            }
+            ans += "</table>"
+            document.getElementById('ans').innerHTML = ans
+        //   try{
+        ////       document.getElementById("ans").classList.remove("bounce0")
+        //   }catch(err){
+        //       console.log("did not find bounce0")
+        //   }
+            document.getElementById("ans").classList.add("bounce0")
+            //console.log(ans)
+        }
+
+        function randomIndex(a){
+          return Math.floor(Math.random()*a);
+        }
+
+        function DesPair(){
+            let t = document.getElementById('t1').value
+            let t2 = document.getElementById('t2').value
+            t2 = parseInt(t2) || 3
+            //alert(t2)
+            if (t == ""){
+				t="Tom,Isabella,Jacob,Bob,James,Liam,Mia,Frank"
+			}
+			if (typeof t2 == "NaN"){
+                alert("Error!/nPlease enter the data following the specs")
+                return 1
+            }
+            t = t.split(",")
+            t = t.Pair(t2)
+            t.Print()
+        }  
+    </script>
+    <title>DesPair</title>
+  </head>
+  <body>
+    <div id="content">
+        <div class="H bounce0">
+            <h1><span style="color: #ff8000">Des</span><span style="color: #3366ff">Pair</span></h1>
+        </div>
+            <p class="bounce1">Enter Name List, separate with comma: </p>
+        <div class="bounce2"><input id="t1" size="80" placeholder="Tom,Isabella,Jacob,Bob,James,Liam,Mia,Frank"></div>
+                <br>
+        <p class="bounce3">Max number of people in each group:</p> 
+        <div class="bounce4"><input id="t2" size="5" placeholder="3"></div>
+                <br>
+                <br>
+            <button class="btn bounce5" onclick="DesPair()">DesPair</button>
+                <br>
+                <br>
+            <div id="ans"> </div>
+        <br>
+        <br>
+    </div>
+  </body>
+</html>

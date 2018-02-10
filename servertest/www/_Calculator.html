@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <script>
+    let Exp = [];
+    let legalChars = ["+","-","*","/","^","(",")","."," "];
+    let operations = [makeOperation("^", powF), makeOperation("*", multiplyF), makeOperation("/", divideF), makeOperation("+", addF), makeOperation("-", subtractF)];
+    let orginalStr;
+    let leftPInd;
+    let rightPInd;
+    let steps = [];
+    let abort = 0; //in case of infinite loop, automatic abort
+    let Pcount = 0; // number of parentheses in the expression
+    let ExplStay = -1; // the index of explanation that is pinned
+    let HistoryCount = 1; // no. 0 is the default autofill, so start at 1;
+    let firstProcess = true;
+
+
+
+    //--------------------\variables/----------/functions\--------------------
+
+
+
+    function BtnPressed(){ // button will trigger this function
+        let t = document.getElementById('input1').value;
+        if (t==""){
+            t="1.2 * ( 1.5 + 2 ^ ( 4 - 2 ) ) + 1.4 * ( 2 + -.5 )";
+            document.getElementById('input1').value = t;
+        }
+        Calculate(t);
+    }
+
+
+    function Calculate (str){ //MAIN function -> workflow // look at each function for more explanation
+        try{ // to catch my exceptions(from char & gram checks) and system exceptions, so the program NEVER crashes
+            str = init(str); //init everything
+            checkChar(str); //check for illegal chars such as "a", "&", ...
+            putIntoArray(str); //parse the string into an array
+            checkGram(); //check for grammatic issues in the array such as "1++1", "1+(1+)1", ...
+            setAbortCount(); // THIS PROGRAM IS NOT DESIGNED TO HAVE ANY ERRORS, but even if the program goes into an INFINITE LOOP, it stops itself so the user don't have to reopen the page to force stop
+            while (CalculateRange()){ //calcuate search range
+                operate(); // search & do the operations
+            }
+            RecordStep(0,0,"The result.");
+            WriteIntoHistory();
+        }catch (err){
+            alert("ERROR: " + err.toString()); // alert the error message
+        }finally{
+            Print(); // even if there are errors, "finally" lets the program display what calculations it has so far
+        }
+    }
+
+
+    function CalculateRange(){ // find inner most parentheses, calculate search range //core func
+        //Find parentheses
+        //
+        // 1+(1+(1+1))+(1+1)+1
+        //          ^
+        //          |
+        //    find the first ")"
+        //  then find the matching ")" -> first one infront of it
+        //
+        leftPInd = 0;
+        rightPInd = Exp.length-1;
+
+        for (i=0; i<Exp.length; i++){//search for ")"
+            if (Exp[i] == ")"){
+                rightPInd = i;
+                break;
+            }
+        }
+        for (i=rightPInd -1; i>=0; i--){ //search back for "("
+            if (Exp[i] == "("){
+                leftPInd = i;
+                break;
+            }
+        }
+
+        //if only one number in parentheses, then delete the parenthese to avoid infinite loop
+        if (rightPInd-leftPInd <= 2 && Exp[rightPInd]==")" && Exp[leftPInd]=="("){
+            let tmp = Exp[leftPInd+1];
+            RecordStep(leftPInd,rightPInd, generateExp("()",Exp[i-1],Exp[i+1],ans,false));
+            Exp.splice(leftPInd,3,tmp.toString());
+            console.log(Exp);
+            CalculateRange(); //expression changed -> re-calculate range
+        }
+
+
+        abort -= 1;
+        if (abort<=0){
+            throw "Unknown error: Infinite loop. Auto-aborted.";
+        }
+        console.log("continue calculation: " +(!(!(Exp.length-1))).toString());
+        return (Exp.length-1) //returns true if length=1 which means the calculation is finished;
+    }
+
+
+    function checkChar (str) { // check if there are any chars that are not supported, do NOT check expression grammar
+        for (i=0; i<str.length; i++){
+            let legal = false;
+            let d = str.substring(i,i+1);
+            for (j=0; j<legalChars.length; j++){
+                if (d == legalChars[j] || (!(isNaN(parseFloat(d))))) {
+                    legal = true;
+                    break;
+                }
+            }
+            if (!(legal)){
+                throw "Illegal character: " + d;
+            }
+        }
+    }
+
+
+    function putIntoArray (str){ // parses the expression (given as string) into an array
+        let isNum = null;
+        let prevIsNum = null;
+        for (i=0; i<str.length; i++){
+            let d = str.substring(i,i+1) //each digit of the string;
+            isNum = identifyChar(d);
+            if ((prevIsNum==isNum && isNum == "number")){//first digit || negative sign instead of subtraction operator 
+                Exp[Exp.length-1] += d;
+            }else{
+                Exp.push(d);
+            }
+            prevIsNum = isNum;
+        }
+        console.log(Exp);
+    }
+
+
+    function checkGram () { // checks if the expression is grammatically
+        //try to autofix negative sign and minus sign confusion, and -(fdasfasdfsaf)  ->  0-(fdasfasdfsaf)
+        if (Exp[0]=="-" && Exp[1]=="("){
+            Exp.unshift("0");
+        }else if (Exp[0]=="-" && !(isNaN(parseFloat(Exp[1])))){
+            Exp.splice(0,2,"-"+Exp[1]);
+        }
+        for (i=1; i<Exp.length-1; i++){
+            if (Exp[i-1]=="(" && Exp[i]=="-" && Exp[i+1]=="("){
+                Exp.splice(i,0,"0");
+            }else if (Exp[i-1]=="(" && Exp[i]=="-" && !(isNaN(parseFloat(Exp[i+1])))){
+                Exp.splice(i,2,"-"+Exp[i+1]);
+            }
+        }
+        //check if the start or end is an operator
+        if (identifyChar(Exp[0])=="operator" || identifyChar(Exp[Exp.length-1])=="operator"){
+            throw "The expression cannot start or end with an operator.";
+        }
+        //check double operator or double number
+        let prev = "none";
+        let kind = "";
+        let Par = 0; // "("= +1, "("= -1; if at end it is 0, everything matches; at any times it should not go below 0 or some are in the wrong order
+        let meaningful = false; //if no numbers were entered
+
+        for (i=0; i<Exp.length; i++){
+            kind = identifyChar(Exp[i]);
+            console.log(kind);
+            //check same kind
+            if (kind==prev && kind!="parenthese"){
+                console.log(Exp[i]);
+                if (Exp[i]=="-"){
+                    Exp.splice(i,1);
+                    Exp[i] = "-" + Exp[i];
+                    i -=1;
+                }else{
+                    throw "You wrote two '"+Exp[i-1]+"'s next to each other.";
+                }
+            }else if(prev=="number" && Exp[i]=="(" || kind=="number" && Exp[i-1]==")"){//has to be (, cannot be )
+                throw "You need a operator between a number and a parenthese";
+            }else if(kind=="parenthese" && prev=="parenthese"){ // so last one exist
+                if (Exp[i-1]=="(" && Exp[i]==")"){
+                    throw "Try putting something inside the parentheses.";
+                }
+                if (Exp[i-1]==")" && Exp[i]=="("){
+                    throw "Undefined operation between parentheses.";
+                }
+            }else if(prev!="none"){
+                if ((Exp[i-1]=="(" && kind=="operator") || (Exp[i]==")" && prev=="operator")){
+                    throw "A "+Exp[i]+" operator does not work with an parenthese.";
+                }
+            }
+            prev = kind;
+
+            //check matching parentheses
+            if (Exp[i]=="("){
+                Par += 1;
+            }else if (Exp[i]==")"){
+                Par -= 1;
+            }
+            if (Par < 0){
+                throw "Some of your parenthese(s) are in the wrong order.";
+            }
+
+            if (Exp[i].split(".").length > 2){
+                throw "A number cannot have two decimal dots.";
+            }
+
+            if (kind == "number"){
+                meaningful = true;
+            }
+
+        }
+        if (Par != 0 ){
+            throw Math.abs(Par).toString()+" of your parenthese(s) don't match.";
+        }
+        if (!meaningful){
+            throw "Try putting something in the expression.";
+        }
+        console.log("meaningful="+meaningful.toString());
+        console.log("After Fix");
+        console.log(Exp);
+    }
+
+
+    function operate(){ // search and calculate (in search range)
+        operations.forEach(function(item){
+            if (item()){
+                return true; //requested re-calculate range
+            }
+        });
+    }
+
+
+    function makeOperation (symb, mathFunc){ // makes each kind of calculation //core func
+        return function(){
+            console.log("operation type:" +symb);
+            console.log("leftPInd: "+leftPInd.toString());
+            console.log("rightPInd: "+rightPInd.toString());
+            for (i=leftPInd+1; i<rightPInd; i++){
+                console.log("i: "+i.toString());
+                if (Exp[i] == symb){
+                    console.log(Exp);
+                    let ans = mathFunc(Exp[i-1],Exp[i+1]);
+                    if (rightPInd-leftPInd <= 4 && Exp[leftPInd]=="(" && Exp[rightPInd]==")"){ //the only item inside this parenthese, delete the parenthese
+                        console.log("delete Ps");
+                        RecordStep(i-2,i+2,generateExp(symb,Exp[i-1],Exp[i+1],ans,true));
+                        Exp.splice(i-2,5,ans.toString());
+                        console.log("after delete");
+                        console.log(Exp);
+                        return true; //request re-calculate range
+                    }else{
+                        RecordStep(i-1,i+1,generateExp(symb,Exp[i-1],Exp[i+1],ans,false));
+                        Exp.splice(i-1,3,ans.toString());
+                        i-=1;
+                        rightPInd -= 2;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+
+    function generateExp(operation,val1,val2,res,parenthese){ // generate word explanations
+        let ans = "";
+        if (parenthese){
+            ans += "Parentheses have the most priority, so operations inside it should be done first.\n";
+        }
+        switch(operation){
+            case "^":
+            ans += "Powers have the most priority among operators. Whenever this is seen, calculate it first, except when you see parentheses.";
+            break;
+            case "*":
+            ans += "In this case, there are no powers, multiplication has the most priority, so it should be calcuated first.";
+            break;
+            case "/":
+            ans += "In this case, there are no powers, division has the most priority, so it should be calcuated first.";
+            break;
+            case "+":
+            ans += "In this case, there are no powers, or multiplication, or division. Addition has the most priority, so it should be calcuated first.";
+            break;
+            case "-":
+            ans += "In this case, there are no powers, or multiplication, or division, or addition. Subtraction has the most priority, so it should be calcuated first.";
+            break;
+            case "()":
+            return "Since there is only one number inside the parentheses, we can take the number out and delete the parentheses.";
+            break;
+        }
+        if (parseFloat(val2)<0){
+            if (operation=="+"){
+                ans += "\nAdding a negative number is like subtrating the absolute value of the number";
+            }else if (operation=="-"){
+                ans += "\nSubtracting a negative number is like adding the absolute value of the number";
+            }
+        }
+        ans += "\n"+val1.toString()+" "+operation.toString()+" "+val2.toString()+" is equal to "+res.toString();
+        return ans;
+    }
+
+
+    function Print(){ // generate result in HTML format & display
+        console.log("steps before Print");
+        console.log(steps);
+        for (i=0; i<steps.length; i++){
+            //results from last step
+            if (i!=0){ //this one has to go first because the cover area is smaller than the next one so it should be the inner nested tag
+                steps[i][0][steps[i-1][1]] = "<span class='"+(i-1).toString()+"'>" + steps[i][0][steps[i-1][1]] + "</span>";
+            }
+            console.log(steps[i][0][steps[i][1]]);
+            console.log(steps[i][0][steps[i][2]]);
+
+            steps[i][0][steps[i][1]] = "<span class='"+i.toString()+"'>" + steps[i][0][steps[i][1]];
+            steps[i][0][steps[i][2]] += "</span>";
+        }
+        let ans="";
+        let animationDelayInterval = 0.2;
+        if (steps.length>10){
+            animationDelayInterval = 1.5 / (steps.length -1);
+        }
+        for (i=0; i<steps.length; i++){
+            ans += "<p style='visibility: hidden; animation: fadeIn 1s "+(i*animationDelayInterval).toString()+"s forwards ease-out;' onclick='mouseClick("+i.toString()+")' onmouseover='mouseOver("+i.toString()+")' onmouseout='mouseOut("+i.toString()+")'>";
+            for (j=0; j<steps[i][0].length; j++){
+                ans += steps[i][0][j]+" ";
+            }
+            ans += "</p>";
+        }
+        document.getElementById('ans').innerHTML = ans;
+        console.log(steps);
+    }
+
+
+    function WriteIntoHistory (){
+        let a = document.getElementById("history").getElementsByTagName("a");
+        console.log(a);
+        for (i = 0; i < a.length; i++){
+            if (a[i].innerHTML.toUpperCase().replaceAll(" ","") == orginalStr.toUpperCase().replaceAll(" ","")){
+                return; //same thing already in history
+            }
+        }
+        document.getElementById('history').innerHTML = "<a class='dropdownItem' id='h"+HistoryCount.toString()+"' onclick='historyClicked("+HistoryCount.toString()+")'>"+orginalStr+"<a>" + document.getElementById('history').innerHTML;
+        HistoryCount +=1;
+    }
+
+
+    String.prototype.replaceAll = function(search, replacement) {
+        return this.split(search).join(replacement);
+    }
+
+    function RecordStep(startIndx,endIndx,Expl){
+        // if (startIndx == undefined || endIndx == undefined)
+        steps.push([Exp.slice(0),startIndx+1,endIndx+1,Expl]); // +1 since going to unshift another item into array
+        if (firstProcess){
+            firstProcess = false;
+            steps[steps.length-1][0].unshift("");
+        }else{
+            steps[steps.length-1][0].unshift("=");
+        }
+        console.log(steps);
+    }
+
+    function setAbortCount(){
+        for (i=0; i<Exp.length; i++){
+            if (Exp[i]==("(")){
+                Pcount +=1;
+            }
+        }
+        //now that we know how many Ps there are, we can set the abort count
+        abort = Pcount + 3;
+    }
+
+    function isPartOfNum(a){
+        return (!(isNaN(parseFloat(a))) || (a == "."));
+    }
+
+    function isP(a){
+        return (a=="(" || a==")");
+    }
+
+    function identifyChar(a){
+        if (isPartOfNum(a)){//is this digit part of a number
+            return "number";
+        }else if (isP(a)){
+            return "parenthese";
+        }else{
+            return "operator";
+        }
+    }
+
+    function init(a){
+        Exp = [];
+        steps = [];
+        firstProcess = true;
+        abort = 0;
+        Pcount = 0;
+        document.getElementById("Expl").innerHTML = "";
+        orginalStr = a;
+        leftPInd = 0;
+        rightPInd = 0;
+        abort = 0;
+        Pcount = 0;
+        ExplStay = -1;
+        return a.replaceAll(" ","");
+    }
+
+    function powF(a,b){
+        return strip(Math.pow(parseFloat(a),parseFloat(b)));
+    }
+
+    function addF(a,b){
+        return strip(parseFloat(a) + parseFloat(b));
+    }
+
+    function subtractF(a,b){
+        return strip(parseFloat(a) - parseFloat(b));
+    }
+
+    function multiplyF(a,b){
+        return strip(parseFloat(a) * parseFloat(b));
+    }
+
+    function divideF(a,b){
+        return strip(parseFloat(a) / parseFloat(b));
+    }
+
+    function strip(a) { //fix the float problem of 1 = 0.99999999999996
+        return parseFloat(a.toPrecision(12));
+    }
+
+
+
+    //--------------------\main func/----------/event handlers\--------------------
+
+
+
+    function mouseOver(a){ //Explanation
+        let list = document.getElementsByClassName(a.toString());
+        for (i=0; i<list.length; i++){
+            list[i].style.fontWeight="bold";
+            list[i].style.backgroundColor="#ffb366";
+        }
+        if (!(ExplStay+1)){
+          document.getElementById("Expl").innerHTML = "<p id='ExplP'>"+steps[a][3]+"</p>";
+        }
+      }
+
+    function mouseOut(a){ //Explanation
+        let list = document.getElementsByClassName(a.toString());
+        for (i=0; i<list.length; i++){
+            list[i].removeAttribute("style");
+        }
+        if (!(ExplStay+1)){
+            document.getElementById("Expl").innerHTML = "";
+        }
+    }
+
+    function mouseClick(a){ //Explanation
+        if (ExplStay == a){
+            document.getElementById("Expl").innerHTML = "";
+            ExplStay = -1;
+        }else{
+            document.getElementById("Expl").innerHTML = "<p id='ExplP'>"+steps[a][3]+"</p>";
+            ExplStay = a;
+        }
+    }
+
+    function historyClicked (a){
+        console.log("h"+a.toString());
+        document.getElementById('input1').value = document.getElementById("h"+a.toString()).innerHTML;
+        BtnPressed();
+    }
+
+    function KeyPressed(e){
+        toggleHistory(true);
+        console.log("KeyPressed");
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) { //Enter keycode;
+            toggleHistory(false);
+            BtnPressed();
+        }
+    }
+
+    function inputClicked(){
+        toggleHistory();
+    }
+
+    function toggleHistory(a){
+        // if a is undefined, then toggle, a!=false means true or undefined
+        let shown = document.getElementById("history").classList.contains('show');
+        if (a!=false && !shown){//true or toggle & not shown
+            document.getElementById("history").classList.add("show");
+        }else if (a!=true && shown){//false or toggle & shown
+            document.getElementById("history").classList.remove("show");
+        }
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches("#input1")) {
+            toggleHistory(false);
+        }
+    }
+
+</script>
+
+<style>
+    * {
+        font-family: sans-serif;
+    }
+
+    #content {
+        max-width: 5000px;
+        margin: auto;
+        align-items: center;
+    }
+
+    body {
+        text-align: center;
+    }
+
+    .btn{
+        font-size: 20px;
+        border-radius: 50%;
+        font-weight: bold;
+        cursor: pointer;
+        position:relative;
+        width:150px;
+        height:75px;
+        background-color: white;
+        border: 5px solid #ff8000;
+        color: #3366ff;
+        border-style: solid;
+        text-decoration:none;
+        text-align:center;
+        vertical-align:middle;
+        display:table-cell;
+        transition-duration: 0.2s;
+    }
+
+    .btn:hover{
+        background-color: #ff8000;
+        color: white;
+    }
+
+    .btn:active {
+        background-color: #cc6600;
+        border: 5px solid #cc6600;
+        color: white;
+    }
+
+    .H {
+        display: block;
+        font-size: 70px;
+        letter-spacing: 0px;
+        font-weight: bold;
+    }
+
+    #ans {
+        font-size: 30px;
+    }
+
+    .expInp {
+        width: 80%;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    #ExplP {
+        font-size: 25px;
+        margin: 20px, 10px, 10px, 20px;
+    }
+
+    .dropdown {
+        display: none;
+        position: absolute;
+        align-items: center;
+        text-align: center;
+        background-color: #f6f6f6;
+        min-width: 230px;
+        width: 50%;
+        margin: auto;
+        left: 0px;
+        right: 0px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdownItem {
+        cursor: pointer;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdownItem:hover {
+        background-color: #e6e6e6;
+    }
+
+    .show {
+        display:block;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        100% {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+
+    
+
+    @keyframes b {
+        0% {
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+
+        100% {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(0);
+        }
+    }
+    
+    .bounce0 {
+        visibility: hidden;
+        animation: b 1s 0s forwards ease-out;
+    }
+    .bounce1 {
+        visibility: hidden;
+        animation: b 1s .25s forwards ease-out;
+    }
+    .bounce2 {
+        visibility: hidden;
+        animation: b 1s .7s forwards ease-out;
+    }
+
+</style>
+</head>
+<body>
+  <div id="content">
+    <h1 class="H bounce0">Calculator</h1>
+    <input type="text" id="input1" class="expInp bounce1" placeholder="Enter math expression here..." onkeypress="KeyPressed(event)" onclick="inputClicked()">
+    <div class="dropdown" id="history">
+      <a class="dropdownItem" onclick="historyClicked(0)" id="h0">1.2 * ( 1.5 + 2 ^ ( 4 - 2 ) ) + 1.4 * ( 2 + -.5 )</a>
+  </div>
+
+  <br><br>
+  <button onclick="BtnPressed()" class="btn bounce2">Calculate</button>
+  <div id="ans"></div>
+  <div id="Expl" style="background-color: orange;"></div>
+</div>
+</body>
+</html>

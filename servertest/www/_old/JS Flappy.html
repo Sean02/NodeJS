@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Flappy</title>
+</head>
+
+<body id="b1">
+    <canvas id="myCanvas" width="1000" height="800" style="background-color:white"> 
+      <script>
+        var c=document.getElementById("myCanvas");
+        var cxt=c.getContext("2d");
+        var started=false;
+        var openingWidth=250;
+        //var RefInterval=10;
+        //var UPDDisplayID=0;
+    //    var obj = document.getElementById('b1'); 
+//obj.addEventListener('touchstart', function(){jump();});
+        var buf={
+                mepos:100,
+                v:0,
+                ob1:0,
+                ob2:0,
+                ob3:0,
+                ob4:0,
+                obp1:1010,
+                obp2:1260,
+                obp3:1510,
+                obp4:1760,
+                score:0
+               // lstupd:0,
+               // ms:0,
+               // diocolor:0
+        };
+
+
+        function draw(){
+            cxt.beginPath();
+            //clear screen
+            cxt.clearRect(0,0,1000,800);
+            //draw me (ball)
+            cxt.fillStyle="#0095DD";
+            cxt.arc(200,buf.mepos,20,0,Math.PI*2,true);
+            cxt.fill();
+           // cxt.fillStyle="#FF0000";
+           // cxt.fillRect(0,0,1000,10);
+           // cxt.fillRect(0,790,1000,10);
+            //fill walls
+            cxt.fillStyle="#FF0000";
+            cxt.fillRect(buf.obp1, 0, 10, buf.ob1);
+            cxt.fillRect(buf.obp1, buf.ob1 + openingWidth, 10, 800);
+            cxt.fillRect(buf.obp2, 0, 10, buf.ob2);
+            cxt.fillRect(buf.obp2, buf.ob2 + openingWidth, 10, 800);
+            cxt.fillRect(buf.obp3, 0, 10, buf.ob3);
+            cxt.fillRect(buf.obp3, buf.ob3 + openingWidth, 10, 800);
+            cxt.fillRect(buf.obp4, 0, 10, buf.ob4);
+            cxt.fillRect(buf.obp4, buf.ob4 + openingWidth, 10, 800);
+            cxt.fillStyle="#0095DD";
+            cxt.fillText(String(buf.score),940,50)
+            cxt.closePath();
+//            var d = new Date()
+//            buf.ms=d.getTime()-buf.lstupd;
+//            buf.lstupd=d.getTime();
+        }
+
+        function update(){
+            if (buf.mepos<=800){
+                buf.mepos = buf.mepos + buf.v;
+                buf.v = buf.v + 1;//fall faster
+            }else{
+                buf.v=0;
+                buf.mepos=800;
+            }
+            step=5;
+            buf.obp1-=step;
+            buf.obp2-=step;
+            buf.obp3-=step;
+            buf.obp4-=step;
+            if (Math.abs(buf.obp1-205)<3 ||Math.abs(buf.obp2-205)<3 ||Math.abs(buf.obp3-205)<3 ||Math.abs(buf.obp4-205)<3){
+                buf.score+=1;
+            }
+            if (buf.obp1 >= 170 && buf.obp1 <= 220){
+                //170 = 200(mepos.x) - 20(r) - 10(wallwidth)
+                //220 = 200(mepos.x) + 20(r)
+                
+                if (buf.mepos < buf.ob1 || buf.mepos > buf.ob1 + openingWidth){
+                    alert("Game Over");
+                    location.reload();
+                }
+                
+            }else if (buf.obp2 >= 170 && buf.obp2 <= 220){
+                if (buf.mepos < buf.ob2 || buf.mepos > buf.ob2 + openingWidth){
+                    alert("Game Over");
+                    location.reload();
+                }
+            }else if (buf.obp3 >= 170 && buf.obp3 <= 220){
+                if (buf.mepos < buf.ob3 || buf.mepos > buf.ob3 + openingWidth){
+                    alert("Game Over");
+                    location.reload();
+                }
+            }else if (buf.obp4 >= 170 && buf.obp4 <= 220){
+                if (buf.mepos < buf.ob4 || buf.mepos > buf.ob4 + openingWidth){
+                    alert("Game Over");
+                    location.reload();
+                }
+            }
+            //console.log(buf.v);
+            //console.log(buf.obp1);
+            
+            //alert(buf.v,buf.mepos);
+            if (buf.obp1<-10){
+                buf.ob1=getrndnum();
+                buf.obp1=1010;
+            }else if(buf.obp2<-10){
+                buf.ob2=getrndnum();
+                buf.obp2=1010;
+            }else if (buf.obp3<-10){
+            	buf.ob3=getrndnum();
+            	buf.obp3=1010;
+            }else if (buf.obp4<-10){
+            	buf.ob4=getrndnum();
+            	buf.obp4=1010;
+            }
+        }
+        
+          
+          
+//        function dio(){
+//            var flp= Math.round(1000/buf.ms)
+//            if (flp>35){ //ok
+//                    document.getElementById("t1").innerHTML="<p style='color:black'>Game Engine status: OK ["+String(flp)+" flp]</p>";
+//            }else if (flp>=24){
+//                if (buf.diocolor==0){
+//                    buf.diocolor=1;
+//                    document.getElementById("t1").innerHTML="<p style='color:yellow'>Game Engine status: Barely OK ["+String(flp)+" flp]</p>";
+//                }else{
+//                    buf.diocolor=0;
+//                    document.getElementById("t1").innerHTML="<p style='color:black'>Game Engine status: Barely OK ["+String(flp)+" flp]</p>";
+//                }
+//            }else{
+//                if (buf.diocolor==0){
+//                    buf.diocolor=1;
+//                    document.getElementById("t1").innerHTML="<p style='color:red'>Game Engine status: OVERLOADED ["+String(flp)+" flp]</p>";
+//                }else{
+//                    buf.diocolor=0;
+//                    document.getElementById("t1").innerHTML="<p style='color:black'>Game Engine status: OVERLOADED ["+String(flp)+" flp]</p>";
+//                }
+//            }
+//            
+//        }
+          
+        function getrndnum(){
+            return Math.floor(Math.random() * ((800 - openingWidth) - 0) + 0);
+            //Math.floor(Math.random() * (end - start) + start);
+        }
+
+		function init(){
+			 started=true;
+             UPDDisplayID=setInterval(draw,5);
+             setInterval(update,20);
+            // setInterval(dio,1000);
+             buf.ob1=getrndnum();
+             buf.ob2=getrndnum();
+             buf.ob3=getrndnum();
+             buf.ob4=getrndnum();
+			 draw();
+			//alert("k");
+		}
+
+        function jump(){
+            if (started==false){
+                 init();
+                //alert("start");
+            }
+            buf.v = -15;	//120px
+        }
+	
+//        function settings(){
+//            var refint=prompt("Please Enter Display Refresh Interval. If your game display is not very fluent, make this value smaller.");
+//            if (isNaN(refint)==false){
+//                RefInterval=number(refint);
+//                alert("Success, changed to "+String(RefInterval));
+//                UPDDisplayID=setInterval(draw,RefInterval);
+//            }else{
+//                alert("Why don't you enter a number next time?");
+//            }
+//        }
+	window.addEventListener('touchstart',function(event) {
+//  gnStartX = event.touches[0].pageX;
+//  gnStartY = event.touches[0].pageY;
+  //alert(1);
+  jump();
+},false);
+    	window.addEventListener('mousedown',function(event) {jump();},false);
+	cxt.beginPath();
+    cxt.font="40px Georgia";
+    cxt.fillText("Tap anywhere to play",300,200);
+    cxt.closePath();
+        </script>
+    </canvas>
+    <br />
+<!-- <button onclick="settings()" style="width:100; height:50;">Settings</button>-->
+<!--    <p id="t1">Status</p>-->
+</body>
+</html>
