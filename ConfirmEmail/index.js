@@ -23,6 +23,12 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(function (err, req, res, next) {
+    console.error("Express ERROR:" + err.stack);
+    res.status(500).send('<h1>500 Internal Error</h1>');
+    return;
+});
+
 
 //----------------------------------------------------------------------
 app.get("/signup", (req, res) => {
@@ -97,12 +103,18 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
 
 app.get('/confirm/:token', function (req, res) {
     // res.send('user ' + req.params.token);
+    if (req.params.token === "") {
+        res.status(200).render("emailConfirmed", {
+            title: "This link doesn't go anywhere.",
+            msg: "Where did you even get it?"
+        });
+    }
     console.log("received confirm token");
     Process.confirm(req.params.token).then((result) => {
         console.log("clean exit");
         if (result === "token not found") {
             res.status(200).render("emailConfirmed", {
-                title: "This link doesn't lead anywhere.",
+                title: "This link doesn't go anywhere.",
                 msg: "Where did you even get it?"
             });
         } else if (result === "unsubscribed") {
@@ -130,7 +142,13 @@ app.listen(80, () => {
     console.log(`Started up at port 80`);
 });
 
+//none of above are found -> look for static
 app.use("/", express.static(__dirname));
+
+//not found in static either, emm... return 404 page!
+app.use(function (req, res, next) {
+    res.sendFile(__dirname + "/views/404.html");
+});
 
 module.exports = {app};
 
