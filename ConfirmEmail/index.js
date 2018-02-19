@@ -148,6 +148,7 @@ app.use("/", express.static(__dirname));
 //not found in static either, emm... return 404 page!
 app.use(function (req, res, next) {
     res.sendFile(__dirname + "/views/404.html");
+    return;
 });
 
 module.exports = {app};
