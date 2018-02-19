@@ -5,6 +5,7 @@ let MailGun = require("./MailGun.js");
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
         console.log("starting reqSignup");
+        email = email.toLowerCase();
         MongoDB.Read("Lunch", "Users", {"email": email}).then((data) => {
             console.log("checking for existing user: read data", data);
             if (data.length > 0) {
@@ -18,7 +19,7 @@ function reqSignup(email) {
                     let d = new Date();
                     const waitTimeinMins = 10;
                     console.log(d.getTime() - data[0].time);
-                    if (d.getTime() - data[0].time<waitTimeinMins*60*1000){
+                    if (d.getTime() - data[0].time < waitTimeinMins * 60 * 1000) {
                         console.log("too frequent");
                         resolve("too frequent");
                         return;
@@ -57,22 +58,23 @@ function reqSignup(email) {
 function reqUnsubscribe(email) {
     return new Promise((resolve, reject) => {
         console.log("starting reqUnsubscribe");
+        email = email.toLowerCase();
         MongoDB.Read("Lunch", "Users", {"email": email}).then((data) => {
             console.log("checking for existing user: read data", data);
-            if (data.length<1){
+            if (data.length < 1) {
                 console.log("user doesnt exist");
                 resolve("user doesnt exist");
                 return;
-            }else if (!data[0].subscribed){
+            } else if (!data[0].subscribed) {
                 console.log("user not confirmed");
                 resolve("user not confirmed");
                 return;
-            }else if (data[0].token!==""){
+            } else if (data[0].token !== "") {
                 console.log("resend token");
                 let d = new Date();
                 const waitTimeinMins = 10;
                 console.log(d.getTime() - data[0].time);
-                if (d.getTime() - data[0].time<waitTimeinMins*60*1000){
+                if (d.getTime() - data[0].time < waitTimeinMins * 60 * 1000) {
                     console.log("too frequent");
                     resolve("too frequent");
                     return;
@@ -88,7 +90,7 @@ function reqUnsubscribe(email) {
                         });
                     });
                 });
-            }else {
+            } else {
                 console.log("unsubscribe");
                 JWTSign({email}).then((userData) => {
                     console.log("generated new token", userData);
@@ -106,6 +108,7 @@ function reqUnsubscribe(email) {
         });
     });
 }
+
 // function getUser(searchStr) {
 //     return new Promise((resolve, reject) => {
 //         MongoDB.Read("Lunch", "Users", {searchStr}, (data) => {
@@ -205,9 +208,9 @@ function addToMailingList(email, time) {
 function Unsubscribe(data) {
     return new Promise((resolve) => {
         console.log(data);
-       data = data[0];
-       console.log(data);
-       console.log(data.email);
+        data = data[0];
+        console.log(data);
+        console.log(data.email);
         MongoDB.Delete("Lunch", "Users", {"token": data.token}).then((res) => {
             console.log("User deleted from database"); //deleted from database
             console.log("Deleting from mailgun with searchStr:", data.email);
