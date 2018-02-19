@@ -30,7 +30,7 @@ function send(domain1, from, to, subject, text) {
             from: from,
             to: to,
             subject: subject,
-            text: text
+            html: text
         };
 
         console.log("data to be sent is ", data);
