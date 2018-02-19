@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="951814a3-c9b7-4d9f-979b-d23bbd014d91" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ConfirmEmail/index.js" afterPath="$PROJECT_DIR$/ConfirmEmail/index.js" />
+      <change beforePath="$PROJECT_DIR$/ConfirmEmail/views/signup.hbs" afterPath="$PROJECT_DIR$/ConfirmEmail/views/signup.hbs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,7 +16,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConfirmEmail/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="556">
@@ -24,6 +24,16 @@
               <folding>
                 <marker date="1519003678554" expanded="true" signature="2022:2037" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="signup.hbs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/signup.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="624">
+              <caret line="30" column="84" lean-forward="false" selection-start-line="30" selection-start-column="84" selection-end-line="30" selection-end-column="84" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,16 +83,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
               <caret line="19" column="39" lean-forward="false" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.haml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/delete-btn/index.haml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -191,13 +191,13 @@
         <option value="$PROJECT_DIR$/ConfirmEmail/index.html" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/emailConfirmed.hbs" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/confirmEmail.hbs" />
-        <option value="$PROJECT_DIR$/ConfirmEmail/views/signup.hbs" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/delete-btn/js/index.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/delete-btn/index.html" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/unsubscribe.hbs" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/tmp.html" />
         <option value="$PROJECT_DIR$/ConfirmEmail/Process.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/index.js" />
+        <option value="$PROJECT_DIR$/ConfirmEmail/views/signup.hbs" />
       </list>
     </option>
   </component>
@@ -267,37 +267,6 @@
               <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
               <item name="ConfirmEmail" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NodeJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
-              <item name="ConfirmEmail" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="delete-btn" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NodeJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
-              <item name="ConfirmEmail" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="delete-btn" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NodeJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
-              <item name="ConfirmEmail" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="delete-btn" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NodeJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NodeJS" type="462c0819:PsiDirectoryNode" />
-              <item name="ConfirmEmail" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="delete-btn" type="462c0819:PsiDirectoryNode" />
-              <item name="index.haml" type="620a8d5e:NestingTreeNode" />
             </path>
             <path>
               <item name="NodeJS" type="b2602c69:ProjectViewProjectNode" />
@@ -383,12 +352,12 @@
       <workItem from="1518493144328" duration="4272000" />
       <workItem from="1518502476161" duration="67500000" />
       <workItem from="1518927889482" duration="1925000" />
-      <workItem from="1518930237848" duration="19076000" />
+      <workItem from="1518930237848" duration="19784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98268000" />
+    <option name="totallyTimeSpent" value="98976000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
@@ -725,14 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/signup.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="15" column="77" lean-forward="true" selection-start-line="15" selection-start-column="77" selection-end-line="15" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/confirmEmail.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
@@ -834,6 +795,14 @@
           <folding>
             <marker date="1519003678554" expanded="true" signature="2022:2037" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/signup.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="30" column="84" lean-forward="false" selection-start-line="30" selection-start-column="84" selection-end-line="30" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
