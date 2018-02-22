@@ -4,20 +4,20 @@ let MongoDB = require("./MongoDB.js");
 
 
 function sendEmail(domain, from, to, subject, text) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         MongoDB.Read("Passwds", "MailgunApiKey", {handle: true}).then((data) => {
                 key = data[0].key;
                 console.log("key is ", key);
                 send(domain, from, to, subject, text).then(() => {
                     console.log("sent");
                     resolve();
-                });
-            }, (err) => console.log(err));
+                },(err)=>{console.log(err);reject(err);});
+            },(err)=>{console.log(err);reject(err);});
     });
 }
 
 function send(domain1, from, to, subject, text) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         if (from === "") from = 'Sean <no-reply@seansun.org>';
         if (to === "") to = 'sean.sun@sonomaacademy.org';
         if (subject === "") subject = 'Email from seansun.org';
@@ -38,25 +38,25 @@ function send(domain1, from, to, subject, text) {
         mailgun.messages().send(data, function (error, body) {
             console.log(body);
             resolve();
-        });
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
 function MailingList(cmd, user) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         MongoDB.Read("Passwds", "MailgunApiKey", {handle: true}).then((data) => {
             key = data[0].key;
             console.log("key is ", key);
             List(cmd, user).then((res) => {
                 console.log("Mailing list func: added.");
                 resolve(res);
-            });
-        }, (err) => console.log(err));
+            },(err)=>{console.log(err);reject(err);});
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
 function List(cmd, a) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         const domain = "seansun.org";
         let mailgun = require('mailgun-js')({apiKey: key, domain: domain});
         var list = mailgun.lists('Luncher@seansun.org');

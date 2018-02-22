@@ -4,8 +4,8 @@ let MailGun = require("./MailGun.js");
 
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
-        console.log("starting reqSignup");
         email = email.toLowerCase();
+        console.log("starting reqSignup",email);
         MongoDB.Read("Lunch", "Users", {"email": email}).then((data) => {
             console.log("checking for existing user: read data", data);
             if (data.length > 0) {
@@ -33,9 +33,9 @@ function reqSignup(email) {
                             MailGun.sendEmail("", "SALuncher@seansun.org", email, "Confirm your Luncher subscription", "by clicking on this link: " + link).then(() => {
                                 resolve("resent token");
                                 return;
-                            });
-                        });
-                    });
+                            },(err)=>{console.log(err);reject(err);});
+                        },(err)=>{console.log(err);reject(err);});
+                    },(err)=>{console.log(err);reject(err);});
                 }
             } else { //create new user
                 JWTSign({email}).then((userData) => {
@@ -45,20 +45,20 @@ function reqSignup(email) {
                         MailGun.sendEmail("", "SALuncher@seansun.org", email, "Confirm your Luncher subscription", "by clicking on this link: " + link).then(() => {
                             resolve("sent");
                             return;
-                        });
-                    });
-                });
+                        },(err)=>{console.log(err);reject(err);});
+                    },(err)=>{console.log(err);reject(err);});
+                },(err)=>{console.log(err);reject(err);});
             }
 
-        });
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
 
 function reqUnsubscribe(email) {
     return new Promise((resolve, reject) => {
-        console.log("starting reqUnsubscribe");
         email = email.toLowerCase();
+        console.log("starting reqUnsubscribe",email);
         MongoDB.Read("Lunch", "Users", {"email": email}).then((data) => {
             console.log("checking for existing user: read data", data);
             if (data.length < 1) {
@@ -87,9 +87,9 @@ function reqUnsubscribe(email) {
                         MailGun.sendEmail("", "SALuncher@seansun.org", email, "Unsubscribe Luncher", "by clicking on this link: " + link).then(() => {
                             resolve("resent token");
                             return;
-                        });
-                    });
-                });
+                        },(err)=>{console.log(err);reject(err);});
+                    },(err)=>{console.log(err);reject(err);});
+                },(err)=>{console.log(err);reject(err);});
             } else {
                 console.log("unsubscribe");
                 JWTSign({email}).then((userData) => {
@@ -100,25 +100,17 @@ function reqUnsubscribe(email) {
                         MailGun.sendEmail("", "SALuncher@seansun.org", email, "Unsubscribe Luncher", "by clicking on this link: " + link).then(() => {
                             resolve("sent token");
                             return;
-                        });
-                    });
-                });
+                        },(err)=>{console.log(err);reject(err);});
+                    },(err)=>{console.log(err);reject(err);});
+                },(err)=>{console.log(err);reject(err);});
             }
 
-        });
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
-// function getUser(searchStr) {
-//     return new Promise((resolve, reject) => {
-//         MongoDB.Read("Lunch", "Users", {searchStr}, (data) => {
-//             resolve(data)
-//         });
-//     });
-// }
-
 function JWTSign(userData) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         getJWTPasswd().then((myPasswd) => {
             console.log("jwt passwd is ", myPasswd);
             const token = jwt.sign(userData, myPasswd);
@@ -132,7 +124,7 @@ function JWTSign(userData) {
             };
             resolve(data);
             return;
-        });
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
@@ -143,12 +135,12 @@ function getJWTPasswd() {
             console.log("jwt passwd is ", myPasswd);
             resolve(myPasswd);
             return;
-        }, (err) => console.log(err));
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
 function confirm(token) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         console.log("starting confirm");
         MongoDB.Read("Lunch", "Users", {token}).then((data) => {
             console.log("got user data:", data);
@@ -163,7 +155,7 @@ function confirm(token) {
                     console.log("uns", res);
                     resolve(res);
                     return;
-                })
+                },(err)=>{console.log(err);reject(err);})
             } else {
                 console.log("creating new user...");
                 // if (token === data[0].token) {
@@ -180,10 +172,10 @@ function confirm(token) {
                         addToMailingList(data[0].email, time);
                         resolve("added");
                         return;
-                    });
-                });
+                    },(err)=>{console.log(err);reject(err);});
+                },(err)=>{console.log(err);reject(err);});
             }
-        }, (err) => console.log(err));
+        },(err)=>{console.log(err);reject(err);});
     })
 }
 
@@ -200,13 +192,13 @@ function addToMailingList(email, time) {
             console.log("User added to Mailing List", res);
             resolve(res);
             return;
-        })
+        },(err)=>{console.log(err);reject(err);});
 
     });
 }
 
 function Unsubscribe(data) {
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
         console.log(data);
         data = data[0];
         console.log(data);
@@ -222,11 +214,11 @@ function Unsubscribe(data) {
                     console.log("Sent goodbye email");
                     resolve("unsubscribed");
                     return;
-                });
-            });
+                },(err)=>{console.log(err);reject(err);});
+            },(err)=>{console.log(err);reject(err);});
 
 
-        }, (err) => console.log(err));
+        },(err)=>{console.log(err);reject(err);});
     });
 }
 
