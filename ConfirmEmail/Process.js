@@ -1,6 +1,7 @@
 let MongoDB = require("./MongoDB.js");
 const jwt = require("jsonwebtoken");
 let MailGun = require("./MailGun.js");
+let fs = require("./FSread.js");
 
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
@@ -42,7 +43,10 @@ function reqSignup(email) {
                     MongoDB.Write("Lunch", "Users", userData).then((res) => {
                         console.log("inserted");
                         const link = "seansun.org/confirm/" + userData.token;
-                        MailGun.sendEmail("", "SALuncher@seansun.org", email, "Confirm your Luncher subscription", "by clicking on this link: " + link).then(() => {
+                        let EmailHTML = fs.read("./views/signupEmail.html");
+                        EmailHTML = EmailHTML.replace("[EMAIL]",email);
+                        EmailHTML = EmailHTML.replace("[CONFIRM_EMAIL]",link);
+                        MailGun.sendEmail("", "SALuncher@seansun.org", email, "Confirm your Luncher subscription", EmailHTML).then(() => {
                             resolve("sent");
                             return;
                         },(err)=>{console.log(err);reject(err);});
@@ -50,7 +54,7 @@ function reqSignup(email) {
                 },(err)=>{console.log(err);reject(err);});
             }
 
-        },(err)=>{console.log(err);reject(err);});
+        },(err)=>{console.log(err);resolve(err);/*this returns to the server, let's not make it complicated*/});
     });
 }
 
@@ -105,7 +109,7 @@ function reqUnsubscribe(email) {
                 },(err)=>{console.log(err);reject(err);});
             }
 
-        },(err)=>{console.log(err);reject(err);});
+        },(err)=>{console.log(err);resolve(err);/*this returns to the server, let's not make it complicated*/});
     });
 }
 
@@ -176,7 +180,7 @@ function confirm(token) {
                 },(err)=>{console.log(err);reject(err);});
             }
         },(err)=>{console.log(err);reject(err);});
-    })
+    },(err)=>{console.log(err);resolve(err);/*this returns to the server, let's not make it complicated*/});
 }
 
 function addToMailingList(email, time) {
@@ -219,7 +223,7 @@ function Unsubscribe(data) {
 
 
         },(err)=>{console.log(err);reject(err);});
-    });
+    },(err)=>{console.log(err);resolve(err);/*this returns to the server, let's not make it complicated*/});
 }
 
 

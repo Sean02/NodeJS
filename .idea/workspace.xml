@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="951814a3-c9b7-4d9f-979b-d23bbd014d91" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ConfirmEmail/MailGun.js" afterPath="$PROJECT_DIR$/ConfirmEmail/MailGun.js" />
-      <change beforePath="$PROJECT_DIR$/ConfirmEmail/Process.js" afterPath="$PROJECT_DIR$/ConfirmEmail/Process.js" />
-      <change beforePath="$PROJECT_DIR$/SendLunch/MailGun.js" afterPath="$PROJECT_DIR$/SendLunch/MailGun.js" />
+      <change beforePath="$PROJECT_DIR$/ConfirmEmail/MongoDB.js" afterPath="$PROJECT_DIR$/ConfirmEmail/MongoDB.js" />
+      <change beforePath="$PROJECT_DIR$/SendLunch/index.js" afterPath="$PROJECT_DIR$/SendLunch/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,31 +49,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="unsubscribe.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/unsubscribe.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="58" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tmp.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ConfirmEmail/views/tmp.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="27" column="43" lean-forward="false" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Process.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConfirmEmail/Process.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="49" column="17" lean-forward="true" selection-start-line="49" selection-start-column="17" selection-end-line="49" selection-end-column="56" />
+            <state relative-caret-position="1248">
+              <caret line="48" column="33" lean-forward="true" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MongoDB.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ConfirmEmail/MongoDB.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="676">
+              <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -90,11 +79,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MailGun.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MailGun.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SendLunch/MailGun.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
-              <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+              <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SendLunch/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -104,7 +103,7 @@
         <entry file="file://C:/Program Files/MongoDB/Server/3.6/bin/dump/Lunch/Users.metadata.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="22" lean-forward="true" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
+              <caret line="0" column="22" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -171,9 +170,7 @@
         <option value="$PROJECT_DIR$/ConfirmEmail/jwt.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/jwttest.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/signup.js" />
-        <option value="$PROJECT_DIR$/ConfirmEmail/MongoDB.js" />
         <option value="$PROJECT_DIR$/SendLunch/webscraper.js" />
-        <option value="$PROJECT_DIR$/SendLunch/index.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/HTML testout/Signup/form/index.html" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/HTML testout/Signup/index.html.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/views/HTML testout/Signup/button-with-built-in-loading-indicator-js-and-scss - Copy/index.html" />
@@ -201,6 +198,8 @@
         <option value="$PROJECT_DIR$/ConfirmEmail/Process.js" />
         <option value="$PROJECT_DIR$/ConfirmEmail/MailGun.js" />
         <option value="$PROJECT_DIR$/SendLunch/MailGun.js" />
+        <option value="$PROJECT_DIR$/SendLunch/index.js" />
+        <option value="$PROJECT_DIR$/ConfirmEmail/MongoDB.js" />
       </list>
     </option>
   </component>
@@ -336,16 +335,15 @@
       <workItem from="1518493144328" duration="4272000" />
       <workItem from="1518502476161" duration="67500000" />
       <workItem from="1518927889482" duration="1925000" />
-      <workItem from="1518930237848" duration="25039000" />
+      <workItem from="1518930237848" duration="27471000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104231000" />
+    <option name="totallyTimeSpent" value="106663000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19427083" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -428,24 +426,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConfirmEmail/MongoDB.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="14" column="30" lean-forward="false" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SendLunch/webscraper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1534">
           <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="3" selection-end-line="61" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SendLunch/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="27" column="10" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -754,7 +738,7 @@
     <entry file="file://C:/Program Files/MongoDB/Server/3.6/bin/dump/Lunch/Users.metadata.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="22" lean-forward="true" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
+          <caret line="0" column="22" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -769,14 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConfirmEmail/Process.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="49" column="17" lean-forward="true" selection-start-line="49" selection-start-column="17" selection-end-line="49" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ConfirmEmail/MailGun.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="998">
@@ -788,7 +764,31 @@
     <entry file="file://$PROJECT_DIR$/SendLunch/MailGun.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
-          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+          <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SendLunch/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConfirmEmail/Process.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1248">
+          <caret line="48" column="33" lean-forward="true" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConfirmEmail/MongoDB.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
           <folding />
         </state>
       </provider>

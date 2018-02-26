@@ -11,7 +11,9 @@ let Process = require("./Process.js");
 const maintenance = false;
 //
 let app = express();
-let urlencodedParser = bodyParser.urlencoded({extended: false});
+let urlencodedParser = bodyParser.urlencoded({
+    extended: false
+});
 // app.use(bodyParser.json());
 app.set("view engine", "hbs");
 //shutdown website
@@ -23,7 +25,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
     console.error("Express ERROR:" + err.stack);
     res.status(500).send('<h1>500 Internal Error</h1>');
     return;
@@ -46,8 +48,13 @@ app.post("/signup", urlencodedParser, (req, res) => {
     console.log(req.body.email);
 
     Process.reqSignup(req.body.email).then((result) => {
-        console.log("clean exit");
-        if (result === "user exist") {
+        console.log("success: clean exit");
+        if (result === "token sent"){
+          res.status(200).render("confirmEmail", {
+              title: "You are <span style=\"color: #ff9933;\">one</span> step away.",
+              msg: "Go to your email inbox and confirm your Luncher subscription!"
+          });
+        }else if (result === "user exist") {
             res.status(200).render("confirmEmail", {
                 title: "You are already a Luncher",
                 msg: "There's no point to subscribe again."
@@ -57,13 +64,22 @@ app.post("/signup", urlencodedParser, (req, res) => {
                 title: "The confirmation email was sent",
                 msg: "If you want another one, come back in a little bit."
             });
-        } else {
+        } else if (result === "invalid email") { // need to add this in Process.js
             res.status(200).render("confirmEmail", {
-                title: "You are <span style=\"color: #ff9933;\">one</span> step away.",
-                msg: "Go to your email inbox and confirm your Luncher subscription!"
+                title: "Invalid email",
+                msg: `Please check that email(${req.body.email}) is correct and try again.\n If you are still having problems, contact us at development@seansun.org.`
             });
-        }
-    });
+          }else{
+            console.log("Server: Unknown ERROR",err);
+            res.status(200).render("confirmEmail", {
+                title: "Unknown Error",
+                msg: "Contact us at development@seansun.org about this error: ["+ err + "]"
+            });
+          }
+    }, (err) => {
+        //nothing is designed to go here,
+        console.log(err);
+      });
 });
 
 app.post("/unsubscribe", urlencodedParser, (req, res) => {
@@ -101,7 +117,7 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
     });
 });
 
-app.get('/confirm/:token', function (req, res) {
+app.get('/confirm/:token', function(req, res) {
     // res.send('user ' + req.params.token);
     if (req.params.token === "") {
         res.status(200).render("emailConfirmed", {
@@ -146,10 +162,11 @@ app.listen(80, () => {
 app.use("/", express.static(__dirname));
 
 //not found in static either, emm... return 404 page!
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.sendFile(__dirname + "/views/404.html");
     return;
 });
 
-module.exports = {app};
-
+module.exports = {
+    app
+};

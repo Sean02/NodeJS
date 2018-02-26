@@ -11,9 +11,13 @@
 let schedule = require("node-schedule");
 let GetLunch = require("./webscraper.js");
 let MailGun = require("./MailGun.js");
+let fs = require("./FSread.js");
 
-let a = schedule.scheduleJob('0 40 11 * * 1-5', function(){
+let a = schedule.scheduleJob('0 30 11 * * 1-5', function(){
     GetLunch.scrape().then((data) => {
+      let EmailHTML = fs.read("/views/signupEmail.html");
+      EmailHTML.replace("[EMAIL]",email);
+      EmailHTML.replace("[CONFIRM_EMAIL]",link);
         MailGun.sendEmail("","Luncher <Luncher@seansun.org>","Luncher@seansun.org","Today's lunch","Hi Lunchers, here's today's menu:\n"+NicenIt(data)).then((res)=>{
            //nothing to do
             console.log(NicenIt(data));
