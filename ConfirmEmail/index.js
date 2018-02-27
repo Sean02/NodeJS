@@ -48,8 +48,8 @@ app.post("/signup", urlencodedParser, (req, res) => {
     console.log(req.body.email);
 
     Process.reqSignup(req.body.email).then((result) => {
-        console.log("success: clean exit");
-        if (result === "token sent"){
+        console.log("resolve:",result);
+        if (result === "sent"){
           res.status(200).render("confirmEmail", {
               title: "You are <span style=\"color: #ff9933;\">one</span> step away.",
               msg: "Go to your email inbox and confirm your Luncher subscription!"
@@ -70,15 +70,18 @@ app.post("/signup", urlencodedParser, (req, res) => {
                 msg: `Please check that email(${req.body.email}) is correct and try again.\n If you are still having problems, contact us at development@seansun.org.`
             });
           }else{
-            console.log("Server: Unknown ERROR",err);
+            console.log("Unknown ERROR",result);
             res.status(200).render("confirmEmail", {
                 title: "Unknown Error",
-                msg: "Contact us at development@seansun.org about this error: ["+ err + "]"
+                msg: "<a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a> about this error: ["+ result + "]"
             });
           }
     }, (err) => {
-        //nothing is designed to go here,
-        console.log(err);
+      console.log("Unknown ERROR",err);
+      res.status(200).render("confirmEmail", {
+          title: "Unknown Error",
+          msg: "<a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a> about this error: ["+ err + "]"
+      });
       });
 });
 
@@ -87,7 +90,7 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
     console.log(req.body.email);
 
     Process.reqUnsubscribe(req.body.email).then((result) => {
-        console.log("clean exit");
+        console.log("resolve:",result);
         if (result === "user doesnt exist") {
             res.status(200).render("confirmEmail", {
                 title: "You are not subscribed",
@@ -108,11 +111,17 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
                 title: "We resent you a confirmation email",
                 msg: "Go to your email inbox and click on that email to unsubscribe."
             });
-        } else {
-            res.status(200).render("confirmEmail", { // "token sent"
+        } else if (result === "sent"){
+            res.status(200).render("confirmEmail", {
                 title: "We sent you a confirmation email",
                 msg: "Go to your email inbox click on that email to unsubscribe."
             });
+        }else{
+          console.log("Server: Unknown ERROR",result);
+          res.status(200).render("confirmEmail", {
+              title: "Unknown Error",
+              msg: "<a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a> about this error: ["+ result + "]"
+          });
         }
     });
 });
@@ -136,7 +145,7 @@ app.get('/confirm/:token', function(req, res) {
         } else if (result === "unsubscribed") {
             res.status(200).render("emailConfirmed", {
                 title: "You are unsubscribed from Luncher",
-                msg: "Do you mind telling us why you unsubscribed? Send us a email to development@seansun.org. Hope to see you again soon!"
+                msg: "Do you mind telling us why you unsubscribed? <a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a>!"
             });
         } else if (result === "added") {
             res.status(200).render("emailConfirmed", {

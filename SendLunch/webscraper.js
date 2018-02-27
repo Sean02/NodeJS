@@ -29,7 +29,12 @@ getDate = () => {
 parseLunch = (html) => {
     let $ = cheerio.load(html);
     let date = getDate();
-    let res= [getSoup($, date), getSalad($, date), getEntree($, date), getSpecialDietEntree($, date), getSides($, date), getDessert($, date)];
+    let res= {"soup": getSoup($, date),
+       "salad": getSalad($, date),
+      "entree": getEntree($, date),
+      "specialdietentree": getSpecialDietEntree($, date),
+        "sides": getSides($, date),
+      "dessert": getDessert($, date)};
     // console.log(res);
     return res;
 };
