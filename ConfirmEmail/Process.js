@@ -2,6 +2,7 @@ let MongoDB = require("./MongoDB.js");
 const jwt = require("jsonwebtoken");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
+let sendLunch = require("../SendLunch/index.js");
 
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
@@ -38,7 +39,7 @@ function reqSignup(email) {
                             "token": userData.token
                         }).then((res) => {
                             console.log("updated to database");
-                            const link = "seansun.org/confirm/" + userData.token;
+                            const link = "http://seansun.org/confirm/" + userData.token;
                             let EmailHTML = fs.read("./views/signupEmail.html");
                             EmailHTML = EmailHTML.replace("[EMAIL]", email);
                             EmailHTML = EmailHTML.replace("[CONFIRM_EMAIL]", link);
@@ -47,15 +48,15 @@ function reqSignup(email) {
                                 return;
                             }, (err) => {
                                 console.log(err);
-                                reject(err);
+                                resolve(err);
                             });
                         }, (err) => {
                             console.log(err);
-                            reject(err);
+                            resolve(err);
                         });
                     }, (err) => {
                         console.log(err);
-                        reject(err);
+                        resolve(err);
                     });
                 }
             } else { //create new user
@@ -64,7 +65,7 @@ function reqSignup(email) {
                 }).then((userData) => {
                     MongoDB.Write("Lunch", "Users", userData).then((res) => {
                         console.log("inserted");
-                        const link = "seansun.org/confirm/" + userData.token;
+                        const link = "http://seansun.org/confirm/" + userData.token;
                         let EmailHTML = fs.read("./views/signupEmail.html");
                         EmailHTML = EmailHTML.replace("[EMAIL]", email);
                         EmailHTML = EmailHTML.replace("[CONFIRM_EMAIL]", link);
@@ -73,25 +74,23 @@ function reqSignup(email) {
                             return;
                         }, (err) => {
                             console.log(err);
-                            reject(err);
+                            resolve(err);
                         });
                     }, (err) => {
                         console.log(err);
-                        reject(err);
+                        resolve(err);
                     });
                 }, (err) => {
                     console.log(err);
-                    reject(err);
+                    resolve(err);
                 });
             }
-
         }, (err) => {
             console.log(err);
             resolve(err); /*this returns to the server, let's not make it complicated*/
         });
     });
 }
-
 
 function reqUnsubscribe(email) {
     return new Promise((resolve, reject) => {
@@ -129,7 +128,7 @@ function reqUnsubscribe(email) {
                         "token": userData.token
                     }).then((res) => {
                         console.log("updated to database");
-                        const link = "seansun.org/confirm/" + userData.token;
+                        const link = "http://seansun.org/confirm/" + userData.token;
                         let EmailHTML = fs.read("./views/unsubscribeEmail.html");
                         EmailHTML = EmailHTML.replace("[LINK]", link);
                         MailGun.sendEmail("", "Luncher@sonomaacademy.org", email, "Unsubscribe Luncher", EmailHTML).then(() => {
@@ -137,15 +136,15 @@ function reqUnsubscribe(email) {
                             return;
                         }, (err) => {
                             console.log(err);
-                            reject(err);
+                            resolve(err);
                         });
                     }, (err) => {
                         console.log(err);
-                        reject(err);
+                        resolve(err);
                     });
                 }, (err) => {
                     console.log(err);
-                    reject(err);
+                    resolve(err);
                 });
             } else {
                 console.log("unsubscribe");
@@ -159,7 +158,7 @@ function reqUnsubscribe(email) {
                         "token": userData.token
                     }).then((res) => {
                         console.log("updated to database");
-                        const link = "seansun.org/confirm/" + userData.token;
+                        const link = "http://seansun.org/confirm/" + userData.token;
                         let EmailHTML = fs.read("./views/unsubscribeEmail.html");
                         EmailHTML = EmailHTML.replace("[LINK]", link);
                         MailGun.sendEmail("", "Luncher@sonomaacademy.org", email, "Unsubscribe Luncher", EmailHTML).then(() => {
@@ -167,18 +166,17 @@ function reqUnsubscribe(email) {
                             return;
                         }, (err) => {
                             console.log(err);
-                            reject(err);
+                            resolve(err);
                         });
                     }, (err) => {
                         console.log(err);
-                        reject(err);
+                        resolve(err);
                     });
                 }, (err) => {
                     console.log(err);
-                    reject(err);
+                    resolve(err);
                 });
             }
-
         }, (err) => {
             console.log(err);
             resolve(err); /*this returns to the server, let's not make it complicated*/
@@ -244,8 +242,8 @@ function confirm(token) {
                     return;
                 }, (err) => {
                     console.log(err);
-                    reject(err);
-                })
+                    resolve(err);
+                });
             } else {
                 console.log("creating new user...");
                 // if (token === data[0].token) {
@@ -261,25 +259,28 @@ function confirm(token) {
                         "token": "" //newtoken
                     }).then((res) => {
                         console.log("user added(updated) to database");
-                        addToMailingList(data[0].email, time);
-                        resolve("added");
-                        return;
+                        addToMailingList(data[0].email, time).then(() => {
+                            //send user a test email
+                            sendLunch.sendLunch(data[0].email);
+                            resolve("added");
+                            return;
+                        }, (err) => {
+                            console.log(err);
+                            resolve(err);
+                        });
                     }, (err) => {
                         console.log(err);
-                        reject(err);
+                        resolve(err);
                     });
                 }, (err) => {
                     console.log(err);
-                    reject(err);
+                    resolve(err);
                 });
             }
         }, (err) => {
             console.log(err);
-            reject(err);
+            resolve(err);
         });
-    }, (err) => {
-        console.log(err);
-        resolve(err); /*this returns to the server, let's not make it complicated*/
     });
 }
 
@@ -300,9 +301,8 @@ function addToMailingList(email, time) {
             return;
         }, (err) => {
             console.log(err);
-            reject(err);
+            resolve(err);
         });
-
     });
 }
 
@@ -324,28 +324,34 @@ function Unsubscribe(data) {
                 return;
             }, (err) => {
                 console.log(err);
-                reject(err);
+                resolve(err);
             });
-
-
         }, (err) => {
             console.log(err);
-            reject(err);
+            resolve(err);
         });
-    }, (err) => {
-        console.log(err);
-        resolve(err); /*this returns to the server, let's not make it complicated*/
     });
 }
-
 
 function getTime() {
     let d = new Date();
     return d.getFullYear().toString() + "-" + (d.getMonth() + 1).toString() + "-" + d.getDate().toString() + " " + d.getHours().toString() + ":" + d.getMinutes().toString() + ":" + d.getSeconds().toString() + "." + d.getMilliseconds().toString();
 }
 
+function getUserCount() {
+    return new Promise((resolve, reject) => {
+        MongoDB.Count("Lunch", "Users", {
+            subscribed: true
+        }).then((data) => {
+            resolve(data);
+        }, (err) => {
+            resolve(err);
+        });
+    });
+}
 module.exports = {
     reqSignup,
     reqUnsubscribe,
-    confirm
+    confirm,
+    getUserCount
 };

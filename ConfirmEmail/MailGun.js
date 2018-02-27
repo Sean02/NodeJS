@@ -1,8 +1,5 @@
 let MongoDB = require("./MongoDB.js");
-
 //get the mailgun api key: under mongo database -> MailgunApiKey -> key -> key
-
-
 function sendEmail(domain, from, to, subject, text) {
     return new Promise((resolve, reject) => {
         MongoDB.Read("Passwds", "MailgunApiKey", {
@@ -10,7 +7,6 @@ function sendEmail(domain, from, to, subject, text) {
         }).then((data) => {
             key = data[0].key;
             console.log("key is ", key);
-
             //Send Email
             send(domain, from, to, subject, text).then(() => {
                 console.log("sent");
@@ -34,7 +30,6 @@ function send(domain1, from, to, subject, text) {
         if (text === "") text = 'Hello World!';
         // if (domain === "") domain = 'seansun.org';
         const domain = "seansun.org";
-
         let mailgun = require('mailgun-js')({
             apiKey: key,
             domain: domain
@@ -46,9 +41,7 @@ function send(domain1, from, to, subject, text) {
             html: text,
             "h:Reply-To": "development@seansun.org"
         };
-
-        console.log("data to be sent is ", data);
-
+        console.log("data to be sent is ", data.from, "\n", data.to, "\n", data.subject);
         mailgun.messages().send(data, function(error, body) {
             console.log(body);
             resolve(0);
@@ -126,12 +119,9 @@ function List(cmd, a) {
             resolve("Unknown cmd");
         }
     });
-
 }
-
 module.exports = {
     sendEmail,
     MailingList
 };
-
 // sendEmail("","no-reply@seansun.org","sean.sun@sonomaacademy.org","hi","hello");

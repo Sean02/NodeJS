@@ -6,7 +6,6 @@ let SignUp = require("./signup.js");
 let Process = require("./Process.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
-
 //config
 const maintenance = false;
 //
@@ -24,37 +23,31 @@ app.use((req, res, next) => {
     }
     next();
 });
-
 app.use(function(err, req, res, next) {
     console.error("Express ERROR:" + err.stack);
     res.status(500).send('<h1>500 Internal Error</h1>');
     return;
 });
-
-
 //----------------------------------------------------------------------
 app.get("/signup", (req, res) => {
     console.log("Someone visited the signup page.");
     res.render("signup.hbs", {});
 });
-
 app.get("/unsubscribe", (req, res) => {
     console.log("Someone visited the unsubscribe page.");
     res.render("unsubscribe.hbs", {});
 });
-
 app.post("/signup", urlencodedParser, (req, res) => {
     console.log("received signup post");
     console.log(req.body.email);
-
     Process.reqSignup(req.body.email).then((result) => {
-        console.log("resolve:",result);
-        if (result === "sent"){
-          res.status(200).render("confirmEmail", {
-              title: "You are <span style=\"color: #ff9933;\">one</span> step away.",
-              msg: "Go to your email inbox and confirm your Luncher subscription!"
-          });
-        }else if (result === "user exist") {
+        console.log("resolve:", result);
+        if (result === "sent") {
+            res.status(200).render("confirmEmail", {
+                title: "You are <span style=\"color: #ff9933;\">one</span> step away.",
+                msg: "Go to your email inbox and confirm your Luncher subscription!"
+            });
+        } else if (result === "user exist") {
             res.status(200).render("confirmEmail", {
                 title: "You are already a Luncher",
                 msg: "There's no point to subscribe again."
@@ -69,32 +62,36 @@ app.post("/signup", urlencodedParser, (req, res) => {
                 title: "Invalid email",
                 msg: `Please check that email(${req.body.email}) is correct and try again.\n If you are still having problems, contact us at development@seansun.org.`
             });
-          }else{
-            console.log("Unknown ERROR",result);
+        } else {
+            console.log("Unknown ERROR", result);
             res.status(200).render("confirmEmail", {
                 title: "Unknown Error",
-                msg: "<a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a> about this error: ["+ result + "]"
+                msg: `<span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="
+                location.href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'
+                ">Contact us</span> about this error: [` + result + `]`
             });
-          }
+        }
     }, (err) => {
-      console.log("Unknown ERROR",err);
-      res.status(200).render("confirmEmail", {
-          title: "Unknown Error",
-          msg: "<a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a> about this error: ["+ err + "]"
-      });
-      });
+        console.log("Unknown ERROR", err);
+        res.status(200).render("confirmEmail", {
+            title: "Unknown Error",
+            msg: `<span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="
+            location.href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'
+            ">Contact us</span> about this error: [` + err + `]`
+        });
+    });
 });
-
 app.post("/unsubscribe", urlencodedParser, (req, res) => {
     console.log("received unsubscribe post");
     console.log(req.body.email);
-
     Process.reqUnsubscribe(req.body.email).then((result) => {
-        console.log("resolve:",result);
+        console.log("resolve:", result);
         if (result === "user doesnt exist") {
             res.status(200).render("confirmEmail", {
                 title: "You are not subscribed",
-                msg: "Click <a href='seansun.org/signup'>here</a> to subscribe!"
+                msg: `Click <span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="
+                location.href = '/signup'
+                ">here</span> to subscribe!`
             });
         } else if (result === "user not confirmed") {
             res.status(200).render("confirmEmail", {
@@ -111,21 +108,22 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
                 title: "We resent you a confirmation email",
                 msg: "Go to your email inbox and click on that email to unsubscribe."
             });
-        } else if (result === "sent"){
+        } else if (result === "sent") {
             res.status(200).render("confirmEmail", {
                 title: "We sent you a confirmation email",
                 msg: "Go to your email inbox click on that email to unsubscribe."
             });
-        }else{
-          console.log("Server: Unknown ERROR",result);
-          res.status(200).render("confirmEmail", {
-              title: "Unknown Error",
-              msg: "<a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a> about this error: ["+ result + "]"
-          });
+        } else {
+            console.log("Server: Unknown ERROR", result);
+            res.status(200).render("confirmEmail", {
+                title: "Unknown Error",
+                msg: `<span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="
+                location.href = 'mailto:development@seansun.org?subject=Feedback%20for%20Luncher'
+                ">Contact us</span> about this error: [` + result + `]`
+            });
         }
     });
 });
-
 app.get('/confirm/:token', function(req, res) {
     // res.send('user ' + req.params.token);
     if (req.params.token === "") {
@@ -145,12 +143,12 @@ app.get('/confirm/:token', function(req, res) {
         } else if (result === "unsubscribed") {
             res.status(200).render("emailConfirmed", {
                 title: "You are unsubscribed from Luncher",
-                msg: "Do you mind telling us why you unsubscribed? <a href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'>Contact us</a>!"
+                msg: `Do you mind telling us why you unsubscribed? <span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="location.href='mailto:development@seansun.org?subject=Feedback%20for%20Luncher'">Contact us</span>!`
             });
         } else if (result === "added") {
             res.status(200).render("emailConfirmed", {
                 title: "Congrats! You are now a Luncher",
-                msg: "We will be emailing you lunch menus at about half an hour before lunch!"
+                msg: "We will be emailing you lunch menus at 7:30am!"
             });
         } else {
             res.status(200).render("emailConfirmed", {
@@ -158,24 +156,29 @@ app.get('/confirm/:token', function(req, res) {
                 msg: "You can retry but if the error doesn't go away, contact us by sending an email to development@seansun.org."
             });
         }
-
     });
 });
-
-
-app.listen(80, () => {
-    console.log(`Started up at port 80`);
+// app.get("/stats", (req, res) => {
+//     res.sendFile(__dirname + "/views/stats.html");
+// });
+app.get("/getStats", (req, res) => {
+    Process.getUserCount().then((data) => {
+        res.status(200).send({
+            count: data
+        });
+    });
 });
-
 //none of above are found -> look for static
 app.use("/", express.static(__dirname));
-
 //not found in static either, emm... return 404 page!
 app.use(function(req, res, next) {
     res.sendFile(__dirname + "/views/404.html");
     return;
 });
-
+// start server
+app.listen(80, () => {
+    console.log(`Started up at port 80`);
+});
 module.exports = {
     app
 };
