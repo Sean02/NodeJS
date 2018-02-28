@@ -7,6 +7,9 @@ let sendLunch = require("../SendLunch/index.js");
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
         email = email.toLowerCase();
+        if (!(Validate(email))) {
+            resolve("invalid email")
+        }
         console.log("starting reqSignup", email);
         MongoDB.Read("Lunch", "Users", {
             "email": email
@@ -95,6 +98,9 @@ function reqSignup(email) {
 function reqUnsubscribe(email) {
     return new Promise((resolve, reject) => {
         email = email.toLowerCase();
+        if (!(Validate(email))) {
+            resolve("invalid email")
+        }
         console.log("starting reqUnsubscribe", email);
         MongoDB.Read("Lunch", "Users", {
             "email": email
@@ -336,6 +342,13 @@ function Unsubscribe(data) {
 function getTime() {
     let d = new Date();
     return d.getFullYear().toString() + "-" + (d.getMonth() + 1).toString() + "-" + d.getDate().toString() + " " + d.getHours().toString() + ":" + d.getMinutes().toString() + ":" + d.getSeconds().toString() + "." + d.getMilliseconds().toString();
+}
+
+function Validate(input) {
+    if (input.trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+        return false;
+    }
+    return true;
 }
 
 function getUserCount() {

@@ -150,6 +150,11 @@ app.get('/confirm/:token', function(req, res) {
                 title: "Congrats! You are now a Luncher",
                 msg: "We will be emailing you lunch menus at 7:30am!"
             });
+        } else if (result === "invalid email") {
+            res.status(200).render("emailConfirmed", {
+                title: "Your email is invalid",
+                msg: "We will be emailing you lunch menus at 7:30am!"
+            });
         } else {
             res.status(200).render("emailConfirmed", {
                 title: "Well this is embarrassing, there has been an error.",
