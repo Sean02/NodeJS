@@ -1,39 +1,46 @@
-const {MongoClient, ObjectID} = require("mongodb");
-
+const {
+    MongoClient,
+    ObjectID
+} = require("mongodb");
 // let Stopwatch = require('timer-stopwatch');
-
 function Read(database, collection, searchStr) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         MongoClient.connect("mongodb://localhost:27017/" + database, (err, db) => {
-            if (err)
-                return console.log("Unable to connect to MongoDB server", err);
-            console.log("Connected to MongoDB server");
+            //Reject promise if connection failed
+            if (err) {
+                reject(err);
+            }
             //connected to database
-            db.collection(collection).find(searchStr).toArray().then((data) => {
+            // console.log("Connected to MongoDB server");
+            db.collection(collection).find(searchStr).toArray((err, data) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }
+                //Got Data
                 console.log(data);
-                // console.log("got data");
                 resolve(data);
-            }, (err) => {
-                console.log("Unable to get mailgun api key ", err);
-                // errCallback("Unable to get mailgun api key " + err);
-                resolve(err);
             });
-            db.close(); //close database
+            //close database
+            db.close();
         });
     });
-
 }
 
 function Write(database, collection, data) {
     return new Promise((resolve, reject) => {
         MongoClient.connect("mongodb://localhost:27017/" + database, (err, db) => {
-            if (err)
-                return console.log("Unable to connect to MongoDB server", err);
-            console.log("Connected to MongoDB server");
+            //Reject promise if load fails
+            if (err) {
+                reject(err);
+            }
             //connected to database
+            // console.log("Connected to MongoDB server");
             db.collection(collection).insertOne(data, (err, result) => {
-                if (err)
+                if (err) {
                     console.log("Error inserting to database:", err);
+                    reject(err);
+                }
                 // callback(result);
                 resolve(result);
             }); //data is in format: {a:b, c:d}
@@ -45,11 +52,18 @@ function Write(database, collection, data) {
 function Update(database, collection, searchStr, data) {
     return new Promise((resolve, reject) => {
         MongoClient.connect("mongodb://localhost:27017/" + database, (err, db) => {
-            if (err)
-                return console.log("Unable to connect to MongoDB server", err);
-            console.log("Connected to MongoDB server");
+            if (err) reject("Unable to connect to MongoDB server", err);
+            // console.log("Connected to MongoDB server");
             //connected to database
-            db.collection(collection).findOneAndUpdate(searchStr, {$set: data}, {returnOriginal: false}).then((res) => {
+            db.collection(collection).findOneAndUpdate(searchStr, {
+                $set: data
+            }, {
+                returnOriginal: false
+            }, (err, res) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }
                 //nothing to do.
                 // callback(res);
                 resolve(res);
@@ -63,11 +77,16 @@ function Update(database, collection, searchStr, data) {
 function Delete(database, collection, searchStr) {
     return new Promise((resolve, reject) => {
         MongoClient.connect("mongodb://localhost:27017/" + database, (err, db) => {
-            if (err)
-                return console.log("Unable to connect to MongoDB server", err);
-            console.log("Connected to MongoDB server");
+            if (err) {
+                reject("Unable to connect to MongoDB server", err);
+            }
+            // console.log("Connected to MongoDB server");
             //connected to database
-            db.collection(collection).findOneAndDelete(searchStr).then((res) => {
+            db.collection(collection).findOneAndDelete(searchStr, (err, res) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }
                 //nothing to do.
                 // callback(res);
                 resolve(res);
@@ -78,11 +97,33 @@ function Delete(database, collection, searchStr) {
     });
 }
 
+function Count(database, collection, searchStr) {
+    return new Promise((resolve, reject) => {
+        MongoClient.connect("mongodb://localhost:27017/" + database, (err, db) => {
+            //Reject promise if connection failed
+            if (err) {
+                reject(err);
+            }
+            //connected to database
+            // console.log("Connected to MongoDB server");
+            db.collection(collection).count(searchStr, function(err, count) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(count);
+                db.close();
+            });
+            //close database
+            db.close();
+        });
+    });
+}
 module.exports = {
     Read,
     Write,
     Update,
-    Delete
+    Delete,
+    Count
 };
 // let timer = new Stopwatch();
 // timer.start();

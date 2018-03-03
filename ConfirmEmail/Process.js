@@ -39,7 +39,8 @@ function reqSignup(email) {
                         MongoDB.Update("Lunch", "Users", {
                             "email": userData.email
                         }, {
-                            "token": userData.token
+                            "token": userData.token,
+                            time: d.getTime()
                         }).then((res) => {
                             console.log("updated to database");
                             const link = "http://seansun.org/confirm/" + userData.token;
@@ -131,7 +132,8 @@ function reqUnsubscribe(email) {
                     MongoDB.Update("Lunch", "Users", {
                         "email": userData.email
                     }, {
-                        "token": userData.token
+                        "token": userData.token,
+                        time: d.getTime()
                     }).then((res) => {
                         console.log("updated to database");
                         const link = "http://seansun.org/confirm/" + userData.token;
@@ -158,10 +160,12 @@ function reqUnsubscribe(email) {
                     email
                 }).then((userData) => {
                     console.log("generated new token", userData);
+                    let d = new Date();
                     MongoDB.Update("Lunch", "Users", {
                         "email": userData.email
                     }, {
-                        "token": userData.token
+                        "token": userData.token,
+                        time: d.getTime()
                     }).then((res) => {
                         console.log("updated to database");
                         const link = "http://seansun.org/confirm/" + userData.token;
@@ -266,8 +270,8 @@ function confirm(token) {
                     }).then((res) => {
                         console.log("user added(updated) to database");
                         addToMailingList(data[0].email, time).then(() => {
-                            //send user a test email
-                            sendLunch.sendLunch(data[0].email);
+                            //send user a test email (buggy - TODO)
+                            // sendLunch.sendLunch(data[0].email);
                             resolve("added");
                             return;
                         }, (err) => {
@@ -346,6 +350,8 @@ function getTime() {
 
 function Validate(input) {
     if (input.trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+        return false;
+    } else if (input.trim().substr(-12) === "@seansun.org") {
         return false;
     }
     return true;

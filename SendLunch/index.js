@@ -11,8 +11,13 @@ let schedule = require("node-schedule");
 let GetLunch = require("./webscraper.js");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
-let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
-    sendLunch("Luncher@seansun.org");
+// let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
+//     sendLunch("Luncher@seansun.org");
+//     console.log("Fired");
+// });
+let a = schedule.scheduleJob('20 52 15 * * 1-5', function() {
+    sendLunch("test@seansun.org");
+    console.log("Fired");
 });
 console.log("Starting...");
 
@@ -38,12 +43,14 @@ function sendLunch(email) {
         EmailHTML = EmailHTML.replace("[SIDES]", data.sides);
         EmailHTML = EmailHTML.replace("[DATE]", date);
         MailGun.sendEmail("", "Luncher <Luncher@sonomaacademy.org>", email, `Today's Menu - ${date}`, EmailHTML).then((res) => {
-            //nothing to do
-            console.log(res);
+            resolve("sent");
+            return;
+        }, (err) => {
+            console.log(err);
+            resolve(err);
         });
     });
 }
 module.exports = {
     sendLunch
 }
-// sendLunch("sean.sun@sonomaacademy.org");
