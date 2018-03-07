@@ -10,9 +10,8 @@
   <script src="/views/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-  <div style="position: absolute;  margin: auto;  top: 0;  right: 0;  bottom: 0;  left: 0;">
-    <center>
-      <h1 id="text1" style="font-size: 100px;">Loading</h1></center>
+  <div style="position: absolute;  margin: auto;  top: 30%;  right: 0;  bottom: 0;  left: 0;">
+      <div id="text1" style="font-size: 100px; font-family: sans-serif">Loading</div>
   </div>
 </body>
 <script>
@@ -25,7 +24,7 @@
     .done((data)=>{
       console.log('GET response:', data);
       console.log(data.count);
-      document.getElementById("text1").innerHTML = data.count+" users";
+      document.getElementById("text1").innerHTML = "<center><b>"+data.count+"</b> Lunchers</center>";
     })
     .fail((jqXHR,textStatus,err)=>{
       console.log("Error:",jqXHR,textStatus,err);

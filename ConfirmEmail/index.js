@@ -52,6 +52,11 @@ app.post("/signup", urlencodedParser, (req, res) => {
                 title: "You are already a Luncher",
                 msg: "There's no point to subscribe again."
             });
+        } else if (result === "invalid email") {
+            res.status(200).render("confirmEmail", {
+                title: "Invalid email",
+                msg: "Try harder, I don't believe you can hack my server."
+            });
         } else if (result === "too frequent") {
             res.status(200).render("confirmEmail", {
                 title: "The confirmation email was sent",
@@ -97,6 +102,11 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
             res.status(200).render("confirmEmail", {
                 title: "You are not subscribed",
                 msg: "You need to confirm your email to subscribe."
+            });
+        } else if (result === "invalid email") {
+            res.status(200).render("confirmEmail", {
+                title: "Invalid email",
+                msg: "Try harder, I don't believe you can hack my server."
             });
         } else if (result === "too frequent") {
             res.status(200).render("confirmEmail", {

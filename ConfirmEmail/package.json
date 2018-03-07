@@ -16,6 +16,7 @@
     "jsonwebtoken": "^7.1.9",
     "mailgun-js": "^0.14.2",
     "mongodb": "^2.2.5",
+    "npm": "^5.7.1",
     "request": "^2.83.0",
     "timer-stopwatch": "^0.2.0"
   }
