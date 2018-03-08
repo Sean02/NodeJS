@@ -2,8 +2,7 @@ let MongoDB = require("./MongoDB.js");
 const jwt = require("jsonwebtoken");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
-let sendLunch = require("../SendLunch/index.js");
-
+// let sendLunch = require("../SendLunch/index.js");
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
         email = email.toLowerCase();
@@ -232,7 +231,7 @@ function getJWTPasswd() {
     });
 }
 
-function confirm(token) {
+function confirm(token, sendLunch) {
     return new Promise((resolve, reject) => {
         console.log("starting confirm");
         MongoDB.Read("Lunch", "Users", {
@@ -270,10 +269,11 @@ function confirm(token) {
                     }).then((res) => {
                         console.log("user added(updated) to database");
                         addToMailingList(data[0].email, time).then(() => {
-                            //send user a test email (buggy - TODO)
-                            // sendLunch.sendLunch(data[0].email);
-                            resolve("added");
-                            return;
+                            sendLunch.sendLunch(data[0].email).then(() => {
+                                console.log("sent demo email");
+                                resolve("added");
+                                return;
+                            });
                         }, (err) => {
                             console.log(err);
                             resolve(err);

@@ -4,6 +4,7 @@ let bodyParser = require("body-parser");
 let MongoDB = require("./MongoDB.js");
 let SignUp = require("./signup.js");
 let Process = require("./Process.js");
+let sendLunch = require("./SendLunch/index.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -143,7 +144,7 @@ app.get('/confirm/:token', function(req, res) {
         });
     }
     console.log("received confirm token");
-    Process.confirm(req.params.token).then((result) => {
+    Process.confirm(req.params.token, sendLunch).then((result) => {
         console.log("clean exit");
         if (result === "token not found") {
             res.status(200).render("emailConfirmed", {
