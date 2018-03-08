@@ -38,7 +38,7 @@ function send(domain1, from, to, subject, text) {
             from: from,
             to: to,
             subject: subject,
-            html: text,
+            text: text,
             "h:Reply-To": "development@seansun.org"
         };
         console.log("data to be sent is ", data.from, "\n", data.to, "\n", data.subject);

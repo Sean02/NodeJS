@@ -7,7 +7,8 @@ function reqSignup(email) {
     return new Promise((resolve, reject) => {
         email = email.toLowerCase();
         if (!(Validate(email))) {
-            resolve("invalid email")
+            resolve("invalid email");
+            return;
         }
         console.log("starting reqSignup", email);
         MongoDB.Read("Lunch", "Users", {
@@ -99,7 +100,8 @@ function reqUnsubscribe(email) {
     return new Promise((resolve, reject) => {
         email = email.toLowerCase();
         if (!(Validate(email))) {
-            resolve("invalid email")
+            resolve("invalid email");
+            return;
         }
         console.log("starting reqUnsubscribe", email);
         MongoDB.Read("Lunch", "Users", {

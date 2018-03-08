@@ -193,7 +193,7 @@ app.use(function(req, res, next) {
 });
 // start server
 app.listen(80, () => {
-    console.log(`Started up at port 80`);
+    console.log(`Started Luncher at port 80`);
 });
 module.exports = {
     app

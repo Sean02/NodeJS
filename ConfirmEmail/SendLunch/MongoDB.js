@@ -13,6 +13,8 @@ function Read(database, collection, searchStr) {
             //connected to database
             // console.log("Connected to MongoDB server");
             db.collection(collection).find(searchStr).toArray((err, data) => {
+                //close database
+                db.close();
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -21,8 +23,6 @@ function Read(database, collection, searchStr) {
                 console.log(data);
                 resolve(data);
             });
-            //close database
-            db.close();
         });
     });
 }
@@ -37,6 +37,7 @@ function Write(database, collection, data) {
             //connected to database
             // console.log("Connected to MongoDB server");
             db.collection(collection).insertOne(data, (err, result) => {
+                db.close(); //close database
                 if (err) {
                     console.log("Error inserting to database:", err);
                     reject(err);
@@ -44,7 +45,6 @@ function Write(database, collection, data) {
                 // callback(result);
                 resolve(result);
             }); //data is in format: {a:b, c:d}
-            db.close(); //close database
         });
     });
 }
@@ -60,6 +60,7 @@ function Update(database, collection, searchStr, data) {
             }, {
                 returnOriginal: false
             }, (err, res) => {
+                db.close(); //close database
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -69,7 +70,6 @@ function Update(database, collection, searchStr, data) {
                 resolve(res);
             });
             //searchStr & data is in format: {a:b, c:d}
-            db.close(); //close database
         });
     });
 }
@@ -83,6 +83,7 @@ function Delete(database, collection, searchStr) {
             // console.log("Connected to MongoDB server");
             //connected to database
             db.collection(collection).findOneAndDelete(searchStr, (err, res) => {
+                db.close(); //close database
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -92,7 +93,6 @@ function Delete(database, collection, searchStr) {
                 resolve(res);
             });
             //searchStr & data is in format: {a:b, c:d}
-            db.close(); //close database
         });
     });
 }
@@ -107,14 +107,14 @@ function Count(database, collection, searchStr) {
             //connected to database
             // console.log("Connected to MongoDB server");
             db.collection(collection).count(searchStr, function(err, count) {
+                //close database
+                db.close();
                 if (err) {
                     reject(err);
                 }
                 resolve(count);
                 db.close();
             });
-            //close database
-            db.close();
         });
     });
 }
