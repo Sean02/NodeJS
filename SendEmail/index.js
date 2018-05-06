@@ -2,6 +2,7 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let MailGun = require("./MailGun.js");
 let MongoDB = require("./MongoDB.js");
+let FSread = require("./FSread.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -70,6 +71,54 @@ app.get("/users/a", (req, res) => {
         res.status(200).send("<h1>Error: " + err + "</h1>")
     });
 });
+app.get("/scan", (req, res) => {
+    MongoDB.Read("Lunch", "Users", {
+        "subscribed": true
+    }).then((data) => {
+        // console.log(data);
+        res.status(200).send(checkDuplicate(data) + "<br><br><br>" + compareWith(data, FSread.read("./data.txt")));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+
+function checkDuplicate(data) {
+    // let arr = data.slice().sort((x, y) => {
+    //     console.log(x, y)
+    //     console.log(x > y)
+    //     return (x.email > y.email)
+    // });
+    let arr = [];
+    data.forEach((item) => {
+        arr.push(item.email);
+    });
+    arr.sort();
+    console.log(arr);
+    let results = [];
+    for (i = 0; i < arr.length - 1; i++) {
+        if (arr[i + 1] == arr[i]) {
+            results.push(arr[i]);
+        }
+    }
+    console.log(results);
+    return results;
+}
+
+function compareWith(data, str) {
+    let arr = [];
+    data.forEach((item) => {
+        arr.push(item.email);
+    });
+    let res = [];
+    arr.forEach((item) => {
+        if (str.search(item.toLowerCase().trim()) == -1) {
+            res.push(item);
+        }
+    });
+    console.log(res);
+    return res;
+}
 
 function nicenIt(data) {
     let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>_id</th><th>Email</th><th>Subscribed</th><th>Time</th><th>Token</th></tr>";

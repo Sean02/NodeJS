@@ -14,12 +14,12 @@ let fs = require("./FSread.js");
 let firstTime = true;
 let ps = "";
 //
-let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
-    console.log("Fired");
-    sendLunch("Luncher@seansun.org").then((res) => {
-        console.log("Exited with message", res);
-    })
-});
+// let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
+//     console.log("Fired");
+//     sendLunch("Luncher@seansun.org").then((res) => {
+//         console.log("Exited with message", res);
+//     })
+// });
 // let b = schedule.scheduleJob('20 18 15 * * 1-5', function() {
 //     sendLunch("Luncher@seansun.org");
 //     console.log("Fired");
@@ -30,7 +30,7 @@ let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
 //         console.log("exited:", res);
 //     });
 // });
-console.log("Starting CronJob...");
+console.log("Starting SendLunch func...");
 
 function getDate() {
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

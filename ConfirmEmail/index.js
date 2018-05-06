@@ -5,6 +5,8 @@ let MongoDB = require("./MongoDB.js");
 let SignUp = require("./signup.js");
 let Process = require("./Process.js");
 let sendLunch = require("./SendLunch/index.js");
+let getLunch = require("./webscraper.js");
+var subdomain = require('express-subdomain');
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -18,6 +20,7 @@ let urlencodedParser = bodyParser.urlencoded({
 app.set("view engine", "hbs");
 //shutdown website
 app.use((req, res, next) => {
+    console.log(req);
     if (maintenance) {
         res.render("maintenance.hbs");
         return;
@@ -29,6 +32,20 @@ app.use(function(err, req, res, next) {
     res.status(500).send('<h1>500 Internal Error</h1>');
     return;
 });
+//----------------------------------------------------------------------
+//routers:
+var apirouter = express.Router();
+apirouter.get('/lunch', function(req, res) {
+    getLunch.scrape().then((data) => {
+        res.json(data);
+    });
+});
+apirouter.get('/', function(req, res) {
+    res.send("Welcome to seansun.org api! To use it, contact us at development@seansun.org");
+});
+app.use(subdomain('a', apirouter));
+//
+//
 //----------------------------------------------------------------------
 app.get("/signup", (req, res) => {
     console.log("Someone visited the signup page.");
@@ -177,6 +194,14 @@ app.get('/confirm/:token', function(req, res) {
 // app.get("/stats", (req, res) => {
 //     res.sendFile(__dirname + "/views/stats.html");
 // });
+app.get("/menu", (req, res) => {
+    res.sendFile(__dirname + "/views/Menu/index.html");
+});
+app.get("/api", (req, res) => {
+    getLunch.scrape().then((data) => {
+        res.json(data);
+    });
+});
 app.get("/getStats", (req, res) => {
     Process.getUserCount().then((data) => {
         res.status(200).send({

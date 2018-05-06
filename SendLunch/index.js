@@ -7,16 +7,19 @@
 // │    │    └─────────────── hour (0 - 23)
 // │    └──────────────────── minute (0 - 59)
 // └───────────────────────── second (0 - 59, OPTIONAL)
+const cout = console.log;
+// const system = {out:{println:console.log}};
 let schedule = require("node-schedule");
 let GetLunch = require("./webscraper.js");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
-let firstTime = true;
-let ps = "";
+let ps = "Hey students, thank you for using Luncher! If you enjoy our service and want to support us, consider introducing Luncher to your parents, they might be concerned what you have for lunch too! Click <a href='http://seansun.org'>here</a> to signup.";
 //
+ps = "";
 let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
     console.log("Fired");
     sendLunch("Luncher@seansun.org").then((res) => {
+        ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
         console.log("Exited with message", res);
     })
 });
@@ -48,6 +51,11 @@ function sendLunch(email) {
             let date = getDate();
             console.log(data);
             //
+            if (!((data.soup) && (data.entree) && (data.specialdietentree) && (data.salad) && (data.dessert) && (data.sides))) {
+                resolve("Lunch data not available, not sending.");
+                return;
+            }
+            //
             EmailHTML = nicenIt(EmailHTML, data, date);
             firstTime = false;
             //
@@ -63,32 +71,29 @@ function sendLunch(email) {
 }
 
 function nicenIt(EmailHTML, data, date) {
-    EmailHTML = EmailHTML.replace("[SOUP]", data.soup || "Not Available");
-    EmailHTML = EmailHTML.replace("[ENTREE]", data.entree || "Not Available");
-    EmailHTML = EmailHTML.replace("[SPECIALDIETENTREE]", data.specialdietentree || "Not Available");
-    EmailHTML = EmailHTML.replace("[SALAD]", data.salad || "Not Available");
-    EmailHTML = EmailHTML.replace("[DESSERT]", data.dessert || "Not Available");
-    EmailHTML = EmailHTML.replace("[SIDES]", data.sides || "Not Available");
-    EmailHTML = EmailHTML.replace("[DATE]", date || "Not Available");
+    EmailHTML = EmailHTML.replace("[SOUP]", data.soup || "Soup Not Available");
+    EmailHTML = EmailHTML.replace("[ENTREE]", data.entree || "Entree Not Available");
+    EmailHTML = EmailHTML.replace("[SPECIALDIETENTREE]", data.specialdietentree || "Diet Entree Not Available");
+    EmailHTML = EmailHTML.replace("[SALAD]", data.salad || "Salad Not Available");
+    EmailHTML = EmailHTML.replace("[DESSERT]", data.dessert || "Dessert Not Available");
+    EmailHTML = EmailHTML.replace("[SIDES]", data.sides || "Sides Not Available");
+    EmailHTML = EmailHTML.replace("[DATE]", date || "Date Not Available");
     //if not the first time, cancel ps
-    if (!firstTime) {
-        ps = "";
-    } else if (ps != "") { //not only it's not the first time, but also there is something in it
-        ps = "<p>" + ps + "</p>"
-    }
-    if (!((data.soup) && (data.entree) && (data.specialdietentree) && (data.salad) && (data.dessert) && (data.sides))) {
-        ps += "<a href='seansun.org/view/whynotavailable.html'>Why is the menu not available?,</a>"
-    }
-    console.log("ps text", ps);
-    //if there are any data, then format it
     if (ps != "") {
+        ps = "<p>" + ps + "</p>"
+        // if (!((data.soup) && (data.entree) && (data.specialdietentree) && (data.salad) && (data.dessert) && (data.sides))) {
+        //     ps += "<a href='seansun.org/view/whynotavailable.html'>Why is the menu not available?,</a>"
+        // }
         ps = `<tr><td align='center' style='padding: 0 56px 28px 56px;' valign='middle'><span style='font-family: "lato", "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 28px;font-size: 16px;  vertical-align: middle;'>` + ps + "</span></td></tr>";
     }
-    console.log("ps final:", ps)
+    console.log("ps:", ps)
     EmailHTML = EmailHTML.replace("[P.S.]", ps);
     return EmailHTML;
 }
 module.exports = {
     sendLunch
 }
-// sendLunch("sean.sun@sonomaacademy.org");
+sendLunch("sean.sun@sonomaacademy.org").then((res) => {
+    ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
+    console.log("Exited with message", res);
+})

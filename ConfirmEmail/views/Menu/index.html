@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <title>Sonoma Academy Lunch Menu</title>
+    <style>
+        body {
+            background-color: #dcd9d6;
+            font-family: Roboto;
+        }
+
+        .header-center {
+            text-align: center;
+        }
+
+        .menu {}
+
+        .menu-left {
+            float: left;
+            width: 45vw;
+        }
+
+        .menu-right {
+            float: right;
+            width: 45vw;
+        }
+
+        .header-sa {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .header-lunch {
+            padding: 0;
+            margin: 0;
+            font-size: 4em;
+            font-weight: bold;
+        }
+
+        .menu-header {
+            font-size: 1em;
+        }
+
+        .menu-item {
+            font-size: 2em;
+            padding: 0;
+            margin: 0;
+        }
+
+        #my-secret-div {
+            width: 1px;
+            height: 1px;
+            visibility: hidden;
+            overflow: hidden;
+        }
+    </style>
+    <script src="http://www.seansun.org/views/jquery-3.3.1.min.js"></script>
+    <script src="http://www.seansun.org/views/Menu/webscraper.js"></script>
+</head>
+
+<body>
+    <div id="my-secret-div"></div>
+    <div class="header-center">
+        <p class='header-sa'>WELCOME TO SONOMA ACADEMY</p>
+        <p class='header-lunch'>Today's Lunch</p>
+    </div>
+    <div class="menu">
+        <div class="menu-left">
+            <h6 class="menu-header">ENTREE</h6>
+            <p class="menu-item" id="entree"></p>
+            <h6 class="menu-header">DIET ENTREE</h6>
+            <p class="menu-item" id="specialdietentree"></p>
+            <h6 class="menu-header">SIDES</h6>
+            <p class="menu-item" id="sides"></p>
+        </div>
+        <div class="menu-right">
+            <h6 class="menu-header">SOUP</h6>
+            <p class="menu-item" id="soup"></p>
+            <h6 class="menu-header">SALAD</h6>
+            <p class="menu-item" id="salad"></p>
+            <h6 class="menu-header">DESSERT</h6>
+            <p class="menu-item" id="dessert"></p>
+        </div>
+    </div>
+</body>
+<script>
+    function updateLunch() {
+        let date = new Date();
+        getLunch(date.getFullYear(), date.getMonth() + 1, date.getDate()).then((data) => {
+            console.log(data);
+            $(`#soup`).html(data.soup);
+            $(`#entree`).html(data.entree);
+            $(`#specialdietentree`).html(data.specialdietentree);
+            $(`#salad`).html(data.salad);
+            $(`#dessert`).html(data.dessert);
+            $(`#sides`).html(data.sides);
+
+        });
+    }
+    updateLunch();
+    //setInterval(updateLunch, 5000)
+</script>
+
+</html>
