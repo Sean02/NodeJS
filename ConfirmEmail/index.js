@@ -7,6 +7,7 @@ let Process = require("./Process.js");
 let sendLunch = require("./SendLunch/index.js");
 let getLunch = require("./webscraper.js");
 var subdomain = require('express-subdomain');
+let towerDefense = require("./TowerDefense.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -20,7 +21,7 @@ let urlencodedParser = bodyParser.urlencoded({
 app.set("view engine", "hbs");
 //shutdown website
 app.use((req, res, next) => {
-    console.log(req);
+    // console.log(req);
     if (maintenance) {
         res.render("maintenance.hbs");
         return;
@@ -33,17 +34,6 @@ app.use(function(err, req, res, next) {
     return;
 });
 //----------------------------------------------------------------------
-//routers:
-var apirouter = express.Router();
-apirouter.get('/lunch', function(req, res) {
-    getLunch.scrape().then((data) => {
-        res.json(data);
-    });
-});
-apirouter.get('/', function(req, res) {
-    res.send("Welcome to seansun.org api! To use it, contact us at development@seansun.org");
-});
-app.use(subdomain('a', apirouter));
 //
 //
 //----------------------------------------------------------------------
@@ -112,9 +102,7 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
         if (result === "user doesnt exist") {
             res.status(200).render("confirmEmail", {
                 title: "You are not subscribed",
-                msg: `Click <span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="
-                location.href = '/signup'
-                ">here</span> to subscribe!`
+                msg: `Click <span style='text-decoration: underline; cursor:pointer;color:#ff9933' onclick="location.href = '/signup'">here</span> to subscribe!`
             });
         } else if (result === "user not confirmed") {
             res.status(200).render("confirmEmail", {
@@ -194,6 +182,54 @@ app.get('/confirm/:token', function(req, res) {
 // app.get("/stats", (req, res) => {
 //     res.sendFile(__dirname + "/views/stats.html");
 // });
+app.post("/towerdefense/addscore", urlencodedParser, (req, res) => {
+    console.log("received tower defense add game highscore request");
+    console.log(req.body.name);
+    console.log(req.body.score);
+    if (req.body.name === undefined || req.body.score === undefined) {
+        console.log("name or score undefined: not running add score");
+        res.status(200).send("undefined parameters");
+        console.log("clean exit");
+    } else {
+        towerDefense.addScore(req.body.name, req.body.score).then((result) => {
+            console.log(result);
+            res.status(200).send(JSON.stringify(result));
+            console.log("clean exit");
+        });
+    }
+});
+app.post("/towerdefense/leaderboard", urlencodedParser, (req, res) => {
+    console.log("received tower defense get game highscore request");
+    console.log(req.body.start);
+    console.log(req.body.end);
+    if (req.body.start === undefined || req.body.end === undefined) {
+        console.log("start or end undefined: not running get score");
+        res.status(200).send(JSON.stringify({
+            message: "undefined parameters"
+        }));
+    } else {
+        towerDefense.GenerateLeaderboardTable(req.body.start, req.body.end).then((result) => {
+            console.log(result);
+            if (result === "added") {}
+            res.status(200).send(JSON.stringify(result));
+        });
+    }
+});
+app.post("/towerdefense/getrawleaderboard", urlencodedParser, (req, res) => {
+    console.log("received tower defense get game highscore request");
+    console.log(req.body.start);
+    console.log(req.body.end);
+    if (req.body.start === undefined || req.body.end === undefined) {
+        console.log("start or end undefined: not running get score");
+        res.status(200).send("undefined parameters");
+    } else {
+        towerDefense.getScore(req.body.start, req.body.end).then((result) => {
+            console.log(result);
+            if (result === "added") {}
+            res.status(200).send(JSON.stringify(result));
+        });
+    }
+});
 app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
 });
