@@ -40,13 +40,15 @@ app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Blu
 
 let normalLimiter = new RateLimit({
     windowMs: 5*60*1000,
-    max: 500,
-    delayMs: 0 // plain reject
+    max: 2,
+    delayMs: 0, // plain reject
+    message: `<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif;}</style>`
 });
 let sensitiveLimiter = new RateLimit({
     windowMs: 5*60*1000,
     max: 50,
-    delayMs: 0 // plain reject
+    delayMs: 0, // plain reject
+    message:`<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif}</style>`
 });
 
 // only apply to requests that begin with /api/
