@@ -53,6 +53,69 @@ function allowThisIP(ip) {
     });
 }
 
+function recordRequest(ip) {
+    return new Promise((resolve, reject) => {
+        MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
+            const d = (new Date()).getTime();
+            if (res.length === 0) {
+                //this is the first time this ip has been on my website
+                MongoDB.Write("ServerProtection", "RequestHistory", {
+                    IP: ip,
+                    lastVisitTime: d,
+                    requests: 1,
+                }).then((result) => {
+                    resolve();
+                });
+            } else {
+                //this user has been on my site before
+                res = res[0];
+                MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
+                    lastVisitTime: d,
+                    requests: res.requests + 1
+                }).then((result) => {
+                    resolve();
+                });
+
+            }
+
+        });
+    });
+}
+
+function recordBadRecord(ip) {
+    return new Promise((resolve, reject) => {
+        MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
+            const d = (new Date()).getTime();
+            if (res.length === 0) {
+                //this is the first time this ip has been on my website
+                MongoDB.Write("ServerProtection", "RequestHistory", {
+                    IP: ip,
+                    lastVisitTime: d,
+                    requests: 1,
+                    badReccords: 1
+                }).then((result) => {
+                    resolve();
+                });
+            } else {
+                //this user has been on my site before
+                res = res[0];
+                MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
+                    lastVisitTime: d,
+                    requests: res.requests + 1,
+                    badRecords: (res.badRecords || 0) + 1
+                }).then((result) => {
+                    resolve();
+                });
+
+            }
+
+        });
+    });
+}
+
+
 module.exports = {
-    allowThisIP
+    allowThisIP,
+    recordRequest,
+    recordBadRecord
 }

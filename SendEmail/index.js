@@ -13,7 +13,7 @@ let urlencodedParser = bodyParser.urlencoded({
     extended: false
 });
 //
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     console.error("Express ERROR:" + err.stack);
     res.status(500).send('<h1>500 Internal Error</h1>');
     return;
@@ -71,6 +71,20 @@ app.get("/users/a", (req, res) => {
         res.status(200).send("<h1>Error: " + err + "</h1>")
     });
 });
+
+app.get("/a", (req, res) => {
+    // let s = req.params.search;
+    // let searchStr = {s: req.params.matchValue}
+
+    MongoDB.Read("ServerProtection", "RequestHistory", {}).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenReq(  data));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+
 app.get("/scan", (req, res) => {
     MongoDB.Read("Lunch", "Users", {
         "subscribed": true
@@ -127,6 +141,15 @@ function nicenIt(data) {
     });
     return res += "</table>";
 }
+
+function nicenReq(data) {
+    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>IP</th><th>Last Visit Time</th><th>Requests</th><th>Bad Records</th></tr>";
+    data.forEach((item, index) => {
+        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.requests + "</td><td>"+item.badRecords+"</td><tr>";
+    });
+    return res += "</table>";
+}
+
 // start server
 app.listen(81, () => {
     console.log(`Started up at port 81`);

@@ -9,7 +9,7 @@ let sendLunch = require("./SendLunch/index.js");
 let getLunch = require("./webscraper.js");
 // var subdomain = require('express-subdomain');
 let towerDefense = require("./TowerDefense.js");
-// let ServerProtection = require("./ServerProtection.js");
+let ServerProtection = require("./ServerProtection.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -34,29 +34,46 @@ app.set("view engine", "hbs");
 //     });
 // });
 
+//record request
+app.use((req, res, next) => {
+    next();
+    ServerProtection.recordRequest(getIP(req)).then(() => {
+        return;
+    });
+});
+
+
 //rate limiter
 
 app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 
 let normalLimiter = new RateLimit({
-    windowMs: 5*60*1000,
-    max: 2,
+    windowMs: 5 * 60 * 1000,
+    max: 500,
     delayMs: 0, // plain reject
-    message: `<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif;}</style>`
+    message: `<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif;}</style>`,
+    onLimitReached: addBadRecord
 });
+function addBadRecord (req, res, options) {
+    console.log("limit func called");
+    ServerProtection.recordBadRecord(getIP(req)).then(() => {
+        return;
+    });
+}
 let sensitiveLimiter = new RateLimit({
-    windowMs: 5*60*1000,
+    windowMs: 5 * 60 * 1000,
     max: 50,
     delayMs: 0, // plain reject
-    message:`<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif}</style>`
+    message: `<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif}</style>`,
+    onLimitReached: addBadRecord
 });
 
 // only apply to requests that begin with /api/
 app.use('/signup/', normalLimiter);
 app.use('/unsubscribe/', normalLimiter);
 app.use('/confirm/', sensitiveLimiter);
-app.use('/towerdefense/leaderboard',normalLimiter);
-app.use('/towerdefense/addscore',sensitiveLimiter);
+app.use('/towerdefense/leaderboard', normalLimiter);
+app.use('/towerdefense/addscore', sensitiveLimiter);
 
 //shutdown website
 app.use((req, res, next) => {
