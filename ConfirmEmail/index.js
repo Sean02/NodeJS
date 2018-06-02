@@ -1,13 +1,15 @@
 let express = require("express");
 let bodyParser = require("body-parser");
+let RateLimit = require('express-rate-limit');
 // let MailGun = require("./MailGun.js");
 let MongoDB = require("./MongoDB.js");
 let SignUp = require("./signup.js");
 let Process = require("./Process.js");
 let sendLunch = require("./SendLunch/index.js");
 let getLunch = require("./webscraper.js");
-var subdomain = require('express-subdomain');
+// var subdomain = require('express-subdomain');
 let towerDefense = require("./TowerDefense.js");
+// let ServerProtection = require("./ServerProtection.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -19,6 +21,41 @@ let urlencodedParser = bodyParser.urlencoded({
 });
 // app.use(bodyParser.json());
 app.set("view engine", "hbs");
+
+//block request if IP is too frequent
+// app.use((req, res, next) => {
+//     ServerProtection.allowThisIP(getIP(req)).then((result) => {
+//         if (result.allow) {
+//             next();
+//         } else {
+//             res.status(429).send(`<h1>429 TOO FREQUENT</h1><h2>Try again soon</h2><br><p>This incident will be reported.</p>`);
+//             return;
+//         }
+//     });
+// });
+
+//rate limiter
+
+app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+
+let normalLimiter = new RateLimit({
+    windowMs: 5*60*1000,
+    max: 500,
+    delayMs: 0 // plain reject
+});
+let sensitiveLimiter = new RateLimit({
+    windowMs: 5*60*1000,
+    max: 50,
+    delayMs: 0 // plain reject
+});
+
+// only apply to requests that begin with /api/
+app.use('/signup/', normalLimiter);
+app.use('/unsubscribe/', normalLimiter);
+app.use('/confirm/', sensitiveLimiter);
+app.use('/towerdefense/leaderboard',normalLimiter);
+app.use('/towerdefense/addscore',sensitiveLimiter);
+
 //shutdown website
 app.use((req, res, next) => {
     // console.log(req);
@@ -28,11 +65,14 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.use(function(err, req, res, next) {
+
+
+app.use(function (err, req, res, next) {
     console.error("Express ERROR:" + err.stack);
     res.status(500).send('<h1>500 Internal Error</h1>');
     return;
 });
+
 //----------------------------------------------------------------------
 //
 //
@@ -140,7 +180,7 @@ app.post("/unsubscribe", urlencodedParser, (req, res) => {
         }
     });
 });
-app.get('/confirm/:token', function(req, res) {
+app.get('/confirm/:token', function (req, res) {
     // res.send('user ' + req.params.token);
     if (req.params.token === "") {
         res.status(200).render("emailConfirmed", {
@@ -191,7 +231,7 @@ app.post("/towerdefense/addscore", urlencodedParser, (req, res) => {
         res.status(200).send("undefined parameters");
         console.log("clean exit");
     } else {
-        towerDefense.addScore(req.body.name, req.body.score).then((result) => {
+        towerDefense.addScore(req.body.name, req.body.score, getIP(req)).then((result) => {
             console.log(result);
             res.status(200).send(JSON.stringify(result));
             console.log("clean exit");
@@ -210,26 +250,13 @@ app.post("/towerdefense/leaderboard", urlencodedParser, (req, res) => {
     } else {
         towerDefense.GenerateLeaderboardTable(req.body.start, req.body.end).then((result) => {
             console.log(result);
-            if (result === "added") {}
+            if (result === "added") {
+            }
             res.status(200).send(JSON.stringify(result));
         });
     }
 });
-app.post("/towerdefense/getrawleaderboard", urlencodedParser, (req, res) => {
-    console.log("received tower defense get game highscore request");
-    console.log(req.body.start);
-    console.log(req.body.end);
-    if (req.body.start === undefined || req.body.end === undefined) {
-        console.log("start or end undefined: not running get score");
-        res.status(200).send("undefined parameters");
-    } else {
-        towerDefense.getScore(req.body.start, req.body.end).then((result) => {
-            console.log(result);
-            if (result === "added") {}
-            res.status(200).send(JSON.stringify(result));
-        });
-    }
-});
+
 app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
 });
@@ -248,7 +275,7 @@ app.get("/getStats", (req, res) => {
 //none of above are found -> look for static
 app.use("/", express.static(__dirname));
 //not found in static either, emm... return 404 page!
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.sendFile(__dirname + "/views/404.html");
     return;
 });
@@ -256,6 +283,13 @@ app.use(function(req, res, next) {
 app.listen(80, () => {
     console.log(`Started Luncher at port 80`);
 });
+
+function getIP(req) {
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log("ip", ip);
+    return ip;
+}
+
 module.exports = {
     app
 };

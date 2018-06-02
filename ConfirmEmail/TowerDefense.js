@@ -1,7 +1,7 @@
 let MongoDB = require("./MongoDB.js");
 let rp = require('request-promise');
 
-function addScore(name, score) {
+function addScore(name, score, ip) {
     return new Promise((resolve, reject) => {
         if (score < 100) {
             console.log("score:", score, " is too low to submit, not adding");
@@ -32,7 +32,8 @@ function addScore(name, score) {
                 "name": safeName.censoredContent,
                 "original name": name,
                 "score": parseInt(score, 10),
-                "time": d.getTime()
+                "time": d.getTime(),
+                "IP": ip
             };
             console.log("data to be written is", Writedata);
             if (isNaN(Writedata.score)) {
@@ -149,6 +150,7 @@ function GenerateLeaderboardTable(start, end) {
                 delete item["original name"];
                 delete item._id;
                 delete item.time;
+                delete item.IP;
                 item.ranking = start + index;
             })
             let table = "<table><tr><th>Rank</th><th>Name</th><th>Score</th></tr>";
