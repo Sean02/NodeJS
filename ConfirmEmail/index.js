@@ -259,6 +259,10 @@ app.post("/towerdefense/leaderboard", urlencodedParser, (req, res) => {
     }
 });
 
+app.get("/towerDefense", (req, res) => {
+    res.sendFile(__dirname + "/views/TowerDefense/index.html");
+});
+
 app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
 });
