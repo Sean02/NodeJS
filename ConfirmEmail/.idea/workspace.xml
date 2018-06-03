@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5abbfad9-854f-4197-93c4-052abd81a69e" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/../SendEmail/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ServerProtection.js" afterPath="$PROJECT_DIR$/ServerProtection.js" />
       <change beforePath="$PROJECT_DIR$/views/TowerDefense" afterPath="$PROJECT_DIR$/views/TowerDefense" />
       <change beforePath="$PROJECT_DIR$/../Lance/lancegame" afterPath="$PROJECT_DIR$/../Lance/lancegame" />
       <change beforePath="$PROJECT_DIR$/../SendEmail/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../SendEmail/.idea/workspace.xml" />
@@ -23,8 +23,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="287" column="23" lean-forward="false" selection-start-line="287" selection-start-column="23" selection-end-line="287" selection-end-column="23" />
+            <state relative-caret-position="788">
+              <caret line="289" column="3" lean-forward="true" selection-start-line="289" selection-start-column="3" selection-end-line="289" selection-end-column="3" />
               <folding>
                 <marker date="1528005294256" expanded="true" signature="4242:4257" ph="..." />
                 <marker date="1528005294256" expanded="false" signature="5649:5705" ph="..." />
@@ -37,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServerProtection.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ServerProtection.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ServerProtection.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="728">
-              <caret line="28" column="50" lean-forward="false" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="50" />
+            <state relative-caret-position="338">
+              <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -70,10 +70,10 @@
       <file leaf-file-name="leaderboard.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/leaderboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="31" column="82" lean-forward="false" selection-start-line="31" selection-start-column="82" selection-end-line="31" selection-end-column="82" />
+            <state relative-caret-position="2430">
+              <caret line="81" column="18" lean-forward="false" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
               <folding>
-                <marker date="1528007815283" expanded="true" signature="6587:6596" ph="{...}" />
+                <marker date="1528012443688" expanded="true" signature="6611:6620" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -91,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="836">
-              <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+            <state relative-caret-position="368">
+              <caret line="174" column="39" lean-forward="false" selection-start-line="174" selection-start-column="39" selection-end-line="174" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -104,7 +104,7 @@
       <file leaf-file-name="TowerDefense.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TowerDefense.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
+            <state relative-caret-position="468">
               <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
               <folding />
             </state>
@@ -168,7 +168,6 @@
       <find>Request</find>
       <find>startscr</find>
       <find>start</find>
-      <find>load</find>
       <find>sean</find>
       <find>Game.</find>
       <find>Game.gameState = 4</find>
@@ -186,8 +185,11 @@
       <find>sort</find>
       <find>tim</find>
       <find>forma</find>
-      <find>time</find>
       <find>f</find>
+      <find>time</find>
+      <find>./</find>
+      <find>load</find>
+      <find>startg</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,11 +204,11 @@
         <option value="$PROJECT_DIR$/MongoDB.js" />
         <option value="$PROJECT_DIR$/views/TowerDefense/index.html" />
         <option value="$PROJECT_DIR$/views/TowerDefense/main.js" />
-        <option value="$PROJECT_DIR$/views/TowerDefense/scripts/game.js" />
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/TowerDefense.js" />
-        <option value="$PROJECT_DIR$/views/TowerDefense/scripts/leaderboard.js" />
         <option value="$PROJECT_DIR$/ServerProtection.js" />
+        <option value="$PROJECT_DIR$/views/TowerDefense/scripts/leaderboard.js" />
+        <option value="$PROJECT_DIR$/views/TowerDefense/scripts/game.js" />
       </list>
     </option>
   </component>
@@ -318,7 +320,7 @@
       <updated>1526939540516</updated>
       <workItem from="1526939541874" duration="93333000" />
       <workItem from="1527894707032" duration="11721000" />
-      <workItem from="1527965193574" duration="8895000" />
+      <workItem from="1527965193574" duration="10303000" />
     </task>
     <task id="LOCAL-00001" summary="added rate limiter">
       <created>1527898405208</created>
@@ -383,11 +385,18 @@
       <option name="project" value="LOCAL" />
       <updated>1528008400829</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="date formatted fixed">
+      <created>1528008828608</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1528008828608</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113949000" />
+    <option name="totallyTimeSpent" value="115357000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
@@ -426,7 +435,8 @@
     <MESSAGE value="Going to leaderboard page from endgame fixed" />
     <MESSAGE value="sound fixed" />
     <MESSAGE value="date record formatted" />
-    <option name="LAST_COMMIT_MESSAGE" value="date record formatted" />
+    <MESSAGE value="date formatted fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="date formatted fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -477,7 +487,7 @@
         <state relative-caret-position="26">
           <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
           <folding>
-            <marker date="1528007815283" expanded="true" signature="6587:6596" ph="{...}" />
+            <marker date="1528012443688" expanded="true" signature="6611:6620" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -754,14 +764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/graphics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/towers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -798,14 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/TowerDefense/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -822,10 +816,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ServerProtection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/leaderboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2430">
+          <caret line="81" column="18" lean-forward="false" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
+          <folding>
+            <marker date="1528012443688" expanded="true" signature="6611:6620" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="287" column="23" lean-forward="false" selection-start-line="287" selection-start-column="23" selection-end-line="287" selection-end-column="23" />
+        <state relative-caret-position="788">
+          <caret line="289" column="3" lean-forward="true" selection-start-line="289" selection-start-column="3" selection-end-line="289" selection-end-column="3" />
           <folding>
             <marker date="1528005294256" expanded="true" signature="4242:4257" ph="..." />
             <marker date="1528005294256" expanded="false" signature="5649:5705" ph="..." />
@@ -837,28 +849,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/leaderboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="31" column="82" lean-forward="false" selection-start-line="31" selection-start-column="82" selection-end-line="31" selection-end-column="82" />
-          <folding>
-            <marker date="1528007815283" expanded="true" signature="6587:6596" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TowerDefense.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
+        <state relative-caret-position="468">
           <caret line="32" column="38" lean-forward="false" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ServerProtection.js">
+    <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/graphics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="728">
-          <caret line="28" column="50" lean-forward="false" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="50" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/TowerDefense/scripts/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="174" column="39" lean-forward="false" selection-start-line="174" selection-start-column="39" selection-end-line="174" selection-end-column="39" />
           <folding />
         </state>
       </provider>

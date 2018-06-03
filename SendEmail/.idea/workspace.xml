@@ -4,7 +4,6 @@
     <list default="true" id="527e908f-96bf-4c85-9c85-e5f7518820ef" name="Default" comment="">
       <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/ServerProtection.js" afterPath="$PROJECT_DIR$/../ConfirmEmail/ServerProtection.js" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/views/TowerDefense" afterPath="$PROJECT_DIR$/../ConfirmEmail/views/TowerDefense" />
       <change beforePath="$PROJECT_DIR$/../Lance/lancegame" afterPath="$PROJECT_DIR$/../Lance/lancegame" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -170,7 +169,7 @@
       <option name="presentableId" value="Default" />
       <updated>1527921329456</updated>
       <workItem from="1527921331046" duration="2913000" />
-      <workItem from="1527987178255" duration="8892000" />
+      <workItem from="1527987178255" duration="9174000" />
     </task>
     <task id="LOCAL-00001" summary="date record formatted">
       <created>1528008476806</created>
@@ -183,7 +182,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11805000" />
+    <option name="totallyTimeSpent" value="12087000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
