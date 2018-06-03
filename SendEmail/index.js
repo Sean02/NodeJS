@@ -7,6 +7,7 @@ let FSread = require("./FSread.js");
 // const { sanitizeBody } = require('express-validator/filter');
 //config
 const maintenance = false;
+const tableCSS = `<style>table{font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;border-collapse:collapse;width:100%}table td,table th{border:1px solid #ddd;padding:8px}table tr:nth-child(even){background-color:#f2f2f2}table tr:hover{background-color:#ddd}table th{padding-top:12px;padding-bottom:12px;text-align:left;background-color:#4CAF50;color:#fff}</style>`;
 //
 let app = express();
 let urlencodedParser = bodyParser.urlencoded({
@@ -45,7 +46,7 @@ app.get("/users/t", (req, res) => {
         "subscribed": true
     }).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenIt(data));
+        res.status(200).send(nicenIt(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -56,7 +57,7 @@ app.get("/users/f", (req, res) => {
         "subscribed": false
     }).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenIt(data));
+        res.status(200).send(nicenIt(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -65,7 +66,7 @@ app.get("/users/f", (req, res) => {
 app.get("/users/a", (req, res) => {
     MongoDB.Read("Lunch", "Users", {}).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenIt(data));
+        res.status(200).send(nicenIt(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -78,7 +79,7 @@ app.get("/a", (req, res) => {
 
     MongoDB.Read("ServerProtection", "RequestHistory", {}).then((data) => {
         // console.log(data);
-        res.status(200).send(`<a href="/a/t"><button>Sort by time last visited</button></a><a href="/a/i"><button>Sort by IP</button></a><a href="/a/r"><button>Sort by num of requests</button></a><a href="/a/b"><button>Sort by num of bad records</button></a>` + nicenReq(data));
+        res.status(200).send(`<a href="/a/t"><button>Sort by time last visited</button></a><a href="/a/i"><button>Sort by IP</button></a><a href="/a/r"><button>Sort by num of requests</button></a><a href="/a/b"><button>Sort by num of bad records</button></a>` + nicenReq(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -90,7 +91,7 @@ app.get("/a/t", (req, res) => {
         "lastVisitTime": -1
     }, 0, 0).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenReq(data));
+        res.status(200).send(nicenReq(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -101,7 +102,7 @@ app.get("/a/i", (req, res) => {
         "IP": 1
     }, 0, 0).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenReq(data));
+        res.status(200).send(nicenReq(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -112,7 +113,7 @@ app.get("/a/r", (req, res) => {
         "requests": -1
     }, 0, 0).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenReq(data));
+        res.status(200).send(nicenReq(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -123,7 +124,7 @@ app.get("/a/b", (req, res) => {
         "badRecords": -1
     }, 0, 0).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenReq(data));
+        res.status(200).send(nicenReq(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -155,7 +156,7 @@ app.get("/l", (req, res) => {
         "score": -1
     }, 0, 0).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenLea(data));
+        res.status(200).send(nicenLea(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
