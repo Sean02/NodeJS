@@ -144,7 +144,7 @@ function GenerateLeaderboardTable(start, end) {
         start = parseInt(start, 10);
         end = parseInt(end, 10);
         if (start < 1) start = 1;
-        if (end < 0) end = 5
+        if (end < 0) end = 5;
         getScore(start, end).then((res) => {
             res.forEach((item, index) => {
                 delete item["original name"];

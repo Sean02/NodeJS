@@ -13,6 +13,8 @@ let ServerProtection = require("./ServerProtection.js");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
+const tableCSS = `<style>table{font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;border-collapse:collapse;width:100%}table td,table th{border:1px solid #ddd;padding:8px}table tr:nth-child(even){background-color:#f2f2f2}table tr:hover{background-color:#ddd}table th{padding-top:12px;padding-bottom:12px;text-align:left;background-color:#4CAF50;color:#fff}</style>`;
+
 const maintenance = false;
 //
 let app = express();
@@ -36,6 +38,7 @@ app.set("view engine", "hbs");
 
 //record request
 app.use((req, res, next) => {
+    console.log(getIP(req), "is trying to access", req.protocol + '://' + req.get('host') + req.originalUrl, "using", req.method, "method")
     next();
     ServerProtection.recordRequest(getIP(req)).then(() => {
         return;
@@ -54,12 +57,14 @@ let normalLimiter = new RateLimit({
     message: `<h1>429 TOO FREQUENT</h1><h2>Try again later</h2><p>This incident will be reported.</p><style>*{font-family: 'Open Sans', sans-serif;}</style>`,
     onLimitReached: addBadRecord
 });
-function addBadRecord (req, res, options) {
+
+function addBadRecord(req, res, options) {
     console.log("limit func called");
     ServerProtection.recordBadRecord(getIP(req)).then(() => {
         return;
     });
 }
+
 let sensitiveLimiter = new RateLimit({
     windowMs: 5 * 60 * 1000,
     max: 50,
@@ -278,6 +283,10 @@ app.post("/towerdefense/leaderboard", urlencodedParser, (req, res) => {
 
 app.get("/towerDefense", (req, res) => {
     res.sendFile(__dirname + "/views/TowerDefense/index.html");
+});
+
+app.get("/towerDefense/leaderboard", (req, res) => {
+    res.send(tableCSS + `<div id="res"</div><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script>$.ajax({type: "POST",url: "./leaderboard",dataType: "json",data: "start=0&end=0"}).done((data) => {$("body").html(data.table);});</script>`);
 });
 
 app.get("/menu", (req, res) => {
