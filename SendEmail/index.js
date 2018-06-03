@@ -221,17 +221,17 @@ function nicenIt(data) {
 }
 
 function nicenReq(data) {
-    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>IP</th><th>Last Visit Time</th><th>Requests</th><th>Bad Records</th></tr>";
+    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>IP</th><th>Last Visit Time</th><th>Time Formatted</th><th>Requests</th><th>Bad Records</th></tr>";
     data.forEach((item, index) => {
-        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.requests + "</td><td>" + item.badRecords + "</td><tr>";
+        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.timeFormatted + "</td><td>" + item.requests + "</td><td>" + item.badRecords + "</td><tr>";
     });
     return res += "</table>";
 }
 
 function nicenLea(data) {
-    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>Ranking</th><th>Name</th><th>Score</th><th>Time</th><th>IP</th><th>Original Name</th></tr>";
+    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>Ranking</th><th>Name</th><th>Score</th><th>Time</th><th>Time Formatted</th><th>IP</th><th>Original Name</th></tr>";
     data.forEach((item, index) => {
-        res += "<tr><td>" + (index + 1) + "</td><td>" + item.name + "</td><td>" + item.score + "</td><td>" + item.time + "</td><td>" + item.IP + "</td><td>" + item["original name"] + "</td><tr>";
+        res += "<tr><td>" + (index + 1) + "</td><td>" + item.name + "</td><td>" + item.score + "</td><td>" + item.time + "</td><td>" + item.timeFormatted + "</td><td>" + item.IP + "</td><td>" + item["original name"] + "</td><tr>";
     });
     return res += "</table>";
 }

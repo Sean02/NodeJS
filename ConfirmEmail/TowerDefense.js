@@ -33,6 +33,7 @@ function addScore(name, score, ip) {
                 "original name": name,
                 "score": parseInt(score, 10),
                 "time": d.getTime(),
+                timeFormatted: d.toString(),
                 "IP": ip
             };
             console.log("data to be written is", Writedata);
@@ -128,10 +129,10 @@ function languageSafe(text) {
             },
             json: true // Automatically parses the JSON string in the response
         };
-        rp(options).then(function(res) {
+        rp(options).then(function (res) {
             console.log('Result from check language request:', res);
             resolve(res);
-        }).catch(function(err) {
+        }).catch(function (err) {
             // API call failed...
             console.log("Check lanugage request failed:", err);
             resolve("failed");
@@ -150,6 +151,7 @@ function GenerateLeaderboardTable(start, end) {
                 delete item["original name"];
                 delete item._id;
                 delete item.time;
+                delete item.timeFormatted;
                 delete item.IP;
                 item.ranking = start + index;
             })
@@ -157,7 +159,8 @@ function GenerateLeaderboardTable(start, end) {
             res.forEach((item, index) => {
                 table += "<tr><td>" + (index + start).toString() + "</td><td>" + item.name.toString() + "</td><td>" + item.score.toString() + "</td>"
             })
-            for (var i = start; i <= end; i++) {}
+            for (var i = start; i <= end; i++) {
+            }
             table += "</table>";
             resolve({
                 table: table,
@@ -180,6 +183,7 @@ function RankingYouWouldGetIfYouHaveThisScore(a) {
         });
     });
 }
+
 module.exports = {
     addScore,
     getScore,

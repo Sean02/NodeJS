@@ -7,12 +7,13 @@ const numOfRequestsInThisTime = 60;
 function allowThisIP(ip) {
     return new Promise((resolve, reject) => {
         MongoDB.Read("ServerProtection", "Frequency", {IP: ip}).then((res) => {
-            const d = (new Date()).getTime();
+            const d = new Date();
             if (res.length === 0) {
                 //this is the first time this ip has been on my website
                 MongoDB.Write("ServerProtection", "Frequency", {
                     IP: ip,
-                    lastRenewTime: d,
+                    lastRenewTime: d.getTime(),
+                    timeFormatted: d.toString(),
                     requests: 1,
                     totalRequests: 1,
                     numOfTimesTooFrequent: 0
@@ -26,6 +27,7 @@ function allowThisIP(ip) {
                     //ok, this user hasn't been on my site for the interval, he gets a renew no matter what.
                     MongoDB.Update("ServerProtection", "Frequency", {IP: ip}, {
                         lastRenewTime: d,
+                        timeFormatted: d.toString(),
                         requests: 1,
                         totalRequests: res.totalRequests + 1
                     }).then((result) => {
@@ -56,12 +58,13 @@ function allowThisIP(ip) {
 function recordRequest(ip) {
     return new Promise((resolve, reject) => {
         MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
-            const d = (new Date()).getTime();
+            const d = new Date();
             if (res.length === 0) {
                 //this is the first time this ip has been on my website
                 MongoDB.Write("ServerProtection", "RequestHistory", {
                     IP: ip,
-                    lastVisitTime: d,
+                    lastVisitTime: d.getTime(),
+                    timeFormatted: d.toString(),
                     requests: 1,
                     badRecords: 0
                 }).then((result) => {
@@ -72,6 +75,7 @@ function recordRequest(ip) {
                 res = res[0];
                 MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
                     lastVisitTime: d,
+                    timeFormatted: d.toString(),
                     requests: res.requests + 1
                 }).then((result) => {
                     resolve();
@@ -86,12 +90,13 @@ function recordRequest(ip) {
 function recordBadRecord(ip) {
     return new Promise((resolve, reject) => {
         MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
-            const d = (new Date()).getTime();
+            const d = new Date();
             if (res.length === 0) {
                 //this is the first time this ip has been on my website
                 MongoDB.Write("ServerProtection", "RequestHistory", {
                     IP: ip,
-                    lastVisitTime: d,
+                    lastVisitTime: d.getTime(),
+                    timeFormatted: d.toString(),
                     requests: 1,
                     badRecords: 1
                 }).then((result) => {
@@ -102,6 +107,7 @@ function recordBadRecord(ip) {
                 res = res[0];
                 MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
                     lastVisitTime: d,
+                    timeFormatted: d.toString(),
                     requests: res.requests + 1,
                     badRecords: (res.badRecords || 0) + 1
                 }).then((result) => {
