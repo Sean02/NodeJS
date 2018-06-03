@@ -26,7 +26,7 @@ function allowThisIP(ip) {
                 if (res.lastRenewTime + renewRequestInterval < d) {
                     //ok, this user hasn't been on my site for the interval, he gets a renew no matter what.
                     MongoDB.Update("ServerProtection", "Frequency", {IP: ip}, {
-                        lastRenewTime: d,
+                        lastRenewTime: d.getTime(),
                         timeFormatted: d.toString(),
                         requests: 1,
                         totalRequests: res.totalRequests + 1
@@ -74,7 +74,7 @@ function recordRequest(ip) {
                 //this user has been on my site before
                 res = res[0];
                 MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
-                    lastVisitTime: d,
+                    lastVisitTime: d.getTime(),
                     timeFormatted: d.toString(),
                     requests: res.requests + 1
                 }).then((result) => {
@@ -106,7 +106,7 @@ function recordBadRecord(ip) {
                 //this user has been on my site before
                 res = res[0];
                 MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
-                    lastVisitTime: d,
+                    lastVisitTime: d.getTime(),
                     timeFormatted: d.toString(),
                     requests: res.requests + 1,
                     badRecords: (res.badRecords || 0) + 1
