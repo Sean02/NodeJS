@@ -63,6 +63,7 @@ function recordRequest(ip) {
                     IP: ip,
                     lastVisitTime: d,
                     requests: 1,
+                    badRecords: 0
                 }).then((result) => {
                     resolve();
                 });
@@ -92,7 +93,7 @@ function recordBadRecord(ip) {
                     IP: ip,
                     lastVisitTime: d,
                     requests: 1,
-                    badReccords: 1
+                    badRecords: 1
                 }).then((result) => {
                     resolve();
                 });

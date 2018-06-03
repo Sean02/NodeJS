@@ -78,7 +78,84 @@ app.get("/a", (req, res) => {
 
     MongoDB.Read("ServerProtection", "RequestHistory", {}).then((data) => {
         // console.log(data);
-        res.status(200).send(nicenReq(  data));
+        res.status(200).send(`<a href="/a/t"><button>Sort by time last visited</button></a><a href="/a/i"><button>Sort by IP</button></a><a href="/a/r"><button>Sort by num of requests</button></a><a href="/a/b"><button>Sort by num of bad records</button></a>` + nicenReq(data));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+
+app.get("/a/t", (req, res) => {
+    MongoDB.ReadWithSortAndSkipAndLimit("ServerProtection", "RequestHistory", {}, {
+        "lastVisitTime": -1
+    }, 0, 0).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenReq(data));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+app.get("/a/i", (req, res) => {
+    MongoDB.ReadWithSortAndSkipAndLimit("ServerProtection", "RequestHistory", {}, {
+        "IP": 1
+    }, 0, 0).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenReq(data));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+app.get("/a/r", (req, res) => {
+    MongoDB.ReadWithSortAndSkipAndLimit("ServerProtection", "RequestHistory", {}, {
+        "requests": -1
+    }, 0, 0).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenReq(data));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+app.get("/a/b", (req, res) => {
+    MongoDB.ReadWithSortAndSkipAndLimit("ServerProtection", "RequestHistory", {}, {
+        "badRecords": -1
+    }, 0, 0).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenReq(data));
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+app.get("/t", (req, res) => {
+    // let s = req.params.search;
+    // let searchStr = {s: req.params.matchValue}
+
+    MongoDB.Read("ServerProtection", "RequestHistory", {}).then((data) => {
+        // console.log(data);
+        let total = 0;
+        data.forEach((item) => {
+            total += item.requests
+        });
+        // res.status(200).send("<br><br><br><br><br><center style='font-family: sans-serif; font-size: xx-large;'>Total number of requests:</center><br><br><center style='font-family: sans-serif; font-size: 200;'>" + total + "</center>");
+        res.status(200).send("<div style='margin: auto; position: absolute; top:0; left: 0; bottom: 0; right: 0; height:500px;'><br><center style='font-family: sans-serif; font-size: xx-large;'>Total number of requests:</center><br><br><center style='font-family: sans-serif; font-size: 200;'>" + total + "</center></div>");
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+
+app.get("/l", (req, res) => {
+    // let s = req.params.search;
+    // let searchStr = {s: req.params.matchValue}
+
+    MongoDB.ReadWithSortAndSkipAndLimit("TowerDefense", "Leaderboard", {}, {
+        "score": -1
+    }, 0, 0).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenLea(data));
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -145,10 +222,39 @@ function nicenIt(data) {
 function nicenReq(data) {
     let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>IP</th><th>Last Visit Time</th><th>Requests</th><th>Bad Records</th></tr>";
     data.forEach((item, index) => {
-        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.requests + "</td><td>"+item.badRecords+"</td><tr>";
+        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.requests + "</td><td>" + item.badRecords + "</td><tr>";
     });
     return res += "</table>";
 }
+
+function nicenLea(data) {
+    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>Ranking</th><th>Name</th><th>Score</th><th>Time</th><th>IP</th><th>Original Name</th></tr>";
+    data.forEach((item, index) => {
+        res += "<tr><td>" + (index + 1) + "</td><td>" + item.name + "</td><td>" + item.score + "</td><td>" + item.time + "</td><td>" + item.IP + "</td><td>" + item["original name"] + "</td><tr>";
+    });
+    return res += "</table>";
+}
+
+function deleteMe() {
+    return new Promise((resolve, reject) => {
+        MongoDB.Read("ServerProtection", "RequestHistory", {}).then((res) => {
+            res.forEach((item) => {
+                MongoDB.Update("ServerProtection", "RequestHistory", {
+                    IP: item.IP
+                }, {badRecords: 0}).then((result) => {
+                    console.log("updated", result);
+                })
+            })
+        }, (err) => {
+            resolve("error", err);
+        });
+    });
+
+}
+
+// deleteMe().then((res)=>{
+//     console.log(res);
+// });
 
 // start server
 app.listen(81, () => {
