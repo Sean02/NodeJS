@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="527e908f-96bf-4c85-9c85-e5f7518820ef" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/views/TowerDefense" afterPath="$PROJECT_DIR$/../ConfirmEmail/views/TowerDefense" />
       <change beforePath="$PROJECT_DIR$/../Lance/lancegame" afterPath="$PROJECT_DIR$/../Lance/lancegame" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
