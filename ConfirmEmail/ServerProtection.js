@@ -4,7 +4,7 @@ const numOfRequestsInThisTime = 60;
 
 //this is supposed to be a rate limiter, but then I found a amazing library that does this better,
 //but I still don't want to delete this beautiful piece of code, so just leave it here
-function allowThisIP(ip) {
+function allowThisIP(ip, req) {
     return new Promise((resolve, reject) => {
         MongoDB.Read("ServerProtection", "Frequency", {IP: ip}).then((res) => {
             const d = new Date();
@@ -16,7 +16,8 @@ function allowThisIP(ip) {
                     timeFormatted: d.toString(),
                     requests: 1,
                     totalRequests: 1,
-                    numOfTimesTooFrequent: 0
+                    numOfTimesTooFrequent: 0,
+                    lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
                 }).then((result) => {
                     resolve({allow: true});
                 });
@@ -29,7 +30,8 @@ function allowThisIP(ip) {
                         lastRenewTime: d.getTime(),
                         timeFormatted: d.toString(),
                         requests: 1,
-                        totalRequests: res.totalRequests + 1
+                        totalRequests: res.totalRequests + 1,
+                        lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
                     }).then((result) => {
                         resolve({allow: true});
                     });
@@ -37,14 +39,16 @@ function allowThisIP(ip) {
                     //just another request
                     MongoDB.Update("ServerProtection", "Frequency", {IP: ip}, {
                         requests: res.requests + 1,
-                        totalRequests: res.totalRequests + 1
+                        totalRequests: res.totalRequests + 1,
+                        lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
                     }).then((result) => {
                         resolve({allow: false});
                     });
                 } else {
                     //block and add bad record
                     MongoDB.Update("ServerProtection", "Frequency", {IP: ip}, {
-                        numOfTimesTooFrequent: res.numOfTimesTooFrequent + 1
+                        numOfTimesTooFrequent: res.numOfTimesTooFrequent + 1,
+                        lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
                     }).then((result) => {
                         resolve({allow: false});
                     });
@@ -55,7 +59,7 @@ function allowThisIP(ip) {
     });
 }
 
-function recordRequest(ip) {
+function recordRequest(ip, req) {
     return new Promise((resolve, reject) => {
         MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
             const d = new Date();
@@ -66,39 +70,8 @@ function recordRequest(ip) {
                     lastVisitTime: d.getTime(),
                     timeFormatted: d.toString(),
                     requests: 1,
-                    badRecords: 0
-                }).then((result) => {
-                    resolve();
-                });
-            } else {
-                //this user has been on my site before
-                res = res[0];
-                MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
-                    lastVisitTime: d.getTime(),
-                    timeFormatted: d.toString(),
-                    requests: res.requests + 1
-                }).then((result) => {
-                    resolve();
-                });
-
-            }
-
-        });
-    });
-}
-
-function recordBadRecord(ip) {
-    return new Promise((resolve, reject) => {
-        MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
-            const d = new Date();
-            if (res.length === 0) {
-                //this is the first time this ip has been on my website
-                MongoDB.Write("ServerProtection", "RequestHistory", {
-                    IP: ip,
-                    lastVisitTime: d.getTime(),
-                    timeFormatted: d.toString(),
-                    requests: 1,
-                    badRecords: 1
+                    badRecords: 0,
+                    lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
                 }).then((result) => {
                     resolve();
                 });
@@ -109,7 +82,7 @@ function recordBadRecord(ip) {
                     lastVisitTime: d.getTime(),
                     timeFormatted: d.toString(),
                     requests: res.requests + 1,
-                    badRecords: (res.badRecords || 0) + 1
+                    lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
                 }).then((result) => {
                     resolve();
                 });
@@ -118,6 +91,47 @@ function recordBadRecord(ip) {
 
         });
     });
+}
+
+function recordBadRecord(ip, req) {
+    return new Promise((resolve, reject) => {
+        MongoDB.Read("ServerProtection", "RequestHistory", {IP: ip}).then((res) => {
+            const d = new Date();
+            if (res.length === 0) {
+                //this is the first time this ip has been on my website
+                MongoDB.Write("ServerProtection", "RequestHistory", {
+                    IP: ip,
+                    lastVisitTime: d.getTime(),
+                    timeFormatted: d.toString(),
+                    requests: 1,
+                    badRecords: 1,
+                    lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
+                }).then((result) => {
+                    resolve();
+                });
+            } else {
+                //this user has been on my site before
+                res = res[0];
+                MongoDB.Update("ServerProtection", "RequestHistory", {IP: ip}, {
+                    lastVisitTime: d.getTime(),
+                    timeFormatted: d.toString(),
+                    requests: res.requests + 1,
+                    badRecords: (res.badRecords || 0) + 1,
+                    lastRequest: getLastRequest(res.lastRequest, req, res.lastVisitTime, d.getTime())
+                }).then((result) => {
+                    resolve();
+                });
+
+            }
+
+        });
+    });
+}
+
+function getLastRequest(oldReq, newReq, oldTime, newTime) {
+    if (newTime - oldTime <= 5 * 1000)
+        return oldReq;
+    return newReq.method + ",  " + newReq.protocol + '://' + newReq.get('host') + newReq.originalUrl;
 }
 
 

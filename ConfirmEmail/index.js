@@ -1,6 +1,7 @@
 let express = require("express");
 let bodyParser = require("body-parser");
 let RateLimit = require('express-rate-limit');
+// let sitemap = require("express-sitemap");
 // let MailGun = require("./MailGun.js");
 let MongoDB = require("./MongoDB.js");
 let SignUp = require("./signup.js");
@@ -26,7 +27,7 @@ app.set("view engine", "hbs");
 
 //block request if IP is too frequent
 // app.use((req, res, next) => {
-//     ServerProtection.allowThisIP(getIP(req)).then((result) => {
+//     ServerProtection.allowThisIP(getIP(req),req).then((result) => {
 //         if (result.allow) {
 //             next();
 //         } else {
@@ -40,7 +41,7 @@ app.set("view engine", "hbs");
 app.use((req, res, next) => {
     console.log(getIP(req), "is trying to access", req.protocol + '://' + req.get('host') + req.originalUrl, "using", req.method, "method")
     next();
-    ServerProtection.recordRequest(getIP(req)).then(() => {
+    ServerProtection.recordRequest(getIP(req), req).then(() => {
         return;
     });
 });
@@ -60,7 +61,7 @@ let normalLimiter = new RateLimit({
 
 function addBadRecord(req, res, options) {
     console.log("limit func called");
-    ServerProtection.recordBadRecord(getIP(req)).then(() => {
+    ServerProtection.recordBadRecord(getIP(req), req).then(() => {
         return;
     });
 }
@@ -304,6 +305,18 @@ app.get("/getStats", (req, res) => {
         });
     });
 });
+
+app.get('/sitemap.xml', function(req, res) {
+    var sitemap = generate_xml_sitemap(); // get the dynamically generated XML sitemap
+    res.header('Content-Type', 'text/xml');
+    res.send(sitemap);
+});
+
+app.get('/robot.txt', function(req, res) {
+    res.header('Content-Type', 'text/plain');
+    res.send("User-agent: *\nDisallow:\nSITEMAP: http://www.seansun.org/sitemap.xml");
+});
+
 //none of above are found -> look for static
 app.use("/", express.static(__dirname));
 //not found in static either, emm... return 404 page!
@@ -322,6 +335,28 @@ function getIP(req) {
     return ip;
 }
 
+function generate_xml_sitemap() {
+    // this is the source of the URLs on your site, in this case we use a simple array, actually it could come from the database
+    var urls = ['', 'signup', 'towerdefense', 'unsubscribe'];
+    // the root of your website - the protocol and the domain name with a trailing slash
+    var root_path = 'http://www.seansun.org/';
+    // XML sitemap generation starts here
+    var priority = 0.5;
+    var freq = 'daily';
+    var xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    for (var i in urls) {
+        xml += '<url>';
+        xml += '<loc>'+ root_path + urls[i] + '</loc>';
+        xml += '<changefreq>'+ freq +'</changefreq>';
+        xml += '<priority>'+ priority +'</priority>';
+        xml += '</url>';
+        i++;
+    }
+    xml += '</urlset>';
+    return xml;
+}
+
+// sitemap.
 module.exports = {
     app
 };

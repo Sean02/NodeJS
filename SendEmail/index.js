@@ -79,7 +79,7 @@ app.get("/a", (req, res) => {
 
     MongoDB.Read("ServerProtection", "RequestHistory", {}).then((data) => {
         // console.log(data);
-        res.status(200).send(`<a href="/a/t"><button>Sort by time last visited</button></a><a href="/a/i"><button>Sort by IP</button></a><a href="/a/r"><button>Sort by num of requests</button></a><a href="/a/b"><button>Sort by num of bad records</button></a>` + nicenReq(data) + tableCSS);
+        res.status(200).send(`<a href="/a/t"><button>Sort by time last visited</button></a><a href="/a/i"><button>Sort by IP</button></a><a href="/a/r"><button>Sort by num of requests</button></a><a href="/a/b"><button>Sort by num of bad records</button></a><a href="/a/l"><button>Sort by request</button></a>` + nicenReq(data) + tableCSS);
     }, (err) => {
         console.log(err);
         res.status(200).send("<h1>Error: " + err + "</h1>")
@@ -122,6 +122,16 @@ app.get("/a/r", (req, res) => {
 app.get("/a/b", (req, res) => {
     MongoDB.ReadWithSortAndSkipAndLimit("ServerProtection", "RequestHistory", {}, {
         "badRecords": -1
+    }, 0, 0).then((data) => {
+        // console.log(data);
+        res.status(200).send(nicenReq(data) + tableCSS);
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});app.get("/a/l", (req, res) => {
+    MongoDB.ReadWithSortAndSkipAndLimit("ServerProtection", "RequestHistory", {}, {
+        "lastRequest": -1
     }, 0, 0).then((data) => {
         // console.log(data);
         res.status(200).send(nicenReq(data) + tableCSS);
@@ -221,9 +231,9 @@ function nicenIt(data) {
 }
 
 function nicenReq(data) {
-    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>IP</th><th>Last Visit Time</th><th>Time Formatted</th><th>Requests</th><th>Bad Records</th></tr>";
+    let res = "<style>th {text-align: left;}table, td, th {border: 1px solid black;}table {border-collapse: collapse;  width: 100%;}</style> <table><tr><th>No</th><th>IP</th><th>Last Visit Time</th><th>Time Formatted</th><th>Requests</th><th>Bad Records</th><th>Last Request</th></tr>";
     data.forEach((item, index) => {
-        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.timeFormatted + "</td><td>" + item.requests + "</td><td>" + item.badRecords + "</td><tr>";
+        res += "<tr><td>" + (index + 1) + "</td><td>" + item.IP + "</td><td>" + item.lastVisitTime + "</td><td>" + item.timeFormatted + "</td><td>" + item.requests + "</td><td>" + item.badRecords + "</td><td>" + item.lastRequest + "</td><tr>";
     });
     return res += "</table>";
 }
