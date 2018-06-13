@@ -16,6 +16,7 @@ let fs = require("./FSread.js");
 let ps = "Hey students, thank you for using Luncher! If you enjoy our service and want to support us, consider introducing Luncher to your parents, they might be concerned what you have for lunch too! Click <a href='http://seansun.org'>here</a> to signup.";
 //
 ps = "";
+// ps="This is the last Luncher email of the school year! We hoped you enjoyed our service and continue to support us next semester!";
 let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
     console.log("Fired");
     sendLunch("Luncher@seansun.org").then((res) => {
@@ -51,7 +52,8 @@ function sendLunch(email) {
             let date = getDate();
             console.log(data);
             //
-            if (!((data.soup) && (data.entree) && (data.specialdietentree) && (data.salad) && (data.dessert) && (data.sides))) {
+            let dataAvailable = ((data.soup) || (data.entree) || (data.specialdietentree) || (data.salad) || (data.dessert) || (data.sides));
+            if (!dataAvailable) {
                 resolve("Lunch data not available, not sending.");
                 return;
             }

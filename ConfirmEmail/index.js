@@ -77,6 +77,7 @@ let sensitiveLimiter = new RateLimit({
 // only apply to requests that begin with /api/
 app.use('/signup/', normalLimiter);
 app.use('/unsubscribe/', normalLimiter);
+app.use('/calc/', normalLimiter);
 app.use('/confirm/', sensitiveLimiter);
 app.use('/towerdefense/leaderboard', normalLimiter);
 app.use('/towerdefense/addscore', sensitiveLimiter);
@@ -97,6 +98,12 @@ app.use(function (err, req, res, next) {
     res.status(500).send('<h1>500 Internal Error</h1>');
     return;
 });
+
+app.get("/favicon.ico", (req, res) => {
+    console.log("Trying to get favicon.ico");
+    res.status(200).sendFile(__dirname + "/views/favicon-96x96.png");
+});
+
 
 //----------------------------------------------------------------------
 //
@@ -290,6 +297,12 @@ app.get("/towerDefense/leaderboard", (req, res) => {
     res.send(tableCSS + `<div id="res"</div><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script>$.ajax({type: "POST",url: "./leaderboard",dataType: "json",data: "start=0&end=0"}).done((data) => {$("body").html(data.table);});</script>`);
 });
 
+
+app.get("/calc", (req, res) => {
+    console.log("calc");
+    res.status(200).sendFile(__dirname + "/views/Calculator.html");
+});
+
 app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
 });
@@ -306,13 +319,13 @@ app.get("/getStats", (req, res) => {
     });
 });
 
-app.get('/sitemap.xml', function(req, res) {
+app.get('/sitemap.xml', function (req, res) {
     var sitemap = generate_xml_sitemap(); // get the dynamically generated XML sitemap
     res.header('Content-Type', 'text/xml');
     res.send(sitemap);
 });
 
-app.get('/robot.txt', function(req, res) {
+app.get('/robot.txt', function (req, res) {
     res.header('Content-Type', 'text/plain');
     res.send("User-agent: *\nDisallow:\nSITEMAP: http://www.seansun.org/sitemap.xml");
 });
@@ -321,7 +334,8 @@ app.get('/robot.txt', function(req, res) {
 app.use("/", express.static(__dirname));
 //not found in static either, emm... return 404 page!
 app.use(function (req, res, next) {
-    res.sendFile(__dirname + "/views/404.html");
+    console.log("404 Not Found");
+    res.status(404).sendFile(__dirname + "/views/404.html");
     return;
 });
 // start server
@@ -346,9 +360,9 @@ function generate_xml_sitemap() {
     var xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
     for (var i in urls) {
         xml += '<url>';
-        xml += '<loc>'+ root_path + urls[i] + '</loc>';
-        xml += '<changefreq>'+ freq +'</changefreq>';
-        xml += '<priority>'+ priority +'</priority>';
+        xml += '<loc>' + root_path + urls[i] + '</loc>';
+        xml += '<changefreq>' + freq + '</changefreq>';
+        xml += '<priority>' + priority + '</priority>';
         xml += '</url>';
         i++;
     }
