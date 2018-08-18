@@ -2,6 +2,7 @@ let MongoDB = require("./MongoDB.js");
 const jwt = require("jsonwebtoken");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
+
 // let sendLunch = require("../SendLunch/index.js");
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
@@ -91,7 +92,8 @@ function reqSignup(email) {
             }
         }, (err) => {
             console.log(err);
-            resolve(err); /*this returns to the server, let's not make it complicated*/
+            resolve(err);
+            /*this returns to the server, let's not make it complicated*/
         });
     });
 }
@@ -190,7 +192,8 @@ function reqUnsubscribe(email) {
             }
         }, (err) => {
             console.log(err);
-            resolve(err); /*this returns to the server, let's not make it complicated*/
+            resolve(err);
+            /*this returns to the server, let's not make it complicated*/
         });
     });
 }
@@ -370,9 +373,13 @@ function getUserCount() {
         });
     });
 }
+
+
+
+
 module.exports = {
     reqSignup,
     reqUnsubscribe,
     confirm,
-    getUserCount
+    getUserCount,
 };

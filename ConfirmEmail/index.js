@@ -251,9 +251,19 @@ app.get('/confirm/:token', function (req, res) {
         }
     });
 });
-// app.get("/stats", (req, res) => {
-//     res.sendFile(__dirname + "/views/stats.html");
-// });
+app.get("/stats", (req, res) => {
+    // let s = req.params.search;
+    // let searchStr = {s: req.params.matchValue}
+
+    ServerProtection.getTotalReqs().then((total) => {
+        console.log("getting total requests:", total);
+        // res.status(200).send("<br><br><br><br><br><center style='font-family: sans-serif; font-size: xx-large;'>Total number of requests:</center><br><br><center style='font-family: sans-serif; font-size: 200;'>" + total + "</center>");
+        res.status(200).send("<div style='margin: auto; position: absolute; top:0; left: 0; bottom: 0; right: 0; height:500px;'><br><center style='font-family: sans-serif; font-size: xx-large;'>Total number of requests:</center><br><br><center style='font-family: sans-serif; font-size: 200;'>" + total + "</center></div>");
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
 app.post("/towerdefense/addscore", urlencodedParser, (req, res) => {
     console.log("received tower defense add game highscore request");
     console.log(req.body.name);
@@ -294,7 +304,7 @@ app.get("/towerDefense", (req, res) => {
 });
 
 app.get("/towerDefense/leaderboard", (req, res) => {
-    res.send(tableCSS + `<div id="res"</div><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script>$.ajax({type: "POST",url: "./leaderboard",dataType: "json",data: "start=0&end=0"}).done((data) => {$("body").html(data.table);});</script>`);
+    res.send(tableCSS + `<div id="res"</div><script src="/jquery"></script><script>$.ajax({type: "POST",url: "./leaderboard",dataType: "json",data: "start=0&end=0"}).done((data) => {$("body").html(data.table);});</script>`);
 });
 
 
@@ -302,6 +312,17 @@ app.get("/calc", (req, res) => {
     console.log("calc");
     res.status(200).sendFile(__dirname + "/views/Calculator.html");
 });
+
+app.get("/jquery", (req, res) => {
+    console.log("wow, so, for all the places you could get jquery from, you have to get it from me, but here you go, with status 200");
+    res.status(200).sendFile(__dirname + "/views/jquery-3.3.1.min.js");
+});
+
+app.post("/usersdontknowthisurl/luncherwebhooks/clicks", (req, res) => {
+    console.log(req);
+    res.status(200).send("ok");
+});
+
 
 app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
@@ -330,13 +351,14 @@ app.get('/robot.txt', function (req, res) {
     res.send("User-agent: *\nDisallow:\nSITEMAP: http://www.seansun.org/sitemap.xml");
 });
 
-//none of above are found -> look for static
+//no matches found above -> look for static hosting
 app.use("/", express.static(__dirname));
+
+
 //not found in static either, emm... return 404 page!
 app.use(function (req, res, next) {
     console.log("404 Not Found");
     res.status(404).sendFile(__dirname + "/views/404.html");
-    return;
 });
 // start server
 app.listen(80, () => {

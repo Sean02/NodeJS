@@ -325,7 +325,7 @@
       <workItem from="1528875304193" duration="524000" />
       <workItem from="1528879152185" duration="4825000" />
       <workItem from="1529734920514" duration="1020000" />
-      <workItem from="1529894599090" duration="4652000" />
+      <workItem from="1529894599090" duration="4820000" />
     </task>
     <task id="LOCAL-00001" summary="added rate limiter">
       <created>1527898405208</created>
@@ -415,7 +415,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138293000" />
+    <option name="totallyTimeSpent" value="138461000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
