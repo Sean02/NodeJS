@@ -6,7 +6,7 @@ let read = (fileName) => {
         // console.log(text);
         return text;
     } catch (e) {
-        console.log("Error when getting HTML:", e);
+        console.log("Error when reading file (from fs):", e);
         throw e;
         return "";
     }

@@ -61,7 +61,7 @@ function sendLunch(email) {
             EmailHTML = nicenIt(EmailHTML, data, date);
             firstTime = false;
             //
-            MailGun.sendEmail("", "Luncher <Luncher@sonomaacademy.org>", email, `Today's Menu - ${date}`, EmailHTML).then((res) => {
+            MailGun.sendEmail("", "Luncher <Luncher@seansun.org>", email, `Today's Menu - ${date}`, EmailHTML).then((res) => {
                 resolve("sent");
                 return;
             }, (err) => {
@@ -95,7 +95,9 @@ function nicenIt(EmailHTML, data, date) {
 module.exports = {
     sendLunch
 }
+console.log("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 sendLunch("sean.sun@sonomaacademy.org").then((res) => {
     ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
     console.log("Exited with message", res);
-})
+});
+console.log("END TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");

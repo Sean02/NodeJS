@@ -11,6 +11,10 @@ let getLunch = require("./webscraper.js");
 // var subdomain = require('express-subdomain');
 let towerDefense = require("./TowerDefense.js");
 let ServerProtection = require("./ServerProtection.js");
+let fs = require("./FSread.js");
+let http = require('http');
+let https = require("https");
+let path = require("path");
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -24,6 +28,24 @@ let urlencodedParser = bodyParser.urlencoded({
 });
 // app.use(bodyParser.json());
 app.set("view engine", "hbs");
+
+////ssl
+const httpsOptions = {
+    ca: fs.read(path.join(__dirname, "ssl", "cert.ca-bundle")),
+    cert: fs.read(path.join(__dirname, "ssl", "cert.crt")),
+    key: fs.read(path.join(__dirname, "ssl", "cert.key"))
+};
+
+
+app.use((req, res, next) => {
+    // The 'x-forwarded-proto' check is for Heroku
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https') {
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+});
+///////
+
 
 //block request if IP is too frequent
 // app.use((req, res, next) => {
@@ -360,10 +382,6 @@ app.use(function (req, res, next) {
     console.log("404 Not Found");
     res.status(404).sendFile(__dirname + "/views/404.html");
 });
-// start server
-app.listen(80, () => {
-    console.log(`Started Luncher at port 80`);
-});
 
 function getIP(req) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -391,6 +409,16 @@ function generate_xml_sitemap() {
     xml += '</urlset>';
     return xml;
 }
+
+
+// start server
+https.createServer(httpsOptions, app).listen(443, function () {
+    console.log("Started Luncher @ port 443");
+});
+
+http.createServer(app).listen(80, function () {
+    console.log("Started Luncher @ port 80");
+});
 
 // sitemap.
 module.exports = {

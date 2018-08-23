@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d1cdf295-a3c2-48fe-95b3-6a70b598e40a" name="Default" comment="">
+    <list default="true" id="731cc2d4-ff41-4fd1-a761-917a7586d3d4" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/dictionaries/Sean.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SendLunch/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterDir="false" />
@@ -13,10 +13,8 @@
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/Process.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/Process.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/views/favicon-96x96.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/views/favicon-96x96.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SendEmail/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SendEmail/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SendEmail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendEmail/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,41 +26,32 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FUSProjectUsageTrigger">
-    <session id="-807835949">
+    <session id="1810007526">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
+      <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="76" />
+          <entry key="js" value="1" />
         </counts>
       </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
+      <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JavaScript" value="76" />
+          <entry key="JavaScript" value="1" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="63" column="59" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
+            <state relative-caret-position="-165" />
           </provider>
         </entry>
       </file>
@@ -71,22 +60,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/index.js" />
-      </list>
-    </option>
-  </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
     <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="JsFlowSettings">
-    <service-enabled>true</service-enabled>
-    <exe-path />
-    <other-services-enabled>true</other-services-enabled>
-    <auto-save>true</auto-save>
   </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
@@ -100,9 +76,9 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="117" />
-    <option name="y" value="90" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="460" />
+    <option name="y" value="357" />
     <option name="width" value="1712" />
     <option name="height" value="1038" />
   </component>
@@ -116,8 +92,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="SendLunch" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SendLunch" type="462c0819:PsiDirectoryNode" />
+              <item name="sendmail" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sendmail" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -127,12 +103,10 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ConfirmEmail" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SendEmail" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -151,28 +125,29 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d1cdf295-a3c2-48fe-95b3-6a70b598e40a" name="Default" comment="" />
-      <created>1528308092897</created>
+      <changelist id="731cc2d4-ff41-4fd1-a761-917a7586d3d4" name="Default Changelist" comment="" />
+      <created>1534895742319</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1528308092897</updated>
-      <workItem from="1528308095288" duration="1014000" />
-      <workItem from="1534772942837" duration="1265000" />
-      <workItem from="1534897889627" duration="32000" />
-      <workItem from="1534998951925" duration="43000" />
+      <updated>1534895742319</updated>
+      <workItem from="1534895743526" duration="112000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2354000" />
+    <option name="totallyTimeSpent" value="112000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="117" y="90" width="1712" height="1038" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28238806" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="npm" side_tool="true" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960506" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -180,11 +155,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
@@ -198,14 +169,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="63" column="59" selection-start-line="63" selection-start-column="59" selection-end-line="63" selection-end-column="59" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-165" />
       </provider>
     </entry>
   </component>

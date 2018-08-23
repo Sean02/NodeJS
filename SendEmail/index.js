@@ -158,6 +158,21 @@ app.get("/t", (req, res) => {
     });
 });
 
+app.get("/tu", (req, res) => {
+    // let s = req.params.search;
+    // let searchStr = {s: req.params.matchValue}
+
+    MongoDB.Read("Lunch", "Users", {subscribed: true}).then((data) => {
+        // console.log(data);
+        let total = data.length;
+        // res.status(200).send("<br><br><br><br><br><center style='font-family: sans-serif; font-size: xx-large;'>Total number of requests:</center><br><br><center style='font-family: sans-serif; font-size: 200;'>" + total + "</center>");
+        res.status(200).send("<div style='margin: auto; position: absolute; top:0; left: 0; bottom: 0; right: 0; height:500px;'><br><center style='font-family: sans-serif; font-size: xx-large;'>Total number of users:</center><br><br><center style='font-family: sans-serif; font-size: 200;'>" + total + "</center></div>");
+    }, (err) => {
+        console.log(err);
+        res.status(200).send("<h1>Error: " + err + "</h1>")
+    });
+});
+
 app.get("/l", (req, res) => {
     // let s = req.params.search;
     // let searchStr = {s: req.params.matchValue}

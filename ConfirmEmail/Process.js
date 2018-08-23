@@ -44,11 +44,11 @@ function reqSignup(email) {
                             time: d.getTime()
                         }).then((res) => {
                             console.log("updated to database");
-                            const link = "http://seansun.org/confirm/" + userData.token;
+                            const link = "https://seansun.org/confirm/" + userData.token;
                             let EmailHTML = fs.read("./views/signupEmail.html");
                             EmailHTML = EmailHTML.replace("[EMAIL]", email);
                             EmailHTML = EmailHTML.replace("[CONFIRM_EMAIL]", link);
-                            MailGun.sendEmail("", "Luncher@sonomaacademy.org", email, "Confirm your Luncher subscription", EmailHTML).then(() => {
+                            MailGun.sendEmail("", "Luncher@seansun.org", email, "Confirm your Luncher subscription", EmailHTML).then(() => {
                                 resolve("resent token");
                                 return;
                             }, (err) => {
@@ -70,11 +70,11 @@ function reqSignup(email) {
                 }).then((userData) => {
                     MongoDB.Write("Lunch", "Users", userData).then((res) => {
                         console.log("inserted");
-                        const link = "http://seansun.org/confirm/" + userData.token;
+                        const link = "https://seansun.org/confirm/" + userData.token;
                         let EmailHTML = fs.read("./views/signupEmail.html");
                         EmailHTML = EmailHTML.replace("[EMAIL]", email);
                         EmailHTML = EmailHTML.replace("[CONFIRM_EMAIL]", link);
-                        MailGun.sendEmail("", "Luncher@sonomaacademy.org", email, "Confirm your Luncher subscription", EmailHTML).then(() => {
+                        MailGun.sendEmail("", "Luncher@seansun.org", email, "Confirm your Luncher subscription", EmailHTML).then(() => {
                             resolve("sent");
                             return;
                         }, (err) => {
@@ -139,10 +139,10 @@ function reqUnsubscribe(email) {
                         time: d.getTime()
                     }).then((res) => {
                         console.log("updated to database");
-                        const link = "http://seansun.org/confirm/" + userData.token;
+                        const link = "https://seansun.org/confirm/" + userData.token;
                         let EmailHTML = fs.read("./views/unsubscribeEmail.html");
                         EmailHTML = EmailHTML.replace("[LINK]", link);
-                        MailGun.sendEmail("", "Luncher@sonomaacademy.org", email, "Unsubscribe Luncher", EmailHTML).then(() => {
+                        MailGun.sendEmail("", "Luncher@seansun.org", email, "Unsubscribe Luncher", EmailHTML).then(() => {
                             resolve("resent token");
                             return;
                         }, (err) => {
@@ -171,10 +171,10 @@ function reqUnsubscribe(email) {
                         time: d.getTime()
                     }).then((res) => {
                         console.log("updated to database");
-                        const link = "http://seansun.org/confirm/" + userData.token;
+                        const link = "https://seansun.org/confirm/" + userData.token;
                         let EmailHTML = fs.read("./views/unsubscribeEmail.html");
                         EmailHTML = EmailHTML.replace("[LINK]", link);
-                        MailGun.sendEmail("", "Luncher@sonomaacademy.org", email, "Unsubscribe Luncher", EmailHTML).then(() => {
+                        MailGun.sendEmail("", "Luncher@seansun.org", email, "Unsubscribe Luncher", EmailHTML).then(() => {
                             resolve("sent");
                             return;
                         }, (err) => {
