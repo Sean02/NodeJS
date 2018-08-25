@@ -1,4 +1,5 @@
 let express = require("express");
+let compression = require('compression');
 let bodyParser = require("body-parser");
 let RateLimit = require('express-rate-limit');
 // let sitemap = require("express-sitemap");
@@ -28,6 +29,11 @@ let urlencodedParser = bodyParser.urlencoded({
 });
 // app.use(bodyParser.json());
 app.set("view engine", "hbs");
+
+//gzip compression
+app.use(compression());
+////
+
 
 ////ssl
 const httpsOptions = {
