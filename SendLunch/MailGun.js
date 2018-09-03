@@ -34,14 +34,21 @@ function send(domain1, from, to, subject, text) {
             apiKey: key,
             domain: domain
         });
-        var data = {
+        let data = {
             from: from,
             to: to,
             subject: subject,
             html: text,
             "h:Reply-To": "development@seansun.org"
         };
-        console.log("data to be sent is ", data.from, "\n", data.to, "\n", data.subject);
+        let dataOut = {
+            from: from,
+            to: to,
+            subject: subject,
+            "h:Reply-To": "development@seansun.org"
+        };
+        console.log("data to be sent is ");
+        console.log(dataOut);
         mailgun.messages().send(data, function(error, body) {
             console.log(body);
             resolve(0);

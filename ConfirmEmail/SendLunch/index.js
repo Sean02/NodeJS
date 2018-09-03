@@ -51,7 +51,7 @@ function sendLunch(email) {
             EmailHTML = nicenIt(EmailHTML, data, date);
             firstTime = false;
             //
-            MailGun.sendEmail("", "Luncher <Luncher@sonomaacademy.org>", email, `Today's Menu - ${date}`, EmailHTML).then((res) => {
+            MailGun.sendEmail("", "Luncher <Luncher@seansun.org>", email, `Today's Menu - ${date}`, EmailHTML).then((res) => {
                 resolve("sent");
                 return;
             }, (err) => {

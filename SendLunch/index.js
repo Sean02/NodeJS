@@ -13,13 +13,14 @@ let schedule = require("node-schedule");
 let GetLunch = require("./webscraper.js");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
+let MongoDB = require("./MongoDB.js");
 let ps = "Hey students, thank you for using Luncher! If you enjoy our service and want to support us, consider introducing Luncher to your parents, they might be concerned what you have for lunch too! Click <a href='http://seansun.org'>here</a> to signup.";
 //
 ps = "";
 // ps="This is the last Luncher email of the school year! We hoped you enjoyed our service and continue to support us next semester!";
-let a = schedule.scheduleJob('0 30 7 * * 1-5', function() {
+let a = schedule.scheduleJob('0 30 7 * * 1-5', function () {
     console.log("Fired");
-    sendLunch("Luncher@seansun.org").then((res) => {
+    sendLunch("Luncher@seansun.org", false).then((res) => {
         ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
         console.log("Exited with message", res);
     })
@@ -45,7 +46,7 @@ function getDate() {
     return monthNames[monthIndex] + ' ' + day + ', ' + year;
 }
 
-function sendLunch(email) {
+function sendLunch(email, test) {
     return new Promise((resolve, reject) => {
         GetLunch.scrape().then((data) => {
             let EmailHTML = fs.read("LuncherEmail.html");
@@ -58,8 +59,14 @@ function sendLunch(email) {
                 return;
             }
             //
+            //lets record and save this menu in the database Lunch -> Menu
+            if (!test)
+                recordMenu(data, date);
+            //
             EmailHTML = nicenIt(EmailHTML, data, date);
             firstTime = false;
+            // console.log(EmailHTML)
+            // return;
             //
             MailGun.sendEmail("", "Luncher <Luncher@seansun.org>", email, `Today's Menu - ${date}`, EmailHTML).then((res) => {
                 resolve("sent");
@@ -69,6 +76,15 @@ function sendLunch(email) {
                 resolve(err);
             });
         });
+    });
+}
+
+function recordMenu(data, date) {
+    data.date = date;
+    let d = new Date();
+    data.time = d.getTime();
+    MongoDB.Write("Lunch", "Menu", data).then((res) => {
+        console.log("Menu Saved In Database.");
     });
 }
 
@@ -88,16 +104,29 @@ function nicenIt(EmailHTML, data, date) {
         // }
         ps = `<tr><td align='center' style='padding: 0 56px 28px 56px;' valign='middle'><span style='font-family: "lato", "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 28px;font-size: 16px;  vertical-align: middle;'>` + ps + "</span></td></tr>";
     }
-    console.log("ps:", ps)
+    console.log("ps:", ps);
     EmailHTML = EmailHTML.replace("[P.S.]", ps);
     return EmailHTML;
 }
+
 module.exports = {
     sendLunch
-}
+};
 console.log("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-sendLunch("sean.sun@sonomaacademy.org").then((res) => {
+sendLunch("sean_sun2002@icloud.com", true).then((res) => {
     ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
     console.log("Exited with message", res);
 });
+
+if (true) {
+    //THIS SHOULD NEVER RUN
+    console.log("YOU SHOULD NEVERRRRR SEE THIS LINE OF CONSOLE UNLESS YOU KNOW WHAT YOU ARE DOING.")
+    // sendLunch("Luncher@seansun.org").then((res) => {
+    //     ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
+    //     console.log("Exited with message", res);
+    // });
+    GetLunch.scrape().then((data) => {
+        recordMenu(data, getDate());
+    });
+}
 console.log("END TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");

@@ -346,11 +346,6 @@ app.get("/jquery", (req, res) => {
     res.status(200).sendFile(__dirname + "/views/jquery-3.3.1.min.js");
 });
 
-app.post("/usersdontknowthisurl/luncherwebhooks/clicks", (req, res) => {
-    console.log(req);
-    res.status(200).send("ok");
-});
-
 
 app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
@@ -377,6 +372,29 @@ app.get('/sitemap.xml', function (req, res) {
 app.get('/robot.txt', function (req, res) {
     res.header('Content-Type', 'text/plain');
     res.send("User-agent: *\nDisallow:\nSITEMAP: http://www.seansun.org/sitemap.xml");
+});
+
+
+//mailgun webhook -> used to get luncher votes
+
+app.post('/webhooks/mailgun/all',function(req,res){
+   console.log(req);
+   res.status(200).send("received mailgun webhook: ALL");
+});
+
+app.post('/webhooks/mailgun/opens',function(req,res){
+    console.log(req);
+    res.status(200).send("received mailgun webhook: OPENS");
+});
+
+app.post('/webhooks/mailgun/clicks',function(req,res){
+    console.log(req);
+    res.status(200).send("received mailgun webhook: CLICKS");
+});
+
+app.post('/webhooks/mailgun/delivered',function(req,res){
+    console.log("DELIVERED");
+    res.status(200).send("received mailgun webhook: DELIVERED");
 });
 
 //no matches found above -> look for static hosting

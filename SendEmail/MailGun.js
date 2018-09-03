@@ -1,4 +1,5 @@
 let MongoDB = require("./MongoDB.js");
+
 //get the mailgun api key: under mongo database -> MailgunApiKey -> key -> key
 function sendEmail(domain, from, to, subject, text) {
     return new Promise((resolve, reject) => {
@@ -39,10 +40,11 @@ function send(domain1, from, to, subject, text) {
             to: to,
             subject: subject,
             html: text,
-            "h:Reply-To": "development@seansun.org"
+            "h:Reply-To": "development@seansun.org",
+            "v:my-custom-data": {"v:Recipient-Email": "%recipient.email%"}
         };
         console.log("data to be sent is ", data.from, "\n", data.to, "\n", data.subject);
-        mailgun.messages().send(data, function(error, body) {
+        mailgun.messages().send(data, function (error, body) {
             console.log(body);
             resolve(0);
         }, (err) => {
@@ -82,7 +84,7 @@ function List(cmd, a) {
         });
         var list = mailgun.lists('Luncher@seansun.org');
         if (cmd === "info") {
-            list.info(function(err, data) {
+            list.info(function (err, data) {
                 // `data` is mailing list info
                 resolve(data);
             });
@@ -94,25 +96,25 @@ function List(cmd, a) {
             //     vars: {age: 26}
             // };
             console.log("creating");
-            list.members().create(a, function(err, data) {
+            list.members().create(a, function (err, data) {
                 // `data` is the member details
                 console.log(data);
                 console.log(err);
                 resolve(data);
             });
         } else if (cmd === "list") {
-            list.members().list(function(err, members) {
+            list.members().list(function (err, members) {
                 // `members` is the list of members
                 resolve(members);
             });
         } else if (cmd === "update") {
             // list.members('bob@gmail.com').update({ name: 'Foo Bar' }, function (err, body) {
-            list.members(a.find).update(a.replace, function(err, body) {
+            list.members(a.find).update(a.replace, function (err, body) {
                 resolve(body);
             });
         } else if (cmd === "delete") {
             // list.members('bob@gmail.com').delete(function (err, data) {
-            list.members(a).delete(function(err, data) {
+            list.members(a).delete(function (err, data) {
                 resolve(data);
             });
         } else {
@@ -120,6 +122,7 @@ function List(cmd, a) {
         }
     });
 }
+
 module.exports = {
     sendEmail,
     MailingList
