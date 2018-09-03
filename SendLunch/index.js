@@ -118,7 +118,7 @@ sendLunch("sean_sun2002@icloud.com", true).then((res) => {
     console.log("Exited with message", res);
 });
 
-if (true) {
+if (false) {
     //THIS SHOULD NEVER RUN
     console.log("YOU SHOULD NEVERRRRR SEE THIS LINE OF CONSOLE UNLESS YOU KNOW WHAT YOU ARE DOING.")
     // sendLunch("Luncher@seansun.org").then((res) => {

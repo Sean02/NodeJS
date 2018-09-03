@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="527e908f-96bf-4c85-9c85-e5f7518820ef" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MailGun.js" beforeDir="false" afterPath="$PROJECT_DIR$/MailGun.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SendLunch/MailGun.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/MailGun.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -149,9 +143,9 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="460" />
-    <option name="y" value="357" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="117" />
+    <option name="y" value="90" />
     <option name="width" value="1712" />
     <option name="height" value="1038" />
   </component>
@@ -179,7 +173,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SendLunch" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
   </component>
@@ -210,7 +204,7 @@
       <workItem from="1529122333564" duration="1134000" />
       <workItem from="1529734922146" duration="924000" />
       <workItem from="1534895856743" duration="420000" />
-      <workItem from="1535947345869" duration="2173000" />
+      <workItem from="1535947345869" duration="2815000" />
     </task>
     <task id="LOCAL-00001" summary="date record formatted">
       <created>1528008476806</created>
@@ -223,10 +217,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18240000" />
+    <option name="totallyTimeSpent" value="18882000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960506" />
