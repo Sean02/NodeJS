@@ -16,6 +16,7 @@ let fs = require("./FSread.js");
 let http = require('http');
 let https = require("https");
 let path = require("path");
+let mailgun;
 // const { body,validationResult } = require('express-validator/check');
 // const { sanitizeBody } = require('express-validator/filter');
 //config
@@ -377,22 +378,36 @@ app.get('/robot.txt', function (req, res) {
 
 //mailgun webhook -> used to get luncher votes
 
-app.post('/webhooks/mailgun/all',function(req,res){
-   console.log(req);
-   res.status(200).send("received mailgun webhook: ALL");
-});
-
-app.post('/webhooks/mailgun/opens',function(req,res){
-    console.log(req);
+app.post('/webhooks/mailgun/opens', urlencodedParser, function (req, res) {
+    console.log(req.body);
+    if (!verifyMailgunWebhook(req.body.timestamp, req.body.token, req.body.signature, req, res)) {
+        return;
+    }
+    MongoDB.Write("Lunch", "EmailOpens", req.body).
+    then((result) => {
+        console.log(result);
+    });
     res.status(200).send("received mailgun webhook: OPENS");
 });
 
-app.post('/webhooks/mailgun/clicks',function(req,res){
+app.post('/webhooks/mailgun/clicks', urlencodedParser, function (req, res) {
+    if (!verifyMailgunWebhook(req.body.timestamp, req.body.token, req.body.signature, req, res)) {
+        return;
+    }
+    MongoDB.Write("Lunch", "EmailClicks", req.body).then((result) => {
+        console.log(result);
+    });
     console.log(req);
     res.status(200).send("received mailgun webhook: CLICKS");
 });
 
-app.post('/webhooks/mailgun/delivered',function(req,res){
+app.post('/webhooks/mailgun/delivered', urlencodedParser, function (req, res) {
+    if (!verifyMailgunWebhook(req.body.timestamp, req.body.token, req.body.signature, req, res)) {
+        return;
+    }
+    MongoDB.Write("Lunch", "EmailDelivers", req.body).then((result) => {
+        console.log(result);
+    });
     console.log("DELIVERED");
     res.status(200).send("received mailgun webhook: DELIVERED");
 });
@@ -443,6 +458,30 @@ https.createServer(httpsOptions, app).listen(443, function () {
 http.createServer(app).listen(80, function () {
     console.log("Started Luncher @ port 80");
 });
+
+//getMailgun keys:
+MongoDB.Read("Passwds", "MailgunApiKey", {handle: true}).then((data) => {
+    key = data[0].key;
+    const domain = "seansun.org";
+    mailgun = require('mailgun-js')({
+        apiKey: key,
+        domain: domain
+    });
+    console.log("Mailgun init success");
+}, (err) => {
+    console.log(err);
+});
+
+function verifyMailgunWebhook(timestamp, token, signature, req, res) {
+    if (!mailgun.validateWebhook(timestamp, token, signature)) {
+        console.log("FAKE MAILGUN!!!");
+        ServerProtection.recordBadRecord(getIP(req), req).then(() => {
+            res.status(405).send("YOU CAN'T HACK ME!");
+        });
+        return false;
+    }
+    return true;
+}
 
 // sitemap.
 module.exports = {

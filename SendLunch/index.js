@@ -55,8 +55,10 @@ function sendLunch(email, test) {
             //
             let dataAvailable = ((data.soup) || (data.entree) || (data.specialdietentree) || (data.salad) || (data.dessert) || (data.sides));
             if (!dataAvailable) {
-                resolve("Lunch data not available, not sending.");
-                return;
+                //don't panic, just add the ps
+                ps = "Don't panic! There's still lunch. We just couldn't get the menu from our information provider, that's all.";
+                // resolve("Lunch data not available, not sending.");
+                // return;
             }
             //
             //lets record and save this menu in the database Lunch -> Menu
@@ -96,6 +98,13 @@ function nicenIt(EmailHTML, data, date) {
     EmailHTML = EmailHTML.replace("[DESSERT]", data.dessert || "Dessert Not Available");
     EmailHTML = EmailHTML.replace("[SIDES]", data.sides || "Sides Not Available");
     EmailHTML = EmailHTML.replace("[DATE]", date || "Date Not Available");
+
+    EmailHTML = EmailHTML.replace("[SOUPURL]", getURLforSearch(data.soup) || "https://seansun.org");
+    EmailHTML = EmailHTML.replace("[ENTREEURL]", getURLforSearch(data.entree) || "https://seansun.org");
+    EmailHTML = EmailHTML.replace("[SPECIALDIETENTREEURL]", getURLforSearch(data.specialdietentree) || "https://seansun.org");
+    EmailHTML = EmailHTML.replace("[SALADURL]", getURLforSearch(data.salad) || "https://seansun.org");
+    EmailHTML = EmailHTML.replace("[DESSERTURL]", getURLforSearch(data.dessert) || "https://seansun.org");
+    EmailHTML = EmailHTML.replace("[SIDESURL]", getURLforSearch(data.sides) || "https://seansun.org");
     //if not the first time, cancel ps
     if (ps != "") {
         ps = "<p>" + ps + "</p>"
@@ -107,6 +116,23 @@ function nicenIt(EmailHTML, data, date) {
     console.log("ps:", ps);
     EmailHTML = EmailHTML.replace("[P.S.]", ps);
     return EmailHTML;
+}
+
+function getURLforSearch(str) {
+    if (str===''){
+        //not available: returning false
+        console.log("getURL returning false");
+        return false; //trigger the fallback url explanation
+    }
+    let arr = str.split(" ");
+    str = "";
+    arr.forEach((item) => {
+        str += "+" + item;
+    });
+    str = str.substring(1);
+    str = "https://www.google.com/search?q=" + str + "&tbm=isch";
+    console.log(str);
+    return str;
 }
 
 module.exports = {
@@ -121,10 +147,10 @@ sendLunch("sean_sun2002@icloud.com", true).then((res) => {
 if (false) {
     //THIS SHOULD NEVER RUN
     console.log("YOU SHOULD NEVERRRRR SEE THIS LINE OF CONSOLE UNLESS YOU KNOW WHAT YOU ARE DOING.")
-    // sendLunch("Luncher@seansun.org").then((res) => {
-    //     ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
-    //     console.log("Exited with message", res);
-    // });
+    sendLunch("Luncher@seansun.org").then((res) => {
+        ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
+        console.log("Exited with message", res);
+    });
     GetLunch.scrape().then((data) => {
         recordMenu(data, getDate());
     });

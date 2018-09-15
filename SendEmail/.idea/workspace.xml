@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="527e908f-96bf-4c85-9c85-e5f7518820ef" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -17,9 +20,9 @@
     <session id="208846661">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.0" value="2" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.0" value="3" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -49,16 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
+            <state relative-caret-position="3818">
               <caret line="166" column="29" selection-start-line="166" selection-start-column="29" selection-end-line="166" selection-end-column="29" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#center#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#center#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#center#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#center#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -71,7 +66,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MailGun.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-326">
+            <state relative-caret-position="23">
               <caret line="29" column="63" lean-forward="true" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
             </state>
           </provider>
@@ -155,6 +150,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -166,14 +162,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SendLunch" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ConfirmEmail" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
   </component>
@@ -204,7 +199,8 @@
       <workItem from="1529122333564" duration="1134000" />
       <workItem from="1529734922146" duration="924000" />
       <workItem from="1534895856743" duration="420000" />
-      <workItem from="1535947345869" duration="2815000" />
+      <workItem from="1535947345869" duration="3290000" />
+      <workItem from="1536817005438" duration="573000" />
     </task>
     <task id="LOCAL-00001" summary="date record formatted">
       <created>1528008476806</created>
@@ -217,13 +213,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18882000" />
+    <option name="totallyTimeSpent" value="19930000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960506" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22011586" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -256,16 +251,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
+        <state relative-caret-position="3818">
           <caret line="166" column="29" selection-start-line="166" selection-start-column="29" selection-end-line="166" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#center#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#center#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#center#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#center#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -291,7 +278,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MailGun.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-326">
+        <state relative-caret-position="23">
           <caret line="29" column="63" lean-forward="true" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
         </state>
       </provider>
