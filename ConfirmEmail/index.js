@@ -383,8 +383,7 @@ app.post('/webhooks/mailgun/opens', urlencodedParser, function (req, res) {
     if (!verifyMailgunWebhook(req.body.timestamp, req.body.token, req.body.signature, req, res)) {
         return;
     }
-    MongoDB.Write("Lunch", "EmailOpens", req.body).
-    then((result) => {
+    MongoDB.Write("Lunch", "EmailOpens", req.body).then((result) => {
         console.log(result);
     });
     res.status(200).send("received mailgun webhook: OPENS");
@@ -476,7 +475,14 @@ function verifyMailgunWebhook(timestamp, token, signature, req, res) {
     if (!mailgun.validateWebhook(timestamp, token, signature)) {
         console.log("FAKE MAILGUN!!!");
         ServerProtection.recordBadRecord(getIP(req), req).then(() => {
-            res.status(405).send("YOU CAN'T HACK ME!");
+            MongoDB.Write("ServerProtection", "WebhookWarnings", {
+                timestamp,
+                token,
+                signature,
+                body: req.body
+            }).then(() => {
+                res.status(406).send("YOU CAN'T HACK ME!");
+            });
         });
         return false;
     }
