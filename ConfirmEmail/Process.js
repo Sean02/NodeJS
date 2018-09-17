@@ -1,9 +1,11 @@
 let MongoDB = require("./MongoDB.js");
-const jwt = require("jsonwebtoken");
+let jwt = require("jsonwebtoken");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
 
-// let sendLunch = require("../SendLunch/index.js");
+let app = require("./index.js");
+
+
 function reqSignup(email) {
     return new Promise((resolve, reject) => {
         email = email.toLowerCase();
@@ -353,7 +355,7 @@ function getTime() {
     return d.getFullYear().toString() + "-" + (d.getMonth() + 1).toString() + "-" + d.getDate().toString() + " " + d.getHours().toString() + ":" + d.getMinutes().toString() + ":" + d.getSeconds().toString() + "." + d.getMilliseconds().toString();
 }
 
-function Validate(input) {
+function Validate(input) { //validate email address
     if (input.trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
         return false;
     } else if (input.trim().substr(-12) === "@seansun.org") {

@@ -4,6 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/ionic/helloworld/www" />
+      <excludeFolder url="file://$MODULE_DIR$/ionic/sample/node_modules/cordova-android/spec/e2e/fixtures/cordova-plugin-fake/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/ionic/sample/node_modules/cordova-ios/tests/spec/unit/fixtures/dummyProj/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/ionic/sample/node_modules/cordova-ios/tests/spec/unit/fixtures/testProj/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/ionic/sample/node_modules/cordova-plugin-crosswalk-webview/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>
