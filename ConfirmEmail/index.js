@@ -38,9 +38,9 @@ app.use(compression());
 
 ////ssl
 const httpsOptions = {
-    ca: fs.read(path.join(__dirname, "ssl", "cert.ca-bundle")),
-    cert: fs.read(path.join(__dirname, "ssl", "cert.crt")),
-    key: fs.read(path.join(__dirname, "ssl", "cert.key"))
+    ca: fs.read(path.join(__dirname, "ssl", "ca_bundle.crt")),
+    cert: fs.read(path.join(__dirname, "ssl", "certificate.crt")),
+    key: fs.read(path.join(__dirname, "ssl", "private.key"))
 };
 
 
@@ -353,6 +353,8 @@ app.get("/menu", (req, res) => {
 });
 app.get("/api", (req, res) => {
     getLunch.scrape().then((data) => {
+        console.log("!!!");
+        console.log(data);
         res.json(data);
     });
 });

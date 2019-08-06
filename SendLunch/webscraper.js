@@ -4,7 +4,7 @@ let cheerio = require('cheerio');
 function scrape() {
     return new Promise((resolve, reject) => {
         let url = 'http://www.myschooldining.com/sa';
-        request(url, function(error, response, html) {
+        request(url, function (error, response, html) {
             if (!error) {
                 // $("[day_no=" + date + "] div#sonomaacademy_lunch_soup span.item-value").text();
                 // let table = $("#table_calendar_week>tbody>tr");
@@ -13,6 +13,7 @@ function scrape() {
         });
     });
 }
+
 getDate = () => {
     let date = new Date();
     let year = date.getFullYear(),
@@ -37,22 +38,23 @@ parseLunch = (html) => {
     return res;
 };
 getSoup = ($, date) => {
-    return $("[day_no=" + date + "] div#sonomaacademy_lunch_soup span.item-value").text().trim();
+    // return $("[day_no=" + date + "] div#sonomaacademy_lunch_soup span.item-value").text().trim();
+    return $("div[id*='soup'][day_no='" + date + "'].category.category-week span.item-value").text().trim();
 };
 getEntree = ($, date) => {
-    return $("[day_no=" + date + "] div#sonomaacademy_lunch_entree span.item-value").text().trim();
+    return $("div[id*='entree'][day_no='" + date + "'].category.category-week span.item-value").first().text().trim();
 };
 getSalad = ($, date) => {
-    return $("[day_no=" + date + "] div#sonomaacademy_lunch_salad span.item-value").text().trim();
+    return $("div[id*='salad'][day_no='" + date + "'].category.category-week span.item-value").text().trim();
 };
 getSpecialDietEntree = ($, date) => {
-    return $("[day_no=" + date + "] div#sonomaacademy_lunch_specialdietentree span.item-value").text().trim();
+    return $("div[id*='specialdietentree'][day_no='" + date + "'].category.category-week span.item-value").text().trim();
 };
 getSides = ($, date) => {
-    return $("[day_no=" + date + "] div#sonomaacademy_lunch_sides span.item-value").text().trim();
+    return $("div[id*='sides'][day_no='" + date + "'].category.category-week span.item-value").text().trim();
 };
 getDessert = ($, date) => {
-    return $("[day_no=" + date + "] div#sonomaacademy_lunch_dessert span.item-value").text().trim();
+    return $("div[id*='dessert'][day_no='" + date + "'].category.category-week span.item-value").text().trim();
 };
 module.exports = {
     scrape

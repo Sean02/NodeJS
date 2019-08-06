@@ -14,9 +14,10 @@ let GetLunch = require("./webscraper.js");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
 let MongoDB = require("./MongoDB.js");
-let ps = "Hey students, thank you for using Luncher! If you enjoy our service and want to support us, consider introducing Luncher to your parents, they might be concerned what you have for lunch too! Click <a href='http://seansun.org'>here</a> to signup.";
+let ps = "";
 //
 ps = "";
+// ps = `<center><img src="https://4.bp.blogspot.com/-S7vjYuAzPw0/V9oB6yYc5DI/AAAAAAAAAxE/NpBhJrb_4-oBaGPDttJ1G1TOnJp8k56pACLcB/s1600/mooncake-festival-2015.jpeg" alt="" style="width:250px;"></center>`;
 // ps="This is the last Luncher email of the school year! We hoped you enjoyed our service and continue to support us next semester!";
 let a = schedule.scheduleJob('0 30 7 * * 1-5', function () {
     console.log("Fired");
@@ -56,7 +57,8 @@ function sendLunch(email, test) {
             let dataAvailable = ((data.soup) || (data.entree) || (data.specialdietentree) || (data.salad) || (data.dessert) || (data.sides));
             if (!dataAvailable) {
                 //don't panic, just add the ps
-                ps = "Don't panic! There's still lunch. We just couldn't get the menu from our information provider, that's all.";
+                if (ps == "")
+                    ps = "Don't panic! There's still lunch. We just couldn't get the menu from our information provider, that's all.";
                 // resolve("Lunch data not available, not sending.");
                 // return;
             }
@@ -93,7 +95,7 @@ function recordMenu(data, date) {
 function nicenIt(EmailHTML, data, date) {
     EmailHTML = EmailHTML.replace("[SOUP]", data.soup || "Soup Not Available");
     EmailHTML = EmailHTML.replace("[ENTREE]", data.entree || "Entree Not Available");
-    EmailHTML = EmailHTML.replace("[SPECIALDIETENTREE]", data.specialdietentree || "Diet Entree Not Available");
+    EmailHTML = EmailHTML.replace("[SPECIALDIETENTREE]", data.specialdietentree || "Vegetarian Entree Not Available");
     EmailHTML = EmailHTML.replace("[SALAD]", data.salad || "Salad Not Available");
     EmailHTML = EmailHTML.replace("[DESSERT]", data.dessert || "Dessert Not Available");
     EmailHTML = EmailHTML.replace("[SIDES]", data.sides || "Sides Not Available");
@@ -106,20 +108,21 @@ function nicenIt(EmailHTML, data, date) {
     EmailHTML = EmailHTML.replace("[DESSERTURL]", getURLforSearch(data.dessert) || "https://seansun.org");
     EmailHTML = EmailHTML.replace("[SIDESURL]", getURLforSearch(data.sides) || "https://seansun.org");
     //if not the first time, cancel ps
-    if (ps != "") {
-        ps = "<p>" + ps + "</p>"
+    if (ps !== "") {
+        //TODO:
+        ps = "<p>" + ps + "</p>";
         // if (!((data.soup) && (data.entree) && (data.specialdietentree) && (data.salad) && (data.dessert) && (data.sides))) {
         //     ps += "<a href='seansun.org/view/whynotavailable.html'>Why is the menu not available?,</a>"
         // }
-        ps = `<tr><td align='center' style='padding: 0 56px 28px 56px;' valign='middle'><span style='font-family: "lato", "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 28px;font-size: 16px;  vertical-align: middle;'>` + ps + "</span></td></tr>";
+        ps = `<tr><td align='center' style='padding: 0 56px 10px 56px;' valign='middle'><span style='font-family: "lato", "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 28px;font-size: 16px;  vertical-align: middle;'>` + ps + "</span></td></tr>";
     }
-    console.log("ps:", ps);
+    console.log("ps:", ps, "|end ps");
     EmailHTML = EmailHTML.replace("[P.S.]", ps);
     return EmailHTML;
 }
 
 function getURLforSearch(str) {
-    if (str===''){
+    if (str === '') {
         //not available: returning false
         console.log("getURL returning false");
         return false; //trigger the fallback url explanation
