@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Stats</title>
+  <!-- <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="seansun.org/views/404/style.css"> -->
+  <!--<script src="../bootstrap/js/bootstrap.min.js"></script>-->
+  <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <div style="position: absolute;  margin: auto;  top: 0;  right: 0;  bottom: 0;  left: 0;">
+    <center>
+      <h1 id="text1" style="font-size: 100px;">Loading</h1></center>
+  </div>
+</body>
+<script>
+  function getData() {
+    $.ajax({
+      type:"GET",
+      url:"/getStats",
+      dataType: "json"
+    })
+    .done((data)=>{
+      console.log('GET response:', data);
+      console.log(data.count);
+      document.getElementById("text1").innerHTML = data.count+" users";
+    })
+    .fail((jqXHR,textStatus,err)=>{
+      console.log("Error:",jqXHR,textStatus,err);
+    });
+  }
+  getData();
+  setInterval(()=>{getData();}, 1000);
+</script>
+
+</html>

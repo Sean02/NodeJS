@@ -10,13 +10,13 @@
 const cout = console.log;
 // const system = {out:{println:console.log}};
 let schedule = require("node-schedule");
-let GetLunch = require("./webscraper.js");
+let GetLunch = require("./newScraper.js");//require("./webscraper.js");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
 let MongoDB = require("./MongoDB.js");
 let ps = "";
 //
-ps = "";
+ps = "Luncher is back! If you are enjoying Luncher and think your friends might too, go tell them about it!";
 // ps = `<center><img src="https://4.bp.blogspot.com/-S7vjYuAzPw0/V9oB6yYc5DI/AAAAAAAAAxE/NpBhJrb_4-oBaGPDttJ1G1TOnJp8k56pACLcB/s1600/mooncake-festival-2015.jpeg" alt="" style="width:250px;"></center>`;
 // ps="This is the last Luncher email of the school year! We hoped you enjoyed our service and continue to support us next semester!";
 let a = schedule.scheduleJob('0 30 7 * * 1-5', function () {
@@ -49,7 +49,7 @@ function getDate() {
 
 function sendLunch(email, test) {
     return new Promise((resolve, reject) => {
-        GetLunch.scrape().then((data) => {
+        GetLunch.getLunch().then((data) => {
             let EmailHTML = fs.read("LuncherEmail.html");
             let date = getDate();
             console.log(data);
@@ -68,7 +68,7 @@ function sendLunch(email, test) {
                 recordMenu(data, date);
             //
             EmailHTML = nicenIt(EmailHTML, data, date);
-            firstTime = false;
+            // firstTime = false;
             // console.log(EmailHTML)
             // return;
             //
@@ -143,7 +143,7 @@ module.exports = {
 };
 console.log("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 sendLunch("sean_sun2002@icloud.com", true).then((res) => {
-    ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
+    // ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
     console.log("Exited with message", res);
 });
 
@@ -154,7 +154,7 @@ if (false) {
         ps = ""; //after send ps, set it to nothing so it doesn't resend tomorrow.
         console.log("Exited with message", res);
     });
-    GetLunch.scrape().then((data) => {
+    GetLunch.getLunch().then((data) => {
         recordMenu(data, getDate());
     });
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+	<textarea id="t" cols="100" rows="30">asdf helloworld==hw
+
+hwq sdalj hw1
+
+werwer==ww
+
+sfadjkl hw jskafdl</textarea>
+</body>
+<script>
+	let shortcuts = [];
+	let $textarea = document.getElementById("t");
+    let t = $textarea.value;
+    console.log("raw string", t);
+    let matches = t.match(new RegExp('(\\w+)==(\\w+)',"ig"));
+    shortcuts = [];
+    matches.forEach((item)=>{
+        let foo = item.split("==");
+        shortcuts.push({full:foo[0], abbr: foo[1]});
+    });
+    console.log(shortcuts);
+</script>
+</html>

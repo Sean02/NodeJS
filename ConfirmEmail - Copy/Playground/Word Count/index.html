@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Word Count</title>
+
+    <script src='./js/jquery.js'></script>
+    <link rel="stylesheet" href="./css/style.css">
+
+
+</head>
+
+<body>
+<!-- <h1 style="text-align: center;margin: 50px 0px 50px 0px;">Word Count</h1> -->
+<div class="container">
+    <div class="backdrop" onresize="resize()">
+        <div class="highlights"></div>
+    </div>
+    <textarea onkeyup="keyUp(event)" onkeydown="keyDown(event)" id="mainT">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis imperdiet mi quis mollis. Fusce arcu eros, dictum eget ultricies imperdiet, tincidunt et mi. In pharetra orci ac felis sodales efficitur. Duis dictum ornare augue, nec bibendum purus. Nunc rutrum tincidunt purus, vitae sodales orci molestie malesuada. Quisque fermentum pulvinar massa tempor varius. Sed nec consectetur est, euismod lobortis lacus. Donec a tempor velit. Vivamus nec rutrum mi, sit amet consectetur nulla. Quisque mauris massa, interdum quis ex et, aliquam blandit turpis.
+
+Etiam justo erat, ornare eget metus vel, fermentum imperdiet leo. Sed eget gravida massa. Vestibulum accumsan tellus eget dignissim consectetur. Nullam et risus placerat, molestie sapien vitae, vehicula leo. Cras ac nisi ut nibh tempus placerat. Proin sodales, ligula ut eleifend malesuada, elit dui tristique lorem, sit amet blandit mi elit nec lectus. Suspendisse blandit nisl sit amet orci laoreet, rutrum luctus massa varius. Nunc suscipit, tellus ut pharetra placerat, lacus nibh imperdiet nunc, quis commodo ex urna vitae justo. Cras efficitur libero nec diam molestie convallis. Nulla et porta nisi, vel viverra libero. Vivamus sed nibh sit amet magna accumsan auctor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris faucibus mi in lorem euismod, vitae imperdiet eros tincidunt.
+
+Quisque vel orci at tellus posuere consequat. Curabitur non libero et ligula blandit tincidunt. Etiam sed egestas turpis, ut tempor erat. Nullam porttitor nunc id metus lacinia, sed efficitur mauris aliquam. In elementum pretium bibendum. Sed blandit congue scelerisque. Sed laoreet rhoncus nunc. Etiam nisl enim, maximus a consectetur ut, tincidunt nec nisl. Aliquam erat volutpat. Nunc efficitur ligula ut est eleifend rutrum. In pharetra tincidunt nibh.
+
+Etiam ut tincidunt ante, quis ultricies massa. Donec sodales faucibus felis et sollicitudin. Donec bibendum felis a massa viverra, vel iaculis urna hendrerit. Curabitur sollicitudin libero at ante laoreet, vitae aliquam tellus aliquet. Nulla facilisi. Etiam consectetur, neque id molestie mollis, ipsum massa porta nibh, eu elementum sem enim eget lectus. Nulla accumsan sapien turpis, at feugiat neque tincidunt dictum. Vestibulum ut cursus massa. Maecenas tempus in sapien sit amet posuere. Quisque lacus nisl, semper in odio tempus, venenatis pellentesque tortor. Etiam iaculis lobortis elit, efficitur tempus nibh aliquam sit amet. Fusce hendrerit condimentum enim ut semper.
+
+Integer ac odio ornare, tempor dolor vitae, elementum sem. Ut eros nulla, tincidunt in interdum vel, sagittis nec leo. Sed vitae tincidunt ex. Mauris id blandit turpis, at rhoncus magna. Integer aliquet est at enim fermentum, ac aliquam leo viverra. Donec et commodo ipsum. Morbi nec turpis at nisl blandit rhoncus non eu lorem. Duis interdum tellus lectus, consectetur tincidunt metus tincidunt ut. Phasellus et auctor dui.
+
+Nulla arcu ligula, faucibus vitae diam nec, dapibus auctor mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim id quam in ultrices. Etiam sed libero at ex rhoncus vestibulum vel et lectus. Maecenas aliquet ultricies ipsum tincidunt sodales. Integer tincidunt dolor convallis felis elementum, et iaculis ex consequat. Sed auctor, metus sit amet pellentesque efficitur, massa lorem euismod nunc, pellentesque consectetur turpis elit id est. Nunc id dolor tincidunt, vulputate diam ac, faucibus neque. Praesent quis orci felis.
+
+In non arcu hendrerit dui blandit suscipit quis sed purus. Cras congue tempor est sed elementum. Nullam non tristique urna. Integer facilisis, orci ac malesuada semper, ligula est dictum mauris, sit amet tincidunt sem tortor vel est. Proin ornare justo quis metus vehicula, id eleifend urna venenatis. Praesent consequat odio ut tellus dictum auctor. Vestibulum finibus eros id volutpat consequat. Sed efficitur nunc nec elit condimentum feugiat et quis arcu. Duis mauris magna, placerat sit amet pellentesque sagittis, pharetra non elit. In leo leo, fringilla non vehicula ut, pellentesque at est. Vivamus ac est at ligula interdum viverra. Cras vehicula velit vitae pretium feugiat. Mauris in volutpat libero.
+
+Sed non lectus a leo convallis pretium. Nullam ac tellus at tortor posuere efficitur sed vel diam. Donec nunc lacus, scelerisque eu nunc non, rhoncus venenatis urna. Nulla facilisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet, tortor vitae maximus interdum, nibh tellus faucibus risus, vitae tristique mauris ipsum quis orci. Nulla lacinia purus erat, in ultrices erat scelerisque a. In quis rutrum ligula. Ut sodales tincidunt ante at vestibulum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ullamcorper condimentum volutpat. Suspendisse potenti. In nisl leo, mattis sit amet dapibus eu, scelerisque tempor urna. Praesent faucibus cursus justo, quis sollicitudin sapien malesuada porttitor.
+
+Ut lectus diam, tincidunt in leo ut, convallis cursus ipsum. Suspendisse sed nisi nec mauris pharetra dignissim a nec lorem. Donec maximus eros mi, quis elementum mi luctus dignissim. Ut convallis justo vitae nibh tincidunt placerat. Aliquam erat volutpat. Ut a lorem eget est lobortis vulputate. Integer leo elit, eleifend non felis at, euismod egestas orci. Donec non tristique ante, et vehicula nibh. Pellentesque eleifend porttitor scelerisque. Etiam tristique laoreet massa in scelerisque. Fusce eget egestas dolor. Aenean consectetur, leo eget molestie convallis, est enim commodo quam, a dignissim est sem sit amet ex. Praesent non dictum enim. Proin cursus convallis bibendum.
+
+Fusce a sagittis risus, ut bibendum nibh. Nulla molestie ultricies volutpat. Curabitur malesuada feugiat tortor ac efficitur. Praesent imperdiet neque nulla, nec tincidunt dolor eleifend ornare. Ut facilisis ipsum eget fermentum aliquet. Quisque vel turpis elementum, pretium elit nec, lacinia orci. Integer porttitor sodales erat, et consectetur odio mattis eu. Nullam maximus erat ut eleifend aliquam. Mauris sit amet convallis purus.
+    </textarea>
+</div>
+<div id="result" style="align-items: center; margin: auto;">
+    <div class="tab">
+        <button class="tablinks" onclick="tab(event, 'count')">Count</button>
+        <button class="tablinks" onclick="tab(event, 'export')">Export</button>
+        <!--<button class="tablinks" onclick="tab(event, 'Tokyo')">Tokyo</button>-->
+    </div>
+    <div id="contents">
+    <div id="count" class="tabcontent">
+        <h1>Count</h1>
+        <button class="buttons" id="countBtn">Count</button>
+        <input id="search" placeholder="Search" onkeyup="filter()">
+        <div id="res"></div>
+    </div>
+
+    <div id="export" class="tabcontent">
+        <h1>Export</h1>
+        <button id="genExp" class="buttons">Generate Export</button>
+        <textarea id="exportT" rows="15"></textarea>
+    </div>
+    </div>
+</div>
+
+
+</body>
+<script src="./js/index.js"></script>
+</html>

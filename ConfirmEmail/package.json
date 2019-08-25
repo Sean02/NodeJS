@@ -20,6 +20,7 @@
     "jsonwebtoken": "^7.1.9",
     "mailgun-js": "^0.14.2",
     "mongodb": "^2.2.5",
+    "nightmare": "^3.0.2",
     "npm": "^5.8.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",

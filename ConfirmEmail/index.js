@@ -8,7 +8,7 @@ let MongoDB = require("./MongoDB.js");
 let SignUp = require("./signup.js");
 let Process = require("./Process.js");
 let sendLunch = require("./SendLunch/index.js");
-let getLunch = require("./webscraper.js");
+let getLunch = require("./SendLunch/newScraper.js");
 // var subdomain = require('express-subdomain');
 let towerDefense = require("./TowerDefense.js");
 let ServerProtection = require("./ServerProtection.js");
@@ -352,7 +352,7 @@ app.get("/menu", (req, res) => {
     res.sendFile(__dirname + "/views/Menu/index.html");
 });
 app.get("/api", (req, res) => {
-    getLunch.scrape().then((data) => {
+    getLunch.getLunch().then((data) => {
         console.log("!!!");
         console.log(data);
         res.json(data);

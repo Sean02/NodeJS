@@ -2,21 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1cdf295-a3c2-48fe-95b3-6a70b598e40a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.well-known/acme-challenge/R1_Zw36L-io0n4T5nIHmGH5d9f3ulQ9srKO-DfPJDh4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.well-known/acme-challenge/pJJmaAuivQNk0xrT_3-IQeEp4VmKS_KaA1gddc7IMFI" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/cronjobtest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/Process.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/Process.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/jwttest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/return a return funtion.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/stats.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/webscraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/webscraper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/webscraper0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/webscraper-web-javascript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LuncherEmail.html" beforeDir="false" afterPath="$PROJECT_DIR$/LuncherEmail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webscraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/webscraper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -32,11 +27,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2448">
-              <caret line="152" column="31" selection-start-line="152" selection-start-column="31" selection-end-line="152" selection-end-column="31" />
+            <state relative-caret-position="2091">
+              <caret line="123" column="31" lean-forward="true" selection-start-line="123" selection-start-column="31" selection-end-line="123" selection-end-column="31" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/newScraper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -61,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webscraper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="596">
-              <caret line="46" column="25" lean-forward="true" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
+            <state relative-caret-position="986">
+              <caret line="58" selection-start-line="58" selection-end-line="60" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -98,6 +104,9 @@
       <find>[DATE]</find>
       <find>DATE</find>
       <find>px</find>
+      <find>GetLunch</find>
+      <find>firstTime</find>
+      <find>ps</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -108,8 +117,9 @@
       <list>
         <option value="$PROJECT_DIR$/MailGun.js" />
         <option value="$PROJECT_DIR$/LuncherEmail.html" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/webscraper.js" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/newScraper.js" />
       </list>
     </option>
   </component>
@@ -119,7 +129,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="117" />
     <option name="y" value="90" />
     <option name="width" value="1712" />
@@ -196,16 +206,19 @@
       <workItem from="1553037927588" duration="5294000" />
       <workItem from="1555960274946" duration="827000" />
       <workItem from="1558157604880" duration="468000" />
+      <workItem from="1566756377909" duration="819000" />
+      <workItem from="1566757728136" duration="2047000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25811000" />
+    <option name="totallyTimeSpent" value="28677000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21917808" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19283456" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -236,16 +249,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="152" column="31" selection-start-line="152" selection-start-column="31" selection-end-line="152" selection-end-column="31" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LuncherEmail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4420">
@@ -264,6 +267,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/webscraper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="58" selection-start-line="58" selection-end-line="60" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MongoDB.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -278,10 +288,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webscraper.js">
+    <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
-          <caret line="46" column="25" lean-forward="true" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
+        <state relative-caret-position="2091">
+          <caret line="123" column="31" lean-forward="true" selection-start-line="123" selection-start-column="31" selection-end-line="123" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/newScraper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
         </state>
       </provider>
     </entry>

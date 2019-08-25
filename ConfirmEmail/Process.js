@@ -274,11 +274,13 @@ function confirm(token, sendLunch) {
                     }).then((res) => {
                         console.log("user added(updated) to database");
                         addToMailingList(data[0].email, time).then(() => {
-                            sendLunch.sendLunch(data[0].email).then(() => {
-                                console.log("sent demo email");
                                 resolve("added");
                                 return;
-                            });
+                            // sendLunch.sendLunch(data[0].email).then(() => {
+                            //     console.log("sent demo email");
+                            //     resolve("added");
+                            //     return;
+                            // });
                         }, (err) => {
                             console.log(err);
                             resolve(err);
