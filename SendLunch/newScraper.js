@@ -82,7 +82,7 @@ getMenuData = (date) => {
                     data.sides += element.text.trim();
                 });
 
-                $("div.week-container div.weeks span:contains('" + day + "')").parent().parent().find("li.title:contains('Condiments/Toppings')").nextAll().find("a.food-name-inner").each((index, element) => {
+                $("div.week-container div.weeks span:contains('" + day + "')").parent().parent().find("li.title:contains('Desserts')").nextAll().find("a.food-name-inner").each((index, element) => {
                     if (index) {
                         data.dessert += ", ";
                     }

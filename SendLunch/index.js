@@ -16,7 +16,7 @@ let fs = require("./FSread.js");
 let MongoDB = require("./MongoDB.js");
 let ps = "";
 //
-ps = "Luncher is back! If you are enjoying Luncher and think your friends might too, go tell them about it!";
+// ps = "Luncher is back! If you are enjoying Luncher and think your friends might too, please tell them about it!";
 // ps = `<center><img src="https://4.bp.blogspot.com/-S7vjYuAzPw0/V9oB6yYc5DI/AAAAAAAAAxE/NpBhJrb_4-oBaGPDttJ1G1TOnJp8k56pACLcB/s1600/mooncake-festival-2015.jpeg" alt="" style="width:250px;"></center>`;
 // ps="This is the last Luncher email of the school year! We hoped you enjoyed our service and continue to support us next semester!";
 let a = schedule.scheduleJob('0 30 7 * * 1-5', function () {

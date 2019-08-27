@@ -3,15 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d1cdf295-a3c2-48fe-95b3-6a70b598e40a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/Process.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/Process.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/newScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ConfirmEmail/SendLunch/newScraper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/newScraper.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,8 +22,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2091">
-              <caret line="123" column="31" lean-forward="true" selection-start-line="123" selection-start-column="31" selection-end-line="123" selection-end-column="31" />
+            <state relative-caret-position="442">
+              <caret line="26" column="6" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
@@ -41,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/newScraper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+            <state relative-caret-position="205">
+              <caret line="84" column="122" selection-start-line="84" selection-start-column="122" selection-end-line="84" selection-end-column="122" />
             </state>
           </provider>
         </entry>
@@ -129,7 +124,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="117" />
     <option name="y" value="90" />
     <option name="width" value="1712" />
@@ -161,7 +156,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -207,12 +202,13 @@
       <workItem from="1555960274946" duration="827000" />
       <workItem from="1558157604880" duration="468000" />
       <workItem from="1566756377909" duration="819000" />
-      <workItem from="1566757728136" duration="2047000" />
+      <workItem from="1566757728136" duration="2268000" />
+      <workItem from="1566762363373" duration="2216000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28677000" />
+    <option name="totallyTimeSpent" value="31114000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
@@ -290,8 +286,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2091">
-          <caret line="123" column="31" lean-forward="true" selection-start-line="123" selection-start-column="31" selection-end-line="123" selection-end-column="31" />
+        <state relative-caret-position="442">
+          <caret line="26" column="6" lean-forward="true" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
@@ -302,10 +298,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/newScraper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+        <state relative-caret-position="205">
+          <caret line="84" column="122" selection-start-line="84" selection-start-column="122" selection-end-line="84" selection-end-column="122" />
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
