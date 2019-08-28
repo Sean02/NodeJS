@@ -14,6 +14,7 @@ let GetLunch = require("./newScraper.js");//require("./webscraper.js");
 let MailGun = require("./MailGun.js");
 let fs = require("./FSread.js");
 let MongoDB = require("./MongoDB.js");
+let updateMonitor = require("./UpdateMonitor.js");
 let ps = "";
 //
 // ps = "Luncher is back! If you are enjoying Luncher and think your friends might too, please tell them about it!";
@@ -26,10 +27,14 @@ let a = schedule.scheduleJob('0 30 7 * * 1-5', function () {
         console.log("Exited with message", res);
     })
 });
-// let b = schedule.scheduleJob('20 18 15 * * 1-5', function() {
-//     sendLunch("Luncher@seansun.org");
-//     console.log("Fired");
-// });
+let reset = schedule.scheduleJob('0 0 21 * * *', function () {
+    updateMonitor.pressReset().then(()=>{});
+    console.log("PRESSED RESET");
+});
+let update = schedule.scheduleJob('0 0 3 * * *', function () {
+    updateMonitor.pressUpdate().then(()=>{});
+    console.log("PRESSED UDPATE");
+});
 // let a = schedule.scheduleJob('20 52 15 * * 1-5', function() {
 //     console.log("Cron Fired");
 //     sendLunch("Luncher@seansun.org").then((res) => {

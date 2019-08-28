@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5abbfad9-854f-4197-93c4-052abd81a69e" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/../SendLunch/UpdateMonitor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SendLunch/newScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/SendLunch/newScraper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greenlock-express.js/examples/demo.js" beforeDir="false" afterPath="$PROJECT_DIR$/greenlock-express.js/examples/demo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greenlock-express.js/examples/my-express-app.js" beforeDir="false" afterPath="$PROJECT_DIR$/greenlock-express.js/examples/my-express-app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greenlock-express.js/examples/production.js" beforeDir="false" afterPath="$PROJECT_DIR$/greenlock-express.js/examples/production.js" afterDir="false" />
@@ -11,7 +11,6 @@
       <change beforePath="$PROJECT_DIR$/greenlock-express.js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/greenlock-express.js/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SendLunch/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SendLunch/newScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SendLunch/newScraper.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -190,7 +189,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="117" />
     <option name="y" value="90" />
     <option name="width" value="1712" />
@@ -301,7 +300,7 @@
       <workItem from="1566757727903" duration="98000" />
       <workItem from="1566758767897" duration="2166000" />
       <workItem from="1566762342835" duration="19000" />
-      <workItem from="1566876959813" duration="23000" />
+      <workItem from="1566876959813" duration="623000" />
     </task>
     <task id="LOCAL-00001" summary="added rate limiter">
       <created>1527898405208</created>
@@ -391,10 +390,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178181000" />
+    <option name="totallyTimeSpent" value="178781000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="npm" order="0" side_tool="true" />
