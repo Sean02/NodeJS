@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5abbfad9-854f-4197-93c4-052abd81a69e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../SendLunch/UpdateMonitor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greenlock-express.js/examples/demo.js" beforeDir="false" afterPath="$PROJECT_DIR$/greenlock-express.js/examples/demo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greenlock-express.js/examples/my-express-app.js" beforeDir="false" afterPath="$PROJECT_DIR$/greenlock-express.js/examples/my-express-app.js" afterDir="false" />
@@ -189,9 +188,9 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="117" />
-    <option name="y" value="90" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="59" />
+    <option name="y" value="176" />
     <option name="width" value="1712" />
     <option name="height" value="1038" />
   </component>
@@ -203,6 +202,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -219,7 +219,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -301,6 +300,9 @@
       <workItem from="1566758767897" duration="2166000" />
       <workItem from="1566762342835" duration="19000" />
       <workItem from="1566876959813" duration="623000" />
+      <workItem from="1567105418163" duration="599000" />
+      <workItem from="1567275881347" duration="599000" />
+      <workItem from="1569989991090" duration="43000" />
     </task>
     <task id="LOCAL-00001" summary="added rate limiter">
       <created>1527898405208</created>
@@ -390,16 +392,16 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178781000" />
+    <option name="totallyTimeSpent" value="180022000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="59" y="176" width="1712" height="1038" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="npm" order="0" side_tool="true" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info id="Structure" order="2" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.20021075" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.20011948" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.5006878" side_tool="true" weight="0.3296582" />
       <window_info anchor="bottom" id="Version Control" order="1" sideWeight="0.4849921" weight="0.10616114" />
       <window_info anchor="bottom" id="Terminal" order="2" />

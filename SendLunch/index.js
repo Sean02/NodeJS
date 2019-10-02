@@ -59,7 +59,7 @@ function sendLunch(email, test) {
             let date = getDate();
             console.log(data);
             //
-            let dataAvailable = ((data.soup) || (data.entree) || (data.specialdietentree) || (data.salad) || (data.dessert) || (data.sides));
+            let dataAvailable = ((data.soup) && (data.entree) && (data.specialdietentree) && (data.salad) && (data.dessert) && (data.sides));
             if (!dataAvailable) {
                 //don't panic, just add the ps
                 if (ps == "")
