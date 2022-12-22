@@ -17,7 +17,7 @@
     "express-sitemap": "^1.8.0",
     "express-subdomain": "^1.0.5",
     "hbs": "^4.0.0",
-    "jsonwebtoken": "^7.1.9",
+    "jsonwebtoken": "^9.0.0",
     "mailgun-js": "^0.14.2",
     "mongodb": "^2.2.5",
     "nightmare": "^3.0.2",
